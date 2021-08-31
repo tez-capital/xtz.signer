@@ -1,0 +1,7 @@
+{
+    "id": "xtz.signer" ,
+    "version" : "0.0.1",
+    "dependencies": [
+        { "id":"xtz.signer.binaries" }
+    ]
+}

@@ -1,0 +1,8 @@
+{
+    "Description": '''
+XTZ signer - app providing signer for tezos baking (both remote and standalone).
+'''
+    Links: [
+        { website: "https://tezos.com/" }
+    ]
+}

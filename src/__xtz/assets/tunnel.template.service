@@ -1,0 +1,16 @@
+[Unit]
+Description=Setup a secure tunnel to baker node
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+User={{{USER}}}
+Group={{{USER}}}
+RestartSec=1
+
+ExecStart=/usr/bin/ssh -NT -p {{{model.BAKER_SSH_PORT}}} -o ServerAliveInterval=60 -o ExitOnForwardFailure=yes -R {{{model.SIGNER_ADDR}}}:{{{model.SIGNER_PORT}}}:localhost:{{{model.SIGNER_PORT}}} <<<BAKER_NODE_ADDR>>>
+
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

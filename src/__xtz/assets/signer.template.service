@@ -1,0 +1,22 @@
+[Unit]
+Description={{{ID}}} baker service
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+User={{{USER}}}
+Group={{{USER}}}
+RestartSec=1
+
+Type=simple
+Restart=always
+
+Environment=TEZOS_LOG='* -> debug'
+ExecStart={{{ROOT_DIR}}}/bin/signer launch socket signer -a {{{model.SIGNER_ADDR}}} -p {{{model.SIGNER_PORT}}} {{{configuration.STARTUP_SIGNER_ARGS__CLI_ARGS}}}
+
+{{#model.SERVICE_CONFIGURATION_SIGNER__ARRAY}}
+{{{key}}}={{{value}}}
+{{/model.SERVICE_CONFIGURATION_SIGNER__ARRAY}}
+
+[Install]
+WantedBy=default.target
