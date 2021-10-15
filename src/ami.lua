@@ -107,6 +107,11 @@ return {
 					aliases = {"dp"},
                     description = 'Sets custom derivation path',
 					type = "string"
+                },
+                ["ledger-id"] = {
+					aliases = {"li"},
+                    description = 'Imports key from specific ledger',
+					type = "string"
                 }
             },
             index = 10,
