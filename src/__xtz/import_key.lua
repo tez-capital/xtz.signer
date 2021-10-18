@@ -5,7 +5,7 @@ ami_assert(type(_user) == "string", "User not specified...", EXIT_INVALID_CONFIG
 
 local _homedir = _user == "root" and "/root" or "/home/" .. _user
 
-local _ledgerId = options["ledger-id"]
+local _ledgerId = _options["ledger-id"]
 if type(_ledgerId) ~= "string" then 
 	local _proc = proc.spawn("bin/client", { "list", "connected", "ledgers" }, {
 		stdio = { stderr = "pipe" },
