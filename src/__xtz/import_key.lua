@@ -15,7 +15,7 @@ if type(_ledgerId) ~= "string" then
 
 	ami_assert(_proc.exitcode == 0, "Failed to get connected ledgers: " .. _proc.stderrStream:read("a"))
 	local _output = _proc.stdoutStream:read("a")
-	local _legerId = _output:match("## Ledger `(.-)`")
+	local _ledgerId = _output:match("## Ledger `(.-)`")
 end
 
 local _derivationPath = _options and _options["derivation-path"]
@@ -27,14 +27,14 @@ if type(_derivationPath) ~= "string" then
 end
 
 local _keyId = am.app.get_configuration("keyId", "baker")
-local _proc = proc.spawn("bin/signer", { "import", "secret", "key", _keyId, "ledger://" .. _legerId .. "/" .. _derivationPath, _options.force and "--force" or nil }, {
+local _proc = proc.spawn("bin/signer", { "import", "secret", "key", _keyId, "ledger://" .. _ledgerId .. "/" .. _derivationPath, _options.force and "--force" or nil }, {
 	stdio = "inherit",
 	wait = true,
 	env = { HOME = _homedir}
 })
 ami_assert(_proc.exitcode == 0,  "Failed to import key to signer!")
 
-local _proc = proc.spawn("bin/client", { "import", "secret", "key", _keyId, "ledger://" .. _legerId .. "/" .. _derivationPath, _options.force and "--force" or nil }, {
+local _proc = proc.spawn("bin/client", { "import", "secret", "key", _keyId, "ledger://" .. _ledgerId .. "/" .. _derivationPath, _options.force and "--force" or nil }, {
 	stdio = "inherit" ,
 	wait = true,
 	env = { HOME = _homedir }
