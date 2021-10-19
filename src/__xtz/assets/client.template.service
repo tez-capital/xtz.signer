@@ -10,6 +10,7 @@ Type=simple
 Restart=on-failure
 RestartSec=3
 
+Environment="HOME={{{ROOT_DIR}}}/data"
 Environment=TEZOS_LOG='* -> debug'
 {{#model.BLOCK_NUMBER}}
 ExecStart={{{ROOT_DIR}}}/bin/client setup ledger to bake for baker --main-hwm {{{model.BLOCK_NUMBER}}} {{{configuration.STARTUP_CLIENT_ARGS__CLI_ARGS}}}

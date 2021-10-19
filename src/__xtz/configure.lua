@@ -12,7 +12,7 @@ end
 local _proc = proc.spawn("/bin/bash", { _tmpFile }, {
 	stdio = { stderr = "pipe" },
 	wait = true,
-	env = { HOME = _user == "root" and "/root" or "/home/" .. _user }
+	env = { HOME = path.combine(os.cwd(), "data") }
 })
 
 fs.remove(_tmpFile)

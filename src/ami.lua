@@ -85,6 +85,9 @@ return {
             index = 8,
             type = 'external',
             exec = 'bin/signer',
+            environment = {
+                HOME = path.combine(os.cwd(), "data")
+            },
             contextFailExitCode = EXIT_APP_INTERNAL_ERROR
         },
         client = {
@@ -93,6 +96,9 @@ return {
             index = 9,
             type = 'external',
             exec = 'bin/client',
+            environment = {
+                HOME = path.combine(os.cwd(), "data")
+            },
             contextFailExitCode = EXIT_APP_INTERNAL_ERROR
         },
         ['import-key'] = {

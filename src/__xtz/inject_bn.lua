@@ -16,7 +16,7 @@ if _blockNumber == "auto" or _blockNumber == "AUTO" then
 	local _proc = proc.spawn("bin/client", { "-E", _bnSource, "rpc", "get", "/chains/main/blocks/head/header" }, {
 		stdio = { stderr = "pipe" },
 		wait = true,
-		env = { HOME = _user == "root" and "/root" or "/home/" .. _user }
+		env = { HOME = path.combine(os.cwd(), "data") }
 	})
 
 	ami_assert(_proc.exitcode == 0, "Failed to get block number: " .. _proc.stderrStream:read("a"))

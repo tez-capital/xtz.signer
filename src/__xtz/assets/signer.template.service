@@ -11,6 +11,7 @@ RestartSec=1
 Type=simple
 Restart=always
 
+Environment="HOME={{{ROOT_DIR}}}/data"
 Environment=TEZOS_LOG='* -> debug'
 ExecStart={{{ROOT_DIR}}}/bin/signer launch socket signer -a {{{model.SIGNER_ADDR}}} -p {{{model.SIGNER_PORT}}} {{{configuration.STARTUP_SIGNER_ARGS__CLI_ARGS}}}
 

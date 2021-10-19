@@ -43,7 +43,7 @@ for k, v in pairs(_services) do
 end
 
 local _user = am.app.get("user", "root")
-local _homedir = _user == "root" and "/root" or "/home/" .. _user
+local _homedir = path.combine(os.cwd(), "data")
 local _proc = proc.spawn("bin/client", { "list", "connected", "ledgers" }, {
 	stdio = { stderr = "pipe" },
 	wait = true,

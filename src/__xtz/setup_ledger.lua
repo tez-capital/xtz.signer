@@ -3,9 +3,8 @@ local _options = ...
 local _user = am.app.get("user", "root")
 ami_assert(type(_user) == "string", "User not specified...", EXIT_INVALID_CONFIGURATION)
 
-local _homedir = _user == "root" and "/root" or "/home/" .. _user
-local _keyId = am.app.get_configuration("keyId", "baker")
-local _args = { "setup", "ledger", "to", "bake", "for", _keyId }
+local _homedir = path.combine(os.cwd(), "data")
+local _args = { "setup", "ledger", "to", "bake", "for", "baker" }
 if _options["main-chain-id"] then 
 	table.insert(_args, "--main-chain-id")
 	table.insert(_args, _options["main-chain-id"])
