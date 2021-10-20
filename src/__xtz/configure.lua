@@ -1,6 +1,11 @@
 local _user = am.app.get("user", "root")
 ami_assert(type(_user) == "string", "User not specified...", EXIT_INVALID_CONFIGURATION)
 
+local _ok, _error = fs.safe_mkdirp("data")
+ami_assert(_ok, "Failed to create data directory - " .. tostring(_error) .. "!")
+local _ok, _uid = fs.safe_getuid(_user)
+ami_assert(_ok, "Failed to get " .. _user .. "uid - " .. (_uid or ""))
+
 -- Setup ledger
 local _tmpFile = os.tmpname()
 local _udevRulesUrl = "https://raw.githubusercontent.com/LedgerHQ/udev-rules/709581c85db97bf6ea12e472aa4e350bf0eabfb7/add_udev_rules.sh"
@@ -38,3 +43,7 @@ if type(_tunnels) == "table" and not table.is_array(_tunnels) then
 		ami_assert(_ok, "Failed to install " .. _tunnelServiceId .. ".service " .. (_error or ""))
 	end
 end
+
+log_info("Granting access to " .. _user .. "(" .. tostring(_uid) .. ")...")
+local _ok, _error = fs.chown(os.cwd(), _uid, _uid, {recurse = true})
+ami_assert(_ok, "Failed to chown data - " .. (_error or ""))

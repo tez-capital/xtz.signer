@@ -148,6 +148,22 @@ return {
             action = '__xtz/setup_ledger.lua',
             contextFailExitCode = EXIT_APP_INTERNAL_ERROR
         },
+        ['get-key-hash'] = {
+            description = "ami 'get-key-hash' sub command",
+            summary = 'Returns hash if imported key.',
+            contextFailExitCode = EXIT_APP_INTERNAL_ERROR,
+            action = function(_options, _, _, _)
+                local _ok, _pkhFile = fs.safe_read_file("data/.tezos-client/public_key_hashs")
+                assert(_ok, "Failed to read 'public_key_hashes' file!")
+                local _ok, _pkh = hjson.safe_parse(_pkhFile)
+                assert(_ok, "Failed to parse 'public_key_hashes' file!")
+                for _, v in ipairs(_pkh) do 
+                    if v.name == "baker" then 
+                        print(v.value)
+                    end
+                end
+            end
+        },
         about = {
             description = "ami 'about' sub command",
             summary = 'Prints information about application',
