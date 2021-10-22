@@ -44,7 +44,12 @@ end
 
 local _user = am.app.get("user", "root")
 local _homedir = path.combine(os.cwd(), "data")
-local _proc = proc.spawn("bin/client", { "list", "connected", "ledgers" }, {
+local _args = { "list", "connected", "ledgers" }
+if _info.signer == "running" then 
+	table.insert(_args, 1, "--remote-signer")
+	table.insert(_args, 1, "http://" .. am.app.get_model("SIGNER_ADDR") .. am.app.get_model("SIGNER_PORT")) 
+end
+local _proc = proc.spawn("bin/client", _args, {
 	stdio = { stderr = "pipe" },
 	wait = true,
 	env = { HOME = _homedir }
