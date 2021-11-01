@@ -47,7 +47,7 @@ local _homedir = path.combine(os.cwd(), "data")
 local _args = { "list", "connected", "ledgers" }
 if _info.signer == "running" then 
 	table.insert(_args, 1, "--remote-signer")
-	table.insert(_args, 1, "http://" .. am.app.get_model("SIGNER_ADDR") .. am.app.get_model("SIGNER_PORT")) 
+	table.insert(_args, 2, "http://" .. am.app.get_model("SIGNER_ADDR") .. am.app.get_model("SIGNER_PORT")) 
 end
 local _proc = proc.spawn("bin/client", _args, {
 	stdio = { stderr = "pipe" },
