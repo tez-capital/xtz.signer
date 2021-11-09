@@ -33,7 +33,6 @@ return {
 
                 if _noOptions or _options.configure then
 					am.execute_extension('__xtz/create_user.lua', {contextFailExitCode = EXIT_APP_CONFIGURE_ERROR})
-                    am.execute_extension('__xtz/inject_bn.lua', {contextFailExitCode = EXIT_APP_CONFIGURE_ERROR})
                     am.app.render()
                     am.execute_extension('__xtz/configure.lua', {contextFailExitCode = EXIT_APP_CONFIGURE_ERROR})
                 end
