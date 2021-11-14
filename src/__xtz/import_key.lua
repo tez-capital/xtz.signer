@@ -32,6 +32,8 @@ if type(_derivationPath) ~= "string" then
 	_derivationPath = "ed25519/0h/0h"
 end
 
+ami_assert(type(_ledgerId) == "string", "Failed to get connected ledger id!")
+
 local _proc = proc.spawn("bin/signer", { "import", "secret", "key", "baker", "ledger://" .. _ledgerId .. "/" .. _derivationPath, _options.force and "--force" or nil }, {
 	stdio = "inherit",
 	wait = true,
