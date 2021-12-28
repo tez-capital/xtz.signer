@@ -28,9 +28,11 @@ ami_assert(os.execute("udevadm control --reload-rules"), "Failed to run 'udevadm
 local _ok, _systemctl = am.plugin.safe_get("systemctl")
 ami_assert(_ok, "Failed to load systemctl plugin")
 
-local _signerServiceId = am.app.get("id") .. "-xtz-signer"
-local _ok, _error = _systemctl.safe_install_service(am.app.get_model("SERVICE_FILE", "__xtz/assets/signer.service"), _signerServiceId)
-ami_assert(_ok, "Failed to install " .. _signerServiceId .. ".service " .. (_error or ""))
+local _services = require"__xtz.services"
+for serviceId, serviceFile in pairs(_services) do
+	local _ok, _error = _systemctl.safe_install_service(serviceFile, serviceId)
+	ami_assert(_ok, "Failed to install " .. serviceId .. ".service " .. (_error or ""))	
+end
 
 local _tunnels = am.app.get_configuration("TUNNELS", {})
 if type(_tunnels) == "table" and not table.is_array(_tunnels) then

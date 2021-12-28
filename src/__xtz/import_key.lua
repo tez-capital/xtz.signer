@@ -7,9 +7,12 @@ local _homedir = path.combine(os.cwd(), "data")
 
 local _ok, _systemctl = am.plugin.safe_get("systemctl")
 ami_assert(_ok, "Failed to load systemctl plugin", EXIT_PLUGIN_LOAD_ERROR)
-local _ok, _status, _started = _systemctl.safe_get_service_status(am.app.get("id") .. "-xtz-signer")
 
-ami_assert(_ok and _status ~= "running", "Signer is already running. Please stop it to import keys...", EXIT_APP_INTERNAL_ERROR)
+local _services = require"__xtz.services"
+for serviceId, _ in pairs(_services) do 
+	local _ok, _status, _started = _systemctl.safe_get_service_status(serviceId)
+	ami_assert(_ok and _status ~= "running", serviceId .. " is already running. Please stop it to import keys...", EXIT_APP_INTERNAL_ERROR)
+end
 
 local _ledgerId = _options["ledger-id"]
 if type(_ledgerId) ~= "string" then 

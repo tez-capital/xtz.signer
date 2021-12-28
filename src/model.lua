@@ -56,6 +56,8 @@ am.app.set_model(
     {
 		SIGNER_ADDR = am.app.get_configuration("SIGNER_ADDR", "127.0.0.1"),
 		SIGNER_PORT = am.app.get_configuration("SIGNER_PORT", "2222"),
+		SIGNER_HTTP_ADDR = am.app.get_configuration("SIGNER_HTTP_ADDR", "127.0.0.1"),
+		SIGNER_HTTP_PORT = am.app.get_configuration("SIGNER_HTTP_PORT", "2223"),
 		BAKER_SSH_PORT = am.app.get_configuration("BAKER_SSH_PORT", "22")
     },
     { merge = true, overwrite = true }

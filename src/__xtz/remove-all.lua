@@ -3,9 +3,7 @@ ami_assert(_ok, "Failed to load systemctl plugin")
 
 local _isBaker = am.app.get_configuration("NODE_TYPE") == "baker"
 
-local _toRemove = {
-	am.app.get("id") .. "-xtz-signer"
-}
+local _toRemove = table.keys(require"__xtz.services.lua")
 
 local _tunnels = am.app.get_configuration("TUNNELS", {})
 if type(_tunnels) == "table" and not table.is_array(_tunnels) then

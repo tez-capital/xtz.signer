@@ -16,9 +16,7 @@ local _info = {
     type = am.app.get_type()
 }
 
-local _services = {
-	signer = am.app.get("id") .. "-xtz-signer"
-}
+local _services = require"__xtz.services"
 
 local _tunnels = am.app.get_configuration("TUNNELS", {})
 if type(_tunnels) == "table" and not table.is_array(_tunnels) then
@@ -29,12 +27,12 @@ if type(_tunnels) == "table" and not table.is_array(_tunnels) then
 end
 
 
-for k, v in pairs(_services) do 
-	if type(v) ~= "string" then goto CONTINUE end
-	local _ok, _status, _started = _systemctl.safe_get_service_status(v)
-	ami_assert(_ok, "Failed to get status of " .. v .. ".service " .. (_status or ""), EXIT_PLUGIN_EXEC_ERROR)
-	_info[k] = _status
-	_info[k .. "_started"] = _started
+for serviceId, _ in pairs(_services) do 
+	if type(serviceId) ~= "string" then goto CONTINUE end
+	local _ok, _status, _started = _systemctl.safe_get_service_status(serviceId)
+	ami_assert(_ok, "Failed to get status of " .. serviceId .. ".service " .. (_status or ""), EXIT_PLUGIN_EXEC_ERROR)
+	_info[serviceId] = _status
+	_info[serviceId .. "_started"] = _started
 	if _status ~= "running" then 
 		_info.status = "One or more signer services is not running!"
 		_info.level = "error"
