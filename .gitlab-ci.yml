@@ -86,7 +86,7 @@ release:
 
 publish:
   stage: publish
-  image: curlimages/curl:latest
+  image: alpine:latest
   dependencies:
     - prep
     - build
@@ -95,6 +95,7 @@ publish:
     - !reference [.default_rules, rules]
   script:
     - apk add jq
+    - apk add curl
     - SHA256=$(sha256sum "./packages/${PACKAGE_NAME}" | awk '{print $1}');
     - echo "uploading $ID [package - $PACKAGE_NAME] from ${CI_PROJECT_PATH} (sha256 - $SHA256, version - $RELEASE_VERSION, package source - ${PACKAGE_REGISTRY_URL})"
     - PACKAGE_URL=$(curl "https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/releases/$RELEASE_VERSION/assets/links" | jq -r ".[0].url")
