@@ -94,7 +94,9 @@ publish:
   rules:
     - !reference [.default_rules, rules]
   script:
+    - apk add jq
     - SHA256=$(sha256sum "./packages/${PACKAGE_NAME}" | awk '{print $1}');
     - echo "uploading $ID [package - $PACKAGE_NAME] from ${CI_PROJECT_PATH} (sha256 - $SHA256, version - $RELEASE_VERSION, package source - ${PACKAGE_REGISTRY_URL})"
+    - PACKAGE_URL=$(curl "https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/releases/$RELEASE_VERSION/assets/links" | jq -r ".[0].url")
     - >
-      curl -i -u "BakeBuddyBot:$GHAT" -X POST -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/BakeBuddyBot/air/dispatches -d "{\"event_type\":\"app-release\", \"client_payload\": { \"id\": \"$ID\", \"repository\": \"${CI_PROJECT_PATH}\", \"version\": \"$RELEASE_VERSION\", \"package\": \"${PACKAGE_REGISTRY_URL}/$RELEASE_VERSION/$PACKAGE_NAME\", \"sha256\": \"$SHA256\"}"
+      curl -i -u "BakeBuddyBot:$GHAT" -X POST -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/BakeBuddyBot/air/dispatches -d "{\"event_type\":\"app-release\", \"client_payload\": { \"id\": \"$ID\", \"repository\": \"${CI_PROJECT_PATH}\", \"version\": \"$RELEASE_VERSION\", \"package\": \"$PACKAGE_URL\", \"sha256\": \"$SHA256\"}"
