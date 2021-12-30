@@ -6,7 +6,7 @@ stages:          # List of stages for jobs, and their order of execution
   - publish
 
 variables:
-  PACKAGE_REGISTRY_URL: "${CI_API_V4_URL}/projects/groktech/${CI_PROJECT_ID}/packages/generic/${CI_PROJECT_TITLE}"
+  PACKAGE_REGISTRY_URL: "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/${CI_PROJECT_TITLE}"
 
 .default_rules:
   rules:
@@ -61,7 +61,7 @@ upload:
     - echo "package $PACKAGE_NAME"
     - echo "uploading to ${PACKAGE_REGISTRY_URL}/$VERSION/$PACKAGE_NAME"
     - >
-      curl -H 'Content-Type: application/octet-stream' -H "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file ./packages/$PACKAGE_NAME "${PACKAGE_REGISTRY_URL}/$VERSION/$PACKAGE_NAME"
+      curl -H "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file ./packages/$PACKAGE_NAME "${PACKAGE_REGISTRY_URL}/$VERSION/$PACKAGE_NAME"
     - echo "Package successfully uploaded."
 
 release:
