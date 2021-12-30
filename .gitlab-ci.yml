@@ -61,7 +61,7 @@ upload:
     - echo "package $PACKAGE_NAME"
     - echo "uploading to ${PACKAGE_REGISTRY_URL}/$VERSION/$PACKAGE_NAME"
     - >
-      curl --header "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file ./packages/$PACKAGE_NAME "${PACKAGE_REGISTRY_URL}/$VERSION/$PACKAGE_NAME"
+      curl -H 'Content-Type: application/octet-stream' -H "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file ./packages/$PACKAGE_NAME "${PACKAGE_REGISTRY_URL}/$VERSION/$PACKAGE_NAME"
     - echo "Package successfully uploaded."
 
 release:
