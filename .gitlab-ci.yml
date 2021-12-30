@@ -57,11 +57,11 @@ upload:
   rules:
     - !reference [.default_rules, rules]
   script:
+    - echo "version $VERSION"
+    - echo "package $PACKAGE_NAME"
+    - echo "uploading to ${PACKAGE_REGISTRY_URL}/$VERSION/$PACKAGE_NAME"
     - >
-      echo "version: $VERSION"
-      echo "package: $PACKAGE_NAME"
-      echo "uploading to: ${PACKAGE_REGISTRY_URL}/$VERSION/$PACKAGE_NAME"
-      curl --header "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file packages/$PACKAGE_NAME "${PACKAGE_REGISTRY_URL}/$VERSION/$PACKAGE_NAME"
+      curl --header "JOB-TOKEN: ${CI_JOB_TOKEN}" --upload-file ./packages/$PACKAGE_NAME "${PACKAGE_REGISTRY_URL}/$VERSION/$PACKAGE_NAME"
     - echo "Package successfully uploaded."
 
 release:
