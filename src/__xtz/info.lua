@@ -29,6 +29,7 @@ end
 
 for serviceId, _ in pairs(_services) do 
 	if type(serviceId) ~= "string" then goto CONTINUE end
+	local _serviceAlias = serviceId:sub(#_appId + 2) -- strip appId
 	local _ok, _status, _started = _systemctl.safe_get_service_status(serviceId)
 	ami_assert(_ok, "Failed to get status of " .. serviceId .. ".service " .. (_status or ""), EXIT_PLUGIN_EXEC_ERROR)
 	_info[serviceId] = _status
