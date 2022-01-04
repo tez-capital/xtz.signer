@@ -4,10 +4,6 @@ local _appId = am.app.get("id", "unknown")
 local _ok, _systemctl = am.plugin.safe_get("systemctl")
 ami_assert(_ok, "Failed to load systemctl plugin", EXIT_PLUGIN_LOAD_ERROR)
 
-local _serviceName = am.app.get_model("SERVICE_NAME", "unknown")
-local _ok, _status, _started = _systemctl.safe_get_service_status(_appId .. "-" .. _serviceName)
-ami_assert(_ok, "Failed to get status of " .. _appId .. "-" .. _serviceName .. ".service " .. (_status or ""), EXIT_PLUGIN_EXEC_ERROR)
-
 local _info = {
     level = "ok",
     status = "Signer is operational",
@@ -25,7 +21,6 @@ if type(_tunnels) == "table" and not table.is_array(_tunnels) then
 		table.insert(_services, _tunnelServiceId)
 	end
 end
-
 
 for serviceId, _ in pairs(_services) do 
 	if type(serviceId) ~= "string" then goto CONTINUE end
