@@ -11,23 +11,7 @@ end
 
 local _downlaodUrls = nil
 
--- SOURCE: https://gitlab.com/tezos/tezos/-/releases
-local _downloadLinks = {
-    ["linux-x86_x64"] = {
-        --node = "https://gitlab.com/api/v4/projects/3836952/packages/generic/tezos/10.2.0/x86_64-tezos-node",
-        client = "https://gitlab.com/api/v4/projects/3836952/packages/generic/tezos/11.0.0/x86_64-tezos-client",
-        signer = "https://gitlab.com/api/v4/projects/3836952/packages/generic/tezos/11.0.0/x86_64-tezos-signer",
-
-    },
-
-    ["linux-arm64"] = {
-        --node = "https://gitlab.com/api/v4/projects/3836952/packages/generic/tezos/10.2.0/arm64-tezos-node",
-        client = "https://gitlab.com/api/v4/projects/3836952/packages/generic/tezos/11.0.0/arm64-tezos-client",
-        signer = "https://gitlab.com/api/v4/projects/3836952/packages/generic/tezos/11.0.0/arm64-tezos-signer"
-
-    },
-
-}
+local _downloadLinks = hjson.parse(fs.read_file("__xtz/sources.hjson"))
 
 if _platform.OS == "unix" then
 	_downlaodUrls = _downloadLinks["linux-x86_x64"]
