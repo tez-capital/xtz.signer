@@ -8,7 +8,7 @@ local _nodeAddr = am.app.get_model("REMOTE_NODE")
 if type(_nodeAddr) == "string" then
 	local _signerTunnelId = am.app.get("id") .. "-xtz-signer-tunnel"
 	_services[_signerTunnelId] = "__xtz/assets/signer-tunnel.service"
-	local _nodeTunnelId = am.app.get("id") .. "-xtz-signer-tunnel"
+	local _nodeTunnelId = am.app.get("id") .. "-xtz-node-tunnel"
 	_services[_nodeTunnelId] = "__xtz/assets/node-tunnel.service"
 end
 
