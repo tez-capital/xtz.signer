@@ -4,7 +4,7 @@ local _services = {
 	[_appId .. "-xtz-signer"] = am.app.get_model("SIGNER_SERVICE_FILE", "__xtz/assets/signer.service")
 }
 
-local _nodeAddr = am.app.get_model("NODE_ADDR")
+local _nodeAddr = am.app.get_model("REMOTE_NODE")
 if type(_nodeAddr) == "string" then
 	local _signerTunnelId = am.app.get("id") .. "-xtz-signer-tunnel"
 	_services[_signerTunnelId] = "__xtz/assets/signer-tunnel.service"

@@ -2,7 +2,7 @@
 id: signer,
 configuration: {
 	...
-	TUNNEL_NODE: <addr>
+	REMOTE_NODE: <addr>
 	
 	...
 }

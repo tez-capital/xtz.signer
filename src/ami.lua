@@ -36,7 +36,7 @@ return {
                     am.app.render()
                     am.execute_extension('__xtz/configure.lua', {contextFailExitCode = EXIT_APP_CONFIGURE_ERROR})
                 end
-                log_success('XTZ node setup complete.')
+                log_success('XTZ signer setup complete.')
             end
         },
         start = {

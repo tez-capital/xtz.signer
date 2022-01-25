@@ -36,12 +36,13 @@ am.app.set_model({
 
 am.app.set_model(
     {
-        SIGNER_ENDPOINT = am.app.get_configuration("SIGNER_ADDR", "127.0.0.1:2222"),
-        NODE_SSH_PORT = am.app.get_configuration("NODE_SSH_PORT", "22"),
-        NODE_ADDR = am.app.get_configuration("TUNNEL_NODE"),
-        NODE_RPC_ENDPOINT = am.app.get_configuration("NODE_RPC_ENDPOINT", "127.0.0.1:8732"),
-        LOCAL_NODE_RPC_PORT = am.app.get_configuration("LOCAL_NODE_RPC_PORT", "8732"),
-        SSH_KEY = am.app.get_configuration("SSH_KEY")
+        REMOTE_SIGNER_PORT = am.app.get_configuration("REMOTE_SIGNER_PORT", "2222"),
+        SIGNER_ENDPOINT = am.app.get_configuration("SIGNER_ENDPOINT", "127.0.0.1:2222"),
+        REMOTE_SSH_PORT = am.app.get_configuration("REMOTE_SSH_PORT", "22"),
+        REMOTE_NODE = am.app.get_configuration("REMOTE_NODE"),
+        REMOTE_RPC_ENDPOINT = am.app.get_configuration("REMOTE_RPC_ENDPOINT", "127.0.0.1:8732"),
+        LOCAL_RPC_PORT = am.app.get_configuration("LOCAL_RPC_PORT", "8732"),
+        REMOTE_SSH_KEY = am.app.get_configuration("REMOTE_SSH_KEY")
     },
     { merge = true, overwrite = true }
 )
