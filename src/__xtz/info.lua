@@ -13,15 +13,6 @@ local _info = {
 }
 
 local _services = require"__xtz.services"
-
-local _tunnels = am.app.get_configuration("TUNNELS", {})
-if type(_tunnels) == "table" and not table.is_array(_tunnels) then
-	for tunnelId, _ in pairs(_tunnels) do
-		local _tunnelServiceId = am.app.get("id") .. "-xtz-tunnel-" .. tunnelId
-		table.insert(_services, _tunnelServiceId)
-	end
-end
-
 for serviceId, _ in pairs(_services) do
 	if type(serviceId) ~= "string" then goto CONTINUE end
 	local _serviceAlias = serviceId:sub(#_appId + 2) -- strip appId

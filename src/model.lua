@@ -34,15 +34,14 @@ am.app.set_model({
 	{merge = true, overwrite = true}
 )
 
-local _dataDir = path.combine(os.cwd(), "data")
-
 am.app.set_model(
     {
-		SIGNER_ADDR = am.app.get_configuration("SIGNER_ADDR", "127.0.0.1"),
-		SIGNER_PORT = am.app.get_configuration("SIGNER_PORT", "2222"),
-		-- SIGNER_HTTP_ADDR = am.app.get_configuration("SIGNER_HTTP_ADDR", "127.0.0.1"),
-		-- SIGNER_HTTP_PORT = am.app.get_configuration("SIGNER_HTTP_PORT", "2223"),
-		BAKER_SSH_PORT = am.app.get_configuration("BAKER_SSH_PORT", "22")
+        SIGNER_ENDPOINT = am.app.get_configuration("SIGNER_ADDR", "127.0.0.1:2222"),
+        NODE_SSH_PORT = am.app.get_configuration("NODE_SSH_PORT", "22"),
+        NODE_ADDR = am.app.get_configuration("TUNNEL_NODE"),
+        NODE_RPC_ENDPOINT = am.app.get_configuration("NODE_RPC_ENDPOINT", "127.0.0.1:8732"),
+        LOCAL_NODE_RPC_PORT = am.app.get_configuration("LOCAL_NODE_RPC_PORT", "8732"),
+        SSH_KEY = am.app.get_configuration("SSH_KEY")
     },
     { merge = true, overwrite = true }
 )

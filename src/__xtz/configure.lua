@@ -34,18 +34,6 @@ for serviceId, serviceFile in pairs(_services) do
 	ami_assert(_ok, "Failed to install " .. serviceId .. ".service " .. (_error or ""))	
 end
 
-local _tunnels = am.app.get_configuration("TUNNELS", {})
-if type(_tunnels) == "table" and not table.is_array(_tunnels) then
-	for tunnelId, addr in pairs(_tunnels) do
-		local _tunnelServiceId = am.app.get("id") .. "-xtz-tunnel-" .. tunnelId
-		local _template = fs.read_file("__xtz/assets/tunnel.service")
-		local _subService = _template:gsub("<<<BAKER_NODE_ADDR>>>", addr, 1)
-		fs.write_file("__xtz/assets/" .. tunnelId .. ".service", _subService)
-		_ok, _error = _systemctl.safe_install_service(am.app.get_model("SERVICE_FILE", "__xtz/assets/" .. tunnelId .. ".service"), _tunnelServiceId)
-		ami_assert(_ok, "Failed to install " .. _tunnelServiceId .. ".service " .. (_error or ""))
-	end
-end
-
 log_info("Granting access to " .. _user .. "(" .. tostring(_uid) .. ")...")
 local _ok, _error = fs.chown(os.cwd(), _uid, _uid, {recurse = true})
 ami_assert(_ok, "Failed to chown data - " .. (_error or ""))
