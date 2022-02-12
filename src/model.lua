@@ -34,10 +34,16 @@ am.app.set_model({
 	{merge = true, overwrite = true}
 )
 
+local _endpoint = am.app.get_configuration("SIGNER_ENDPOINT", "127.0.0.1:2222")
+local _signerAddr = _endpoint:match('([%d%.:]*):') or "127.0.0.1"
+local _signerPort = _endpoint:match('[%d%.:]*:(%d*)') or "2222"
+
 am.app.set_model(
     {
         REMOTE_SIGNER_PORT = am.app.get_configuration("REMOTE_SIGNER_PORT", "2222"),
-        SIGNER_ENDPOINT = am.app.get_configuration("SIGNER_ENDPOINT", "127.0.0.1:2222"),
+        SIGNER_ADDR = _signerAddr,
+        SIGNER_PORT = _signerPort,
+        SIGNER_ENDPOINT = _endpoint,
         REMOTE_SSH_PORT = am.app.get_configuration("REMOTE_SSH_PORT", "22"),
         REMOTE_NODE = am.app.get_configuration("REMOTE_NODE"),
         REMOTE_RPC_ENDPOINT = am.app.get_configuration("REMOTE_RPC_ENDPOINT", "127.0.0.1:8732"),
