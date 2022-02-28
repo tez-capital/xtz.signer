@@ -4,8 +4,8 @@ linux-x86_x64: {
     signer: https://gitlab.com/api/v4/projects/3836952/packages/generic/tezos/11.0.0/x86_64-tezos-signer
 }
 linux-x86_x64-no-adx: {
-    client: https://gitlab.com/tezos/tezos/-/jobs/1805009867/artifacts/file/tezos-binaries/tezos-client
-    signer: https://gitlab.com/tezos/tezos/-/jobs/1805009867/artifacts/file/tezos-binaries/tezos-signer
+    client: https://gitlab.com/tezos/tezos/-/jobs/1805009867/artifacts/raw/tezos-binaries/tezos-client
+    signer: https://gitlab.com/tezos/tezos/-/jobs/1805009867/artifacts/raw/tezos-binaries/tezos-signer
 }
 linux-arm64: {
     client: https://gitlab.com/api/v4/projects/3836952/packages/generic/tezos/11.0.0/arm64-tezos-client
