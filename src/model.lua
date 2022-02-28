@@ -17,6 +17,11 @@ if _platform.OS == "unix" then
 	_downlaodUrls = _downloadLinks["linux-x86_x64"]
     if _platform.SYSTEM_TYPE:match("[Aa]arch64") then
         _downlaodUrls = _downloadLinks["linux-arm64"]
+    else
+        local _ok, _cpuinfo = fs.safe_read_file("/proc/cpuinfo")
+        if _ok and not _cpuinfo:match(" adx ") then
+            _downlaodUrls = _downloadLinks["linux-x86_x64-no-adx"]
+        end
     end
 end
 
