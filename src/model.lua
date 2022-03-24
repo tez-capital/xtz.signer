@@ -31,13 +31,14 @@ if _downlaodUrls == nil then
 end
 
 am.app.set_model({
-		DOWNLOAD_URLS = _downlaodUrls, 
-		WANTED_BINARIES = {
-			"client", "signer"
-		}
-	}, 
+		DOWNLOAD_URLS = _downlaodUrls
+	},
 	{merge = true, overwrite = true}
 )
+
+local _services = require("__xtz.services")
+local _wantedBinaries = table.keys(_services.signerServiceNames)
+table.insert(_wantedBinaries, "client")
 
 local _endpoint = am.app.get_configuration("SIGNER_ENDPOINT", "127.0.0.1:2222")
 local _signerAddr = _endpoint:match('([%d%.:]*):') or "127.0.0.1"
@@ -45,6 +46,7 @@ local _signerPort = _endpoint:match('[%d%.:]*:(%d*)') or "2222"
 
 am.app.set_model(
     {
+        WANTED_BINARIES = _wantedBinaries,
         REMOTE_SIGNER_PORT = am.app.get_configuration("REMOTE_SIGNER_PORT", "2222"),
         SIGNER_ADDR = _signerAddr,
         SIGNER_PORT = _signerPort,

@@ -7,7 +7,8 @@ local _homedir = path.combine(os.cwd(), "data")
 
 local _ok, _systemctl = am.plugin.safe_get("systemctl")
 ami_assert(_ok, "Failed to load systemctl plugin", EXIT_PLUGIN_LOAD_ERROR)
-local _ok, _status, _started = _systemctl.safe_get_service_status(am.app.get("id") .. "-signer")
+local _services = require("__xtz.services")
+local _ok, _status, _started = _systemctl.safe_get_service_status(_services.signerServiceId)
 
 local _args = { "setup", "ledger", "to", "bake", "for", "baker" }
 if _ok and _status == "running" then
@@ -32,6 +33,6 @@ local _proc = proc.spawn("bin/client", _args, {
 })
 
 local _stderr = _proc.stderrStream:read("a")
-ami_assert(_proc.exitcode == 0 or _stderr:match("Error:"), "Failed to setup ledger for baking: " .. _stderr)
+ami_assert(_proc.exitcode == 0 or not _stderr:match("Error:"), "Failed to setup ledger for baking: " .. (_stderr or ""))
 
 log_success("Ledger setup successful.")

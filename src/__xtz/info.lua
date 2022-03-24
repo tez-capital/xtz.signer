@@ -13,13 +13,11 @@ local _info = {
 }
 
 local _services = require"__xtz.services"
-for serviceId, _ in pairs(_services) do
-	if type(serviceId) ~= "string" then goto CONTINUE end
-	local _serviceAlias = serviceId:sub(#_appId + 2) -- strip appId
+for serviceAlias, serviceId in pairs(_services.signerServiceNames) do
 	local _ok, _status, _started = _systemctl.safe_get_service_status(serviceId)
 	ami_assert(_ok, "Failed to get status of " .. serviceId .. ".service " .. (_status or ""), EXIT_PLUGIN_EXEC_ERROR)
-	_info[_serviceAlias] = _status
-	_info[_serviceAlias .. "_started"] = _started
+	_info[serviceAlias] = _status
+	_info[serviceAlias .. "_started"] = _started
 	if _status ~= "running" then
 		_info.status = "One or more signer services is not running!"
 		_info.level = "error"

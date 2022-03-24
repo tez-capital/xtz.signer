@@ -29,7 +29,7 @@ local _ok, _systemctl = am.plugin.safe_get("systemctl")
 ami_assert(_ok, "Failed to load systemctl plugin")
 
 local _services = require"__xtz.services"
-for serviceId, serviceFile in pairs(_services) do
+for serviceId, serviceFile in pairs(_services.signer) do
 	local _ok, _error = _systemctl.safe_install_service(serviceFile, serviceId)
 	ami_assert(_ok, "Failed to install " .. serviceId .. ".service " .. (_error or ""))	
 end
