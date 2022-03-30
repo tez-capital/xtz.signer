@@ -26,7 +26,7 @@ if _downlaodUrls == nil then
 end
 
 am.app.set_model({
-		DOWNLOAD_URLS = _downlaodUrls
+		DOWNLOAD_URLS = am.app.get_configuration("SOURCES", _downlaodUrls)
 	},
 	{merge = true, overwrite = true}
 )
