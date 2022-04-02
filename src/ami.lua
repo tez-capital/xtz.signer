@@ -163,6 +163,36 @@ return {
                 end
             end
         },
+        log = {
+            description = "ami 'log' sub command",
+            summary = 'Prints logs from services.',
+            options = {
+                ["follow"] = {
+                    aliases = {"f"},
+                    description = "Keeps printing the log continuously.",
+                    type = "boolean"
+                }
+            },
+            type = "no-command",
+            action = '__xtz/log.lua',
+            contextFailExitCode = EXIT_APP_INTERNAL_ERROR
+        },
+        ['deposits-limit'] = {
+            description = "ami 'deposit-limit' sub command",
+            summary = 'Sets or unsets deposit limit.',
+            options = {
+                ["unset"] = {
+                    description = "Unsets deposit limit.",
+                    type = "boolean"
+                },
+                ["set"] = {
+                    description = "Set deposit limit to specific amount of tez",
+                    type = "number"
+                }
+            },
+            action = '__xtz/deposits_limit.lua',
+            contextFailExitCode = EXIT_APP_INTERNAL_ERROR
+        },
         about = {
             description = "ami 'about' sub command",
             summary = 'Prints information about application',

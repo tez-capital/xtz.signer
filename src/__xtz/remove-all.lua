@@ -3,14 +3,6 @@ ami_assert(_ok, "Failed to load systemctl plugin")
 
 local _services = require"__xtz.services"
 
-for _, service in pairs(_services.signerServiceNames) do
-	-- skip false values
-	if type(service) ~= "string" then goto CONTINUE end
-	local _ok, _error = _systemctl.safe_remove_service(service)
-	if not _ok then
-		ami_error("Failed to remove " .. service .. ".service " .. (_error or ""))
-	end
-	::CONTINUE::
-end
+_services.remove_all_services()
 
 log_success("Node services succesfully removed.")
