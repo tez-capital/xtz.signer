@@ -6,7 +6,7 @@ StartLimitIntervalSec=0
 [Service]
 User={{{USER}}}
 Group={{{USER}}}
-RestartSec=1
+RestartSec=20
 
 # TODO: use specific key file
 ExecStart=/usr/bin/ssh -NT -p {{{model.REMOTE_SSH_PORT}}} \

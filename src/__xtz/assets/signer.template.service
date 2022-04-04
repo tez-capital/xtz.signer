@@ -6,7 +6,7 @@ StartLimitIntervalSec=0
 [Service]
 User={{{USER}}}
 Group={{{USER}}}
-RestartSec=1
+RestartSec=20
 
 Type=simple
 Restart=always
