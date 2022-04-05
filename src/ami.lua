@@ -171,6 +171,11 @@ return {
                     aliases = {"f"},
                     description = "Keeps printing the log continuously.",
                     type = "boolean"
+                },
+                ["end"] = {
+                    aliases = {"e"},
+                    description = "Jumps to the end of the log.",
+                    type = "boolean"
                 }
             },
             type = "no-command",

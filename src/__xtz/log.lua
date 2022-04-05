@@ -15,6 +15,7 @@ end
 
 local _journalctlArgs = { "journalctl" }
 if _options.follow then table.insert(_journalctlArgs, "-f") end
+if _options['end'] then table.insert(_journalctlArgs, "-e") end
 for _, v in ipairs(_toCheck) do
     table.insert(_journalctlArgs, "-u")
     table.insert(_journalctlArgs, v)
