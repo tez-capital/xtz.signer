@@ -13,11 +13,11 @@ local _info = {
 }
 
 local _services = require"__xtz.services"
-for serviceAlias, serviceId in pairs(_services.allServices) do
-	local _ok, _status, _started = _systemctl.safe_get_service_status(serviceId)
-	ami_assert(_ok, "Failed to get status of " .. serviceId .. ".service " .. (_status or ""), EXIT_PLUGIN_EXEC_ERROR)
-	_info[serviceAlias] = _status
-	_info[serviceAlias .. "_started"] = _started
+for k, v in pairs(_services.allNames) do
+	local _ok, _status, _started = _systemctl.safe_get_service_status(v)
+	ami_assert(_ok, "Failed to get status of " .. v .. ".service " .. (_status or ""), EXIT_PLUGIN_EXEC_ERROR)
+	_info[k] = _status
+	_info[k .. "_started"] = _started
 	if _status ~= "running" then
 		_info.status = "One or more signer services is not running!"
 		_info.level = "error"
