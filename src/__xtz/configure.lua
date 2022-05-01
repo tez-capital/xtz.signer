@@ -36,6 +36,11 @@ for serviceId, serviceFile in pairs(_services.signer) do
 	ami_assert(_ok, "Failed to install " .. serviceId .. ".service " .. (_error or ""))	
 end
 
+for serviceId, serviceFile in pairs(_services.tunnelServices) do
+	local _ok, _error = _systemctl.safe_install_service(serviceFile, serviceId)
+	ami_assert(_ok, "Failed to install " .. serviceId .. ".service " .. (_error or ""))	
+end
+
 log_info("Granting access to " .. _user .. "(" .. tostring(_uid) .. ")...")
 local _ok, _error = fs.chown(os.cwd(), _uid, _uid, {recurse = true})
 ami_assert(_ok, "Failed to chown data - " .. (_error or ""))
