@@ -13,7 +13,7 @@ local _info = {
 }
 
 local _services = require"__xtz.services"
-for serviceAlias, serviceId in pairs(_services.signerServiceNames) do
+for serviceAlias, serviceId in pairs(_services.allServices) do
 	local _ok, _status, _started = _systemctl.safe_get_service_status(serviceId)
 	ami_assert(_ok, "Failed to get status of " .. serviceId .. ".service " .. (_status or ""), EXIT_PLUGIN_EXEC_ERROR)
 	_info[serviceAlias] = _status
