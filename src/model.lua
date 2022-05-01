@@ -26,7 +26,12 @@ if _downlaodUrls == nil then
 end
 
 am.app.set_model({
-		DOWNLOAD_URLS = am.app.get_configuration("SOURCES", _downlaodUrls)
+		DOWNLOAD_URLS = am.app.get_configuration("SOURCES", _downlaodUrls),
+        REMOTE_SIGNER_PORT = am.app.get_configuration("REMOTE_SIGNER_PORT", "2222"),
+        REMOTE_SSH_PORT = am.app.get_configuration("REMOTE_SSH_PORT", "22"),
+        REMOTE_SSH_KEY = am.app.get_configuration("REMOTE_SSH_KEY"),
+        REMOTE_NODE = am.app.get_configuration("REMOTE_NODE"),
+        REMOTE_RPC_ENDPOINT = am.app.get_configuration("REMOTE_RPC_ENDPOINT", "127.0.0.1:8732")
 	},
 	{merge = true, overwrite = true}
 )
@@ -42,15 +47,10 @@ local _signerPort = _endpoint:match('[%d%.:]*:(%d*)') or "2222"
 am.app.set_model(
     {
         WANTED_BINARIES = _wantedBinaries,
-        REMOTE_SIGNER_PORT = am.app.get_configuration("REMOTE_SIGNER_PORT", "2222"),
         SIGNER_ADDR = _signerAddr,
         SIGNER_PORT = _signerPort,
         SIGNER_ENDPOINT = _endpoint,
-        REMOTE_SSH_PORT = am.app.get_configuration("REMOTE_SSH_PORT", "22"),
-        REMOTE_NODE = am.app.get_configuration("REMOTE_NODE"),
-        REMOTE_RPC_ENDPOINT = am.app.get_configuration("REMOTE_RPC_ENDPOINT", "127.0.0.1:8732"),
-        LOCAL_RPC_PORT = am.app.get_configuration("LOCAL_RPC_PORT", "8732"),
-        REMOTE_SSH_KEY = am.app.get_configuration("REMOTE_SSH_KEY")
+        LOCAL_RPC_PORT = am.app.get_configuration("LOCAL_RPC_PORT", "8732")
     },
     { merge = true, overwrite = true }
 )
