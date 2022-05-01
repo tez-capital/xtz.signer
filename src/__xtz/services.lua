@@ -13,7 +13,7 @@ for k, _ in pairs(_signerServices) do
 	_signerServiceNames[k:sub((#(_appId .. "-xtz-") + 1))] = k
 end
 
-local _allNames = util.clone(_signerServices)
+local _allNames = util.clone(_signerServiceNames)
 
 local _tunnelServices = {}
 local _tunnelServiceNames = {}
@@ -24,7 +24,7 @@ if type(_nodeAddr) == "string" then
 	local _nodeTunnelId = am.app.get("id") .. "-xtz-node-tunnel"
 	_tunnelServices[_nodeTunnelId] = "__xtz/assets/node-tunnel.service"
 
-	for k, _ in pairs(_signerServices) do
+	for k, _ in pairs(_tunnelServices) do
 		_tunnelServiceNames[k:sub((#(_appId .. "-xtz-") + 1))] = k
 		_allNames[k:sub((#(_appId .. "-xtz-") + 1))] = k
 	end
