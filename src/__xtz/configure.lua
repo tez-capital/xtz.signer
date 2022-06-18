@@ -8,7 +8,7 @@ ami_assert(_ok, "Failed to get " .. _user .. "uid - " .. (_uid or ""))
 
 -- Setup ledger
 local _tmpFile = os.tmpname()
-local _udevRulesUrl = "https://raw.githubusercontent.com/LedgerHQ/udev-rules/b4806fc8cb26e70b58ebe1e866ad0f6a3b75d48a/20-hw1.rules"
+local _udevRulesUrl = "https://raw.githubusercontent.com/LedgerHQ/udev-rules/b4806fc8cb26e70b58ebe1e866ad0f6a3b75d48a/add_udev_rules.sh"
 local _ok, _error = net.safe_download_file(_udevRulesUrl, _tmpFile, {followRedirects = true})
 if not _ok then
 	fs.remove(_tmpFile)
