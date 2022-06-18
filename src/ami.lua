@@ -5,6 +5,16 @@ return {
             description = "ami 'info' sub command",
             summary = 'Prints runtime info and status of the app',
             action = '__xtz/info.lua',
+            options = {
+                ["services"] = {
+                    description = "Prints info about services",
+                    type = "boolean"
+                },
+                ["ledger"] = {
+                    description = "Prints info about ledger",
+                    type = "boolean"
+                },
+            },
             contextFailExitCode = EXIT_APP_INFO_ERROR
         },
         setup = {
