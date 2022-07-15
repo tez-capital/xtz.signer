@@ -4,7 +4,7 @@ local _options = ...
 
 local _homedir = path.combine(os.cwd(), "data")
 ami_assert((_options.set and not _options.unset) or (not _options.set and _options.unset), "You can not set and unset at the same time!")
-ami_assert(_options.set or _options.set, "You have to specify whether to set or unset!")
+ami_assert(_options.set or _options.unset, "You have to specify whether to set or unset!")
 
 local _ok, _systemctl = am.plugin.safe_get("systemctl")
 ami_assert(_ok, "Failed to load systemctl plugin", EXIT_PLUGIN_LOAD_ERROR)
