@@ -16,7 +16,7 @@ prep:
   rules:
     - !reference [.default_rules, rules]
   script:
-      - apk add jq
+      - apk add jq git
       - VERSION=$(jq -r .version src/specs.json)
       - if git tag -l "$VERSION" | grep "$VERSION"; then echo "Version $VERSION already exists"; exit 1; fi
       - apk add zip curl git
