@@ -51,13 +51,13 @@ return {
         },
         start = {
             description = "ami 'start' sub command",
-            summary = 'Starts the XTZ node',
+            summary = 'Starts the XTZ signer',
             action = '__xtz/start.lua',
             contextFailExitCode = EXIT_APP_START_ERROR
         },
         stop = {
             description = "ami 'stop' sub command",
-            summary = 'Stops the XTZ node',
+            summary = 'Stops the XTZ signer',
             action = '__xtz/stop.lua',
             contextFailExitCode = EXIT_APP_STOP_ERROR
         },
@@ -70,8 +70,8 @@ return {
                     return
                 end
                 -- //TODO: Validate platform
-                ami_assert(proc.EPROC, 'xtz node AMI requires extra api - eli.proc.extra', EXIT_MISSING_API)
-                ami_assert(fs.EFS, 'xtz node AMI requires extra api - eli.fs.extra', EXIT_MISSING_API)
+                ami_assert(proc.EPROC, 'xtz signer AMI requires extra api - eli.proc.extra', EXIT_MISSING_API)
+                ami_assert(fs.EFS, 'xtz signer AMI requires extra api - eli.fs.extra', EXIT_MISSING_API)
 
                 ami_assert(type(am.app.get('id')) == 'string', 'id not specified!', EXIT_INVALID_CONFIGURATION)
                 ami_assert(
@@ -85,7 +85,7 @@ return {
                     'Invalid app type!',
                     EXIT_INVALID_CONFIGURATION
                 )
-                log_success('XTZ node configuration validated.')
+                log_success('XTZ signer configuration validated.')
             end
         },
         signer = {
