@@ -102,6 +102,10 @@ if _printAll or _printLedgerInfo then
 				_info.level = "error"
 			end
 		end
+		if ver.compare_version(_bakingAppVer, "2.3.2") < 0 and _info.status ~= "error" then
+			_info.status = "warning"
+			_info.status = "ledger baking app too old"
+		end
 	end
 end
 
