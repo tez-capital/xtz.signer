@@ -2,7 +2,7 @@ local _ok, _systemctl = am.plugin.safe_get("systemctl")
 ami_assert(_ok, "Failed to load systemctl plugin")
 
 local _services = require"__xtz.services"
-
+log_info("Stopping signer services... this may take few minutes.")
 for _, service in pairs(_services.allNames) do
 	-- skip false values
 	if type(service) ~= "string" then goto CONTINUE end
