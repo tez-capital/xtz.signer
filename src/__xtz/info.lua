@@ -3,7 +3,7 @@ local _json = am.options.OUTPUT_FORMAT == "json"
 local _options = ...
 local _printServiceInfo = _options.services
 local _printLedgerInfo = _options.ledger
-local _printAll = (not _printVotingInfo) and (not _printChainInfo) and (not _printServiceInfo) and (not _printSimple)
+local _printAll = (not _printLedgerInfo) and (not _printServiceInfo)
 
 local _ok, _systemctl = am.plugin.safe_get("systemctl")
 ami_assert(_ok, "Failed to load systemctl plugin", EXIT_PLUGIN_LOAD_ERROR)

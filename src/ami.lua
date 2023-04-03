@@ -166,8 +166,8 @@ return {
                 assert(_ok, "Failed to read 'public_key_hashes' file!")
                 local _ok, _pkh = hjson.safe_parse(_pkhFile)
                 assert(_ok, "Failed to parse 'public_key_hashes' file!")
-                for _, v in ipairs(_pkh) do 
-                    if v.name == "baker" then 
+                for _, v in ipairs(_pkh) do
+                    if v.name == "baker" then
                         print(v.value)
                     end
                 end
@@ -186,6 +186,14 @@ return {
                     aliases = {"e"},
                     description = "Jumps to the end of the log.",
                     type = "boolean"
+                },
+                ["since"] = {
+                    description = "Displays logs starting from the specified time or date. Format: 'YYYY-MM-DD HH:MM:SS'",
+                    type = "string"
+                },
+                ["until"] = {
+                    description = "Displays logs up until the specified time or date. Format: 'YYYY-MM-DD HH:MM:SS'",
+                    type = "string"
                 }
             },
             type = "no-command",
