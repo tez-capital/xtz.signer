@@ -5,6 +5,8 @@ local _printServiceInfo = _options.services
 local _printLedgerInfo = _options.ledger
 local _printAll = (not _printLedgerInfo) and (not _printServiceInfo)
 
+local ANALYTICS_URL = "https://analytics.tez.capital/bake"
+
 local _ok, _systemctl = am.plugin.safe_get("systemctl")
 ami_assert(_ok, "Failed to load systemctl plugin", EXIT_PLUGIN_LOAD_ERROR)
 
@@ -47,6 +49,14 @@ if _ok then
 		for _, _pubKeyRecord in ipairs(_pubKeys) do
 			if _pubKeyRecord["name"] == "baker" then
 				_info.baker_address = _pubKeyRecord["value"]
+
+				if _info.baker_address and os.getenv("DISABLE_TEZBAKE_ANALYTICS") ~= "true" and am.app.get_configuration("DISABLE_ANALYTICS", false) ~= true then
+					local _analyticsCmd = string.interpolate(
+						[[net.RestClient:new("${ANALYTICS_URL}", { timeout = 60 }):safe_post({ bakerId = "${bakerId}", version = "${version}" }); os.exit(0);]],
+						{ bakerId = _info.baker_address, version = am.app.get_version(), ANALYTICS_URL = ANALYTICS_URL }
+					)
+					proc.spawn("eli", { "-e", _analyticsCmd }, {wait = false, stdio = "ignore"})
+				end
 				break
 			end
 		end
