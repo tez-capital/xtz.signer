@@ -21,6 +21,12 @@ return {
             options = {
                 configure = {
                     description = 'Configures application, renders templates and installs services'
+                },
+                ledger = {
+                    description = 'Configures ledger udev rules'
+                },
+                ["skip-ledger"] = {
+                    description = 'Skips udev configuration'
                 }
             },
             action = function(_options, _, _, _)
@@ -39,6 +45,10 @@ return {
 
                 if _noOptions and not _options['no-validate'] then
                     am.execute('validate', {'--configuration'})
+                end
+
+                if (_noOptions or _options.configure or _options.ledger) and not _options["skip-ledger"] then
+                    am.execute_extension('__xtz/configure-ledger.lua', {contextFailExitCode = EXIT_APP_CONFIGURE_ERROR})
                 end
 
                 if _noOptions or _options.configure then
