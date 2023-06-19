@@ -38,7 +38,7 @@ end
 ami_assert(type(_ledgerId) == "string", "Failed to get ledger id!")
 
 log_info("Please confirm key import for signer...")
-local _proc = proc.spawn("bin/signer", { "import", "secret", "key", "baker", "ledger://" .. _ledgerId .. "/" .. _derivationPath, _options.force and "--force" or nil }, {
+local _proc = proc.spawn("bin/signer", { "import", "secret", "key", _options.alias or "baker", "ledger://" .. _ledgerId .. "/" .. _derivationPath, _options.force and "--force" or nil }, {
 	stdio = "inherit",
 	wait = true,
 	env = { HOME = _homedir }
@@ -46,7 +46,7 @@ local _proc = proc.spawn("bin/signer", { "import", "secret", "key", "baker", "le
 ami_assert(_proc.exitcode == 0,  "Failed to import key to signer!")
 
 log_info("Please confirm key import for client...")
-local _proc = proc.spawn("bin/client", { "import", "secret", "key", "baker", "ledger://" .. _ledgerId .. "/" .. _derivationPath, _options.force and "--force" or nil }, {
+local _proc = proc.spawn("bin/client", { "import", "secret", "key", _options.alias or "baker", "ledger://" .. _ledgerId .. "/" .. _derivationPath, _options.force and "--force" or nil }, {
 	stdio = "inherit" ,
 	wait = true,
 	env = { HOME = _homedir }

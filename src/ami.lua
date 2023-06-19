@@ -114,6 +114,10 @@ return {
             description = "ami 'import-key' sub command",
             summary = 'Attempts to import ledger key (Assumes only one ledger is connected).',
 			options = {
+                alias = {
+                    aliases = {"a"},
+                    description = 'key alias',
+                },
                 force = {
                     description = 'Forces key update',
 					type = "boolean"
