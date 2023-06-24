@@ -146,7 +146,7 @@ return {
         },
         ['setup-ledger'] = {
             description = "ami 'setup-ledger' sub command",
-            summary = 'Setups ledger to bake for baker.',
+            summary = 'Setups ledger to bake for baker (or key based on alias).',
             options = {
                 ["main-chain-id"] = {
                     description = "Specify custom chain id",
@@ -154,6 +154,10 @@ return {
                 },
                 ["main-hwm"] = {
                     description = "Specify custom high watermark",
+                    type = "string"
+                },
+                alias = {
+                    description = "alias of key to setup",
                     type = "string"
                 }
             },

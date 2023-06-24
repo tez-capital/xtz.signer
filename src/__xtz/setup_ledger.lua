@@ -10,7 +10,7 @@ ami_assert(_ok, "Failed to load systemctl plugin", EXIT_PLUGIN_LOAD_ERROR)
 local _services = require("__xtz.services")
 local _ok, _status, _started = _systemctl.safe_get_service_status(_services.signerServiceId)
 
-local _args = { "setup", "ledger", "to", "bake", "for", "baker" }
+local _args = { "setup", "ledger", "to", "bake", "for", (_options.alias or "baker") }
 if _ok and _status == "running" then
 	table.insert(_args, 1, "--remote-signer")
 	table.insert(_args, 2, "http://" .. am.app.get_model("SIGNER_ADDR") .. am.app.get_model("SIGNER_PORT"))
