@@ -27,7 +27,7 @@ end
 
 am.app.set_model({
 		DOWNLOAD_URLS = am.app.get_configuration("SOURCES", _downlaodUrls),
-        REMOTE_SIGNER_PORT = am.app.get_configuration("REMOTE_SIGNER_PORT", "2222"),
+        REMOTE_SIGNER_PORT = am.app.get_configuration("REMOTE_SIGNER_PORT", "20090"),
         REMOTE_SSH_PORT = am.app.get_configuration("REMOTE_SSH_PORT", "22"),
         REMOTE_SSH_KEY = am.app.get_configuration("REMOTE_SSH_KEY"),
         REMOTE_NODE = am.app.get_configuration("REMOTE_NODE"),
@@ -40,9 +40,9 @@ local _services = require("__xtz.services")
 local _wantedBinaries = table.keys(_services.signerServiceNames)
 table.insert(_wantedBinaries, "client")
 
-local _endpoint = am.app.get_configuration("SIGNER_ENDPOINT", "127.0.0.1:2222")
+local _endpoint = am.app.get_configuration("SIGNER_ENDPOINT", "127.0.0.1:20090")
 local _signerAddr = _endpoint:match('([%d%.:]*):') or "127.0.0.1"
-local _signerPort = _endpoint:match('[%d%.:]*:(%d*)') or "2222"
+local _signerPort = _endpoint:match('[%d%.:]*:(%d*)') or "20090"
 
 am.app.set_model(
     {
