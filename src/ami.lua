@@ -14,6 +14,10 @@ return {
                     description = "Prints info about ledger",
                     type = "boolean"
                 },
+                ["skip-authorization-check"] = {
+                    description = "Skips check baker authorization check on ledger",
+                    type = "boolean"
+                }
             },
             contextFailExitCode = EXIT_APP_INFO_ERROR
         },

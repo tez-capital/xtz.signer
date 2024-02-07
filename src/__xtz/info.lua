@@ -3,6 +3,7 @@ local _json = am.options.OUTPUT_FORMAT == "json"
 local _options = ...
 local _printServiceInfo = _options.services
 local _printLedgerInfo = _options.ledger
+local _skipLedgerAuthorizationCheck = _options["skip-authorization-check"]
 local _printAll = (not _printLedgerInfo) and (not _printServiceInfo)
 
 local ANALYTICS_URL = "https://analytics.tez.capital/bake"
@@ -65,11 +66,11 @@ end
 
 if _printAll or _printLedgerInfo then
 	local _args = { "list", "connected", "ledgers" }
-	if _info.signer == "running" then
-		table.insert(_args, 1, "--remote-signer")
-		table.insert(_args, 2, "http://" .. am.app.get_model("SIGNER_ADDR") .. am.app.get_model("SIGNER_PORT"))
-	end
-	local _proc = proc.spawn("bin/client", _args, {
+	-- if _info.signer == "running" then
+	-- 	table.insert(_args, 1, "--remote-signer")
+	-- 	table.insert(_args, 2, "http://" .. am.app.get_model("SIGNER_ADDR") .. am.app.get_model("SIGNER_PORT"))
+	-- end
+	local _proc = proc.spawn("bin/signer", _args, {
 		stdio = { stderr = "pipe" },
 		wait = true,
 		env = { HOME = _homedir }
@@ -78,6 +79,7 @@ if _printAll or _printLedgerInfo then
 	local _output = _proc.exitcode == 0 and _proc.stdoutStream:read("a") or "failed"
 	local _legerId = _output:match("## Ledger `(.-)`")
 	local _bakingAppVer = _output:match("Found a Tezos Baking (%S*)")
+	_info.ledger_device = _output:match("Ledger ([^\n]-) at %[.-%]")
 	local _bakingAppRunning = _output:match("Found a Tezos Baking .* running%s*on")
 	if not _legerId then
 		_info.status = "No ledger device found!"
@@ -91,17 +93,19 @@ if _printAll or _printLedgerInfo then
 		_info.ledger = "connected"
 		_info.baking_app = _bakingAppVer
 		_info.baking_app_status = "running"
-		if not _info.baker_address then
+		if _skipLedgerAuthorizationCheck then
+			-- nothing to do
+		elseif not _info.baker_address then
 			_info.status = "Baker key not found! Please import it..."
 			_info.level = "error"
 		else
 			-- TODO: return baker addr and check if authorized
 			local _args = { "get", "ledger", "authorized", "path", "for", "baker" }
-			if _info.signer == "running" then
-				table.insert(_args, 1, "--remote-signer")
-				table.insert(_args, 2, "http://" .. am.app.get_model("SIGNER_ADDR") .. am.app.get_model("SIGNER_PORT"))
-			end
-			local _proc = proc.spawn("bin/client", _args, {
+			-- if _info.signer == "running" then
+			-- 	table.insert(_args, 1, "--remote-signer")
+			-- 	table.insert(_args, 2, "http://" .. am.app.get_model("SIGNER_ADDR") .. am.app.get_model("SIGNER_PORT"))
+			-- end
+			local _proc = proc.spawn("bin/signer", _args, {
 				stdio = { stderr = "pipe" },
 				wait = true,
 				env = { HOME = _homedir }
