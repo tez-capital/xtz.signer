@@ -12,7 +12,9 @@ jobs:
       needs_release: ${{ steps.repository_info.outputs.needs_release }}
       version: ${{ steps.repository_info.outputs.VERSION }}
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
+      with:
+        fetch-tags: true
     - name: setup eli
 
       uses: alis-is/setup-eli@v1
