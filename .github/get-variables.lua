@@ -12,6 +12,6 @@ local handle = io.popen(command)
 local result = handle:read("*a")
 handle:close()
 
-if result ~= "" then
+if result == "" then
 	print("NEEDS_RELEASE=true")
 end
