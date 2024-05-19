@@ -29,23 +29,20 @@ local _proc = proc.spawn("/bin/bash", { _tmpFile }, {
 
 fs.remove(_tmpFile)
 ami_assert(_proc.exitcode == 0, "Failed to setup udev rules : " .. _proc.stderrStream:read("a"))
--- ami_assert(os.execute("udevadm trigger"), "Failed to run 'udevadm trigger'!")
--- ami_assert(os.execute("udevadm control --reload-rules"), "Failed to run 'udevadm control --reload-rules'!")
 
-local _ok, _systemctl = am.plugin.safe_get("systemctl")
-ami_assert(_ok, "Failed to load systemctl plugin")
+local backend = am.app.get_configuration("backend", os.getenv("ASCEND_SERVICES") ~= nil and "ascend" or "systemd")
+local serviceManager = require"__xtz.service-manager"
+local services = require"__xtz.services"
+services.remove_all_services() -- cleanup past install
 
-local _services = require"__xtz.services"
-_services.remove_all_services() -- cleanup past install
-
-for serviceId, serviceFile in pairs(_services.signer) do
-	local _ok, _error = _systemctl.safe_install_service(serviceFile, serviceId)
-	ami_assert(_ok, "Failed to install " .. serviceId .. ".service " .. (_error or ""))
-end
-
-for serviceId, serviceFile in pairs(_services.tunnelServices) do
-	local _ok, _error = _systemctl.safe_install_service(serviceFile, serviceId)
-	ami_assert(_ok, "Failed to install " .. serviceId .. ".service " .. (_error or ""))
+for k, v in pairs(services.all) do
+	local _serviceId = k
+	local sourceFile = string.interpolate("${file}.${extension}", {
+		file = v,
+		extension = backend == "ascend" and "ascend.hjson" or "service"
+	})
+	local _ok, _error = serviceManager.safe_install_service(sourceFile, _serviceId)
+	ami_assert(_ok, "Failed to install " .. _serviceId .. ".service " .. (_error or ""))
 end
 
 log_info("Granting access to " .. _user .. "(" .. tostring(_uid) .. ")...")

@@ -1,59 +1,60 @@
-local _appId = am.app.get("id")
-local _signerServiceId = _appId .. "-xtz-signer"
+local appId = am.app.get("id")
+local signerServiceId = appId .. "-xtz-signer"
 
-local _possibleResidue = { }
+local possibleResidue = {}
 
-local _signerServices = {
-	[_signerServiceId] = am.app.get_model("SIGNER_SERVICE_FILE", "__xtz/assets/signer.service")
+local signerServices = {
+	[signerServiceId] = am.app.get_model("SIGNER_SERVICE_FILE", "__xtz/assets/signer")
+}
+local tunnelServices = {
+	[appId .. "-xtz-signer-tunnel"] = "__xtz/assets/signer-tunnel",
+	[appId .. "-xtz-node-tunnel"] = "__xtz/assets/node-tunnel"
 }
 
-
-local _signerServiceNames = {}
-for k, _ in pairs(_signerServices) do
-	_signerServiceNames[k:sub((#(_appId .. "-xtz-") + 1))] = k
+local signerServiceNames = {}
+for k, _ in pairs(signerServices) do
+	signerServiceNames[k:sub((#(appId .. "-xtz-") + 1))] = k
 end
 
-local _allNames = util.clone(_signerServiceNames)
+local tunnelServiceNames = {}
+for k, _ in pairs(tunnelServices) do
+	tunnelServiceNames[k:sub((#(appId .. "-xtz-") + 1))] = k
+end
 
-local _tunnelServices = {}
-local _tunnelServiceNames = {}
-local _nodeAddr = am.app.get_model("REMOTE_NODE")
-if type(_nodeAddr) == "string" then
-	local _signerTunnelId = am.app.get("id") .. "-xtz-signer-tunnel"
-	_tunnelServices[_signerTunnelId] = "__xtz/assets/signer-tunnel.service"
-	local _nodeTunnelId = am.app.get("id") .. "-xtz-node-tunnel"
-	_tunnelServices[_nodeTunnelId] = "__xtz/assets/node-tunnel.service"
+local all = util.clone(signerServices)
+local allNames = util.clone(signerServiceNames)
 
-	for k, _ in pairs(_tunnelServices) do
-		_tunnelServiceNames[k:sub((#(_appId .. "-xtz-") + 1))] = k
-		_allNames[k:sub((#(_appId .. "-xtz-") + 1))] = k
+local nodeAddr = am.app.get_model("REMOTE_NODE")
+if type(nodeAddr) == "string" then
+	for k, v in pairs(tunnelServiceNames) do
+		allNames[k] = v
+	end
+	for k, v in pairs(tunnelServices) do
+		all[k] = v
 	end
 end
 
 -- includes potential residues
 local function _remove_all_services()
-	local _all = util.merge_arrays(table.values(_signerServiceNames), table.values(_tunnelServices))
-	_all = util.merge_arrays(_all, _possibleResidue)
+	local serviceManager = require"__xtz.service-manager"
 
-	local _ok, _systemctl = am.plugin.safe_get("systemctl")
-	ami_assert(_ok, "Failed to load systemctl plugin")
+	local all = util.merge_arrays(table.values(signerServiceNames), table.values(tunnelServices))
+	all = util.merge_arrays(all, possibleResidue)
 
-	for _, service in ipairs(_all) do
+	for _, service in ipairs(all) do
 		if type(service) ~= "string" then goto CONTINUE end
-		local _ok, _error = _systemctl.safe_remove_service(service)
+		local _ok, _error = serviceManager.safe_remove_service(service)
 		if not _ok then
-			ami_error("Failed to remove " .. service .. ".service " .. (_error or ""))
+			ami_error("Failed to remove " .. service .. ": " .. (_error or ""))
 		end
 		::CONTINUE::
 	end
 end
 
 return {
-	signerServiceId = _signerServiceId,
-	signer = _signerServices,
-	signerServiceNames = _signerServiceNames,
-	tunnelServices = _tunnelServices,
-	tunnelServiceNames = _tunnelServiceNames,
-	allNames = _allNames,
+	signerServiceId = signerServiceId,
+	all = all,
+	allNames = allNames,
+	signerServiceNames = signerServiceNames,
 	remove_all_services = _remove_all_services
 }

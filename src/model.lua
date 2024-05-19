@@ -44,13 +44,16 @@ local _endpoint = am.app.get_configuration("SIGNER_ENDPOINT", "127.0.0.1:20090")
 local _signerAddr = _endpoint:match('([%d%.:]*):') or "127.0.0.1"
 local _signerPort = _endpoint:match('[%d%.:]*:(%d*)') or "20090"
 
+local TEZOS_LOG_LEVEL = am.app.get_configuration("TEZOS_LOG_LEVEL", "info")
+
 am.app.set_model(
     {
         WANTED_BINARIES = _wantedBinaries,
         SIGNER_ADDR = _signerAddr,
         SIGNER_PORT = _signerPort,
         SIGNER_ENDPOINT = _endpoint,
-        LOCAL_RPC_PORT = am.app.get_configuration("LOCAL_RPC_PORT", "8732")
+        LOCAL_RPC_PORT = am.app.get_configuration("LOCAL_RPC_PORT", "8732"),
+        SIGNER_LOG_LEVEL = TEZOS_LOG_LEVEL
     },
     { merge = true, overwrite = true }
 )

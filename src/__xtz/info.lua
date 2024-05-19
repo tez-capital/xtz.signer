@@ -8,8 +8,7 @@ local _printAll = (not _printLedgerInfo) and (not _printServiceInfo)
 
 local ANALYTICS_URL = "https://analytics.tez.capital/bake"
 
-local _ok, _systemctl = am.plugin.safe_get("systemctl")
-ami_assert(_ok, "Failed to load systemctl plugin", EXIT_PLUGIN_LOAD_ERROR)
+local serviceManager = require"__xtz.service-manager"
 
 local _info = {
 	level = "ok",
@@ -24,15 +23,12 @@ if _printAll or _printServiceInfo then
 	local _services = require "__xtz.services"
 	for k, v in pairs(_services.allNames) do
 		if type(v) ~= "string" then goto CONTINUE end
-		local _ok, _status, _started = _systemctl.safe_get_service_status(v)
+		local _ok, _status, _started = serviceManager.safe_get_service_status(v)
 		ami_assert(_ok, "Failed to get status of " .. v .. ".service " .. (_status or ""), EXIT_PLUGIN_EXEC_ERROR)
 		_info.services[k] = {
 			status = _status,
 			started = _started
 		}
-		-- // TODO: remove from root object after migration to bb-cli next
-		_info[k] = _status
-		_info[k .. "_started"] = _started
 		if _status ~= "running" then
 			_info.status = "One or more signer services is not running!"
 			_info.level = "error"
@@ -66,10 +62,6 @@ end
 
 if _printAll or _printLedgerInfo then
 	local _args = { "list", "connected", "ledgers" }
-	-- if _info.signer == "running" then
-	-- 	table.insert(_args, 1, "--remote-signer")
-	-- 	table.insert(_args, 2, "http://" .. am.app.get_model("SIGNER_ADDR") .. am.app.get_model("SIGNER_PORT"))
-	-- end
 	local _proc = proc.spawn("bin/signer", _args, {
 		stdio = { stderr = "pipe" },
 		wait = true,
@@ -101,10 +93,6 @@ if _printAll or _printLedgerInfo then
 		else
 			-- TODO: return baker addr and check if authorized
 			local _args = { "get", "ledger", "authorized", "path", "for", "baker" }
-			-- if _info.signer == "running" then
-			-- 	table.insert(_args, 1, "--remote-signer")
-			-- 	table.insert(_args, 2, "http://" .. am.app.get_model("SIGNER_ADDR") .. am.app.get_model("SIGNER_PORT"))
-			-- end
 			local _proc = proc.spawn("bin/signer", _args, {
 				stdio = { stderr = "pipe" },
 				wait = true,

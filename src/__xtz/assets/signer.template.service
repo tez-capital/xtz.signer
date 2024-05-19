@@ -12,7 +12,7 @@ Type=simple
 Restart=always
 
 Environment="HOME={{{ROOT_DIR}}}/data"
-Environment=TEZOS_LOG='* -> debug'
+Environment=TEZOS_LOG='* -> {{{model.SIGNER_LOG_LEVEL}}}'
 ExecStart={{{ROOT_DIR}}}/bin/signer launch http signer -a {{{model.SIGNER_ADDR}}} -p {{{model.SIGNER_PORT}}} {{{configuration.STARTUP_SIGNER_ARGS__CLI_ARGS}}}
 
 {{#model.SERVICE_CONFIGURATION_SIGNER__ARRAY}}

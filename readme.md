@@ -1,5 +1,5 @@
 ```hjson
-id: signer,
+id: signer
 configuration: {
 	...
 	REMOTE_NODE: <addr>

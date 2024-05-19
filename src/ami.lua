@@ -70,7 +70,7 @@ return {
             summary = 'Validates app configuration and platform support',
             action = function(_options, _, _, _cli)
                 if _options.help then
-                    show_cli_help(_cli)
+                    am.print_help(_cli)
                     return
                 end
                 -- //TODO: Validate platform
@@ -79,7 +79,7 @@ return {
 
                 ami_assert(type(am.app.get('id')) == 'string', 'id not specified!', EXIT_INVALID_CONFIGURATION)
                 ami_assert(
-                    type(am.app.get_config()) == 'table',
+                    type(am.app.get_configuration()) == 'table',
                     'configuration not found in app.h/json!',
                     EXIT_INVALID_CONFIGURATION
                 )

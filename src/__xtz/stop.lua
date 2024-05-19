@@ -1,13 +1,12 @@
-local _ok, _systemctl = am.plugin.safe_get("systemctl")
-ami_assert(_ok, "Failed to load systemctl plugin")
+local serviceManager = require"__xtz.service-manager"
+local services = require"__xtz.services"
 
-local _services = require"__xtz.services"
 log_info("Stopping signer services... this may take few minutes.")
-for _, service in pairs(_services.allNames) do
+for _, service in pairs(services.allNames) do
 	-- skip false values
 	if type(service) ~= "string" then goto CONTINUE end
-	local _ok, _error = _systemctl.safe_stop_service(service)
-	ami_assert(_ok, "Failed to stop " .. service .. ".service " .. (_error or ""))
+	local _ok, _error = serviceManager.safe_stop_service(service)
+	ami_assert(_ok, "Failed to stop " .. service .. ": " .. (_error or ""))
 	::CONTINUE::
 end
 log_success("Signer services succesfully stopped.")

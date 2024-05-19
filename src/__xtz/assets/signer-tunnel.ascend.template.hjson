@@ -1,0 +1,23 @@
+{
+    executable: {{{ROOT_DIR}}}/bin/signer
+    args: [
+		launch
+		http
+		signer
+		-a
+		{{{model.SIGNER_ADDR}}}
+		-p
+		{{{model.SIGNER_PORT}}}
+        {{#configuration.STARTUP_SIGNER_ARGS}}
+        {{.}}
+        {{/configuration.STARTUP_SIGNER_ARGS}}
+    ]
+    environment: {
+        HOME: {{{ROOT_DIR}}}/data
+        TEZOS_LOG: "* -> {{{model.SIGNER_LOG_LEVEL}}}"
+    }
+    restart: always
+    restart_delay: 20
+    stop_timeout: 300
+    user: {{{USER}}}
+}
