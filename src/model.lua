@@ -31,7 +31,8 @@ am.app.set_model({
         REMOTE_SSH_PORT = am.app.get_configuration("REMOTE_SSH_PORT", "22"),
         REMOTE_SSH_KEY = am.app.get_configuration("REMOTE_SSH_KEY"),
         REMOTE_NODE = am.app.get_configuration("REMOTE_NODE"),
-        REMOTE_RPC_ENDPOINT = am.app.get_configuration("REMOTE_RPC_ENDPOINT", "127.0.0.1:8732")
+        REMOTE_RPC_ENDPOINT = am.app.get_configuration("REMOTE_RPC_ENDPOINT", "127.0.0.1:8732"),
+        PLATFORM = _platform
 	},
 	{merge = true, overwrite = true}
 )

@@ -163,6 +163,10 @@ return {
                 alias = {
                     description = "alias of key to setup",
                     type = "string"
+                },
+                ["skip-udev"] = {
+                    description = "Skip udev rules setup",
+                    type = "boolean"
                 }
             },
             index = 12,
