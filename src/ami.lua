@@ -34,21 +34,21 @@ return {
                 end
 
                 if _noOptions or not _options['no-validate'] then
-                    am.execute('validate', {'--platform'})
+                    am.execute('validate', { '--platform' })
                 end
 
                 if _noOptions or _options.app then
-                    am.execute_extension('__xtz/download-binaries.lua', {contextFailExitCode = EXIT_SETUP_ERROR})
+                    am.execute_extension('__xtz/download-binaries.lua', { contextFailExitCode = EXIT_SETUP_ERROR })
                 end
 
                 if _noOptions and not _options['no-validate'] then
-                    am.execute('validate', {'--configuration'})
+                    am.execute('validate', { '--configuration' })
                 end
 
                 if _noOptions or _options.configure then
-					am.execute_extension('__xtz/create_user.lua', {contextFailExitCode = EXIT_APP_CONFIGURE_ERROR})
+                    am.execute_extension('__xtz/create_user.lua', { contextFailExitCode = EXIT_APP_CONFIGURE_ERROR })
                     am.app.render()
-                    am.execute_extension('__xtz/configure.lua', {contextFailExitCode = EXIT_APP_CONFIGURE_ERROR})
+                    am.execute_extension('__xtz/configure.lua', { contextFailExitCode = EXIT_APP_CONFIGURE_ERROR })
                 end
                 log_success('XTZ signer setup complete.')
             end
@@ -114,34 +114,7 @@ return {
             },
             contextFailExitCode = EXIT_APP_INTERNAL_ERROR
         },
-        ['import-key'] = {
-            description = "ami 'import-key' sub command",
-            summary = 'Attempts to import ledger key (Assumes only one ledger is connected).',
-			options = {
-                alias = {
-                    aliases = {"a"},
-                    description = 'key alias',
-                },
-                force = {
-                    description = 'Forces key update',
-					type = "boolean"
-                },
-				["derivation-path"] = {
-					aliases = {"dp"},
-                    description = 'Sets custom derivation path',
-					type = "string"
-                },
-                ["ledger-id"] = {
-					aliases = {"li"},
-                    description = 'Imports key from specific ledger',
-					type = "string"
-                }
-            },
-            index = 10,
-            action = '__xtz/import_key.lua',
-            contextFailExitCode = EXIT_APP_INTERNAL_ERROR
-        },
-		['register-key'] = {
+        ['register-key'] = {
             description = "ami 'register-key' sub command",
             summary = 'Registers key as delegate.',
             index = 11,
@@ -152,20 +125,42 @@ return {
             description = "ami 'setup-ledger' sub command",
             summary = 'Setups ledger to bake for baker (or key based on alias).',
             options = {
-                ["main-chain-id"] = {
-                    description = "Specify custom chain id",
+                ["import-key"] = {
+                    description =
+                    "imports key for baking. To import custom derivation path use '--import-key=<derivation-path>'",
+                    type = "auto"
+                },
+                ["ledger-id"] = {
+                    description = 'imports key from specific ledger (used only if --import-key specified)',
                     type = "string"
                 },
-                ["main-hwm"] = {
-                    description = "Specify custom high watermark",
+                ["authorize"] = {
+                    description = "authorize baker on ledger",
+                    type = "boolean"
+                },
+                ["chain-id"] = {
+                    description = "specify custom chain id (used only if --authorize specified)",
                     type = "string"
                 },
-                alias = {
-                    description = "alias of key to setup",
+                ["hwm"] = {
+                    description = "specify custom high watermark (used only if --authorize specified)",
                     type = "string"
                 },
-                ["skip-udev"] = {
-                    description = "Skip udev rules setup",
+                ["key-alias"] = {
+                    description =
+                    "alias to use for the key we operate on (alias of imported key, key to use in hwm/chain setup etc.)",
+                    type = "auto"
+                },
+                ["platform"] = {
+                    description = "platform to setup ledger for",
+                    type = "string"
+                },
+                ["no-udev"] = {
+                    description = "skip udev rules setup (if --platform specified and platform is linux)",
+                    type = "boolean"
+                },
+                force = {
+                    description = 'forces operation, e.g. key import',
                     type = "boolean"
                 }
             },
@@ -180,7 +175,7 @@ return {
             options = {
                 alias = {
                     description = "key alias",
-                    type= "string"
+                    type = "string"
                 }
             },
             action = function(_options, _, _, _)
@@ -200,12 +195,12 @@ return {
             summary = 'Prints logs from services.',
             options = {
                 ["follow"] = {
-                    aliases = {"f"},
+                    aliases = { "f" },
                     description = "Keeps printing the log continuously.",
                     type = "boolean"
                 },
                 ["end"] = {
-                    aliases = {"e"},
+                    aliases = { "e" },
                     description = "Jumps to the end of the log.",
                     type = "boolean"
                 },
@@ -246,10 +241,10 @@ return {
                 ami_assert(_ok, 'Failed to read about file!', EXIT_APP_ABOUT_ERROR)
 
                 local _ok, _about = hjson.safe_parse(_aboutFile)
-                _about['App Type'] = am.app.get({'type', 'id'}, am.app.get('type'))
+                _about['App Type'] = am.app.get({ 'type', 'id' }, am.app.get('type'))
                 ami_assert(_ok, 'Failed to parse about file!', EXIT_APP_ABOUT_ERROR)
                 if am.options.OUTPUT_FORMAT == 'json' then
-                    print(hjson.stringify_to_json(_about, {indent = false, skipkeys = true}))
+                    print(hjson.stringify_to_json(_about, { indent = false, skipkeys = true }))
                 else
                     print(hjson.stringify(_about))
                 end
@@ -259,7 +254,7 @@ return {
             index = 7,
             action = function(_options, _, _, _)
                 if _options.all then
-                    am.execute_extension('__xtz/remove-all.lua', {contextFailExitCode = EXIT_RM_ERROR})
+                    am.execute_extension('__xtz/remove-all.lua', { contextFailExitCode = EXIT_RM_ERROR })
                     am.app.remove()
                     log_success('Application removed.')
                 else

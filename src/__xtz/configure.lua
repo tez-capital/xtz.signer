@@ -1,10 +1,5 @@
-local _user = am.app.get("user", "root")
-ami_assert(type(_user) == "string", "User not specified...", EXIT_INVALID_CONFIGURATION)
-
 local _ok, _error = fs.safe_mkdirp("data")
 ami_assert(_ok, "Failed to create data directory - " .. tostring(_error) .. "!")
-local _ok, _uid = fs.safe_getuid(_user)
-ami_assert(_ok, "Failed to get " .. _user .. "uid - " .. (_uid or ""))
 
 local backend = am.app.get_configuration("backend", os.getenv("ASCEND_SERVICES") ~= nil and "ascend" or "systemd")
 local serviceManager = require"__xtz.service-manager"
@@ -21,6 +16,5 @@ for k, v in pairs(services.all) do
 	ami_assert(_ok, "Failed to install " .. _serviceId .. ".service " .. (_error or ""))
 end
 
-log_info("Granting access to " .. _user .. "(" .. tostring(_uid) .. ")...")
-local _ok, _error = fs.chown(os.cwd(), _uid, _uid, {recurse = true})
-ami_assert(_ok, "Failed to chown data - " .. (_error or ""))
+-- adjust data directory permissions
+require"__xtz.util".reset_datadir_permissions()
