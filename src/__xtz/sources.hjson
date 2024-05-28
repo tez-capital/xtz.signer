@@ -1,9 +1,11 @@
 // SOURCE: https://gitlab.com/tezos/tezos/-/releases
-linux-x86_x64: {
-    client: https://gitlab.com/api/v4/projects/3836952/packages/generic/octez-19.2/19.2/x86_64-octez-client
-    signer: https://gitlab.com/api/v4/projects/3836952/packages/generic/octez-19.2/19.2/x86_64-octez-signer
-}
-linux-arm64: {
-    client: https://gitlab.com/api/v4/projects/3836952/packages/generic/octez-19.2/19.2/arm64-octez-client
-    signer: https://gitlab.com/api/v4/projects/3836952/packages/generic/octez-19.2/19.2/arm64-octez-signer
+{
+    linux-x86_64: {
+        signer: https://gitlab.com/tezos/tezos/-/package_files/130339110/download
+        client: https://gitlab.com/tezos/tezos/-/package_files/130339263/download
+    }
+    linux-arm64: {
+        signer: https://gitlab.com/tezos/tezos/-/package_files/130341848/download
+        client: https://gitlab.com/tezos/tezos/-/package_files/130342347/download
+    }
 }

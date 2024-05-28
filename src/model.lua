@@ -14,7 +14,7 @@ local _downlaodUrls = nil
 local _downloadLinks = hjson.parse(fs.read_file("__xtz/sources.hjson"))
 
 if _platform.OS == "unix" then
-	_downlaodUrls = _downloadLinks["linux-x86_x64"]
+	_downlaodUrls = _downloadLinks["linux-x86_64"]
     if _platform.SYSTEM_TYPE:match("[Aa]arch64") then
         _downlaodUrls = _downloadLinks["linux-arm64"]
     end
