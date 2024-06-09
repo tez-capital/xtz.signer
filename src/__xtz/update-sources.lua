@@ -2,17 +2,12 @@
 
 local hjson = require "hjson"
 local args = table.pack(...)
-if #args < 2 then
-	print("Usage: update-sources <source-url> [protocols]")
+if #args < 1 then
+	print("Usage: update-sources <source-url>")
 	return
 end
 
 local source = args[1]
-local protocol = args[2]
-local protocolNext
-if #args > 2 then
-	protocolNext = args[3]
-end
 
 --- extract package id from url source - https://gitlab.com/tezos/tezos/-/packages/25835249
 local packageId = source:match("packages/(%d+)")
@@ -27,19 +22,12 @@ local files = hjson.parse(response)
 
 local currentSources = hjson.parse(fs.read_file("src/__xtz/sources.hjson"))
 for platform, sources in pairs(currentSources) do
-	local newSources = util.clone(sources, true)
+	local newSources = {}
 	-- extract arch from linux-x86_64
 	local arch = platform:match("linux%-(.*)")
 	for sourceId, _ in pairs(sources) do
 		-- build asset id => <arch>-octez-<sourceId>
 		local assetIds = { [sourceId] = arch .. "-octez-" .. sourceId }
-		if sourceId:match("baker") or sourceId:match("accuser") then
-			assetIds[sourceId] = arch .. "-octez-" .. sourceId .. "-" .. protocol
-			if protocolNext then
-				assetIds[sourceId .. "-next"] = arch .. "-octez-" .. sourceId .. "-" .. protocol
-			end
-		end
-
 		for assetId, assetName in pairs(assetIds) do
 			-- lookup file id
 			for _, file in ipairs(files) do

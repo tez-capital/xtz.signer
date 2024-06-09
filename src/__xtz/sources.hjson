@@ -1,11 +1,11 @@
 // SOURCE: https://gitlab.com/tezos/tezos/-/releases
 {
     linux-x86_64: {
-        signer: https://gitlab.com/tezos/tezos/-/package_files/130339110/download
         client: https://gitlab.com/tezos/tezos/-/package_files/130339263/download
+        signer: https://gitlab.com/tezos/tezos/-/package_files/130339110/download
     }
     linux-arm64: {
-        signer: https://gitlab.com/tezos/tezos/-/package_files/130341848/download
         client: https://gitlab.com/tezos/tezos/-/package_files/130342347/download
+        signer: https://gitlab.com/tezos/tezos/-/package_files/130341848/download
     }
 }
