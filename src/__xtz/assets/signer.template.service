@@ -19,5 +19,9 @@ ExecStart={{{ROOT_DIR}}}/bin/signer launch http signer -a {{{model.SIGNER_ADDR}}
 {{{key}}}={{{value}}}
 {{/model.SERVICE_CONFIGURATION_SIGNER__ARRAY}}
 
+{{#configuration.SERVICE_CONFIGURATION_SIGNER__ARRAY}}
+{{{key}}}={{{value}}}
+{{/configuration.SERVICE_CONFIGURATION_SIGNER__ARRAY}}
+
 [Install]
 WantedBy=default.target
