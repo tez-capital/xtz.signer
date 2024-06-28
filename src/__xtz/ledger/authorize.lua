@@ -23,8 +23,12 @@ local function setup(options)
 		table.insert(_args, 2, "http://" .. am.app.get_model("SIGNER_ADDR") .. am.app.get_model("SIGNER_PORT"))
 	end
 
+	local protocol = "ProtoALphaALphaALphaALphaALphaALphaALphaALphaDdp3zK"
+	if type(options.protocol) == "string" then
+		protocol = options.protocol
+	end
 	table.insert(_args, 1, "-p")
-	table.insert(_args, 2, "ProtoALphaALphaALphaALphaALphaALphaALphaALphaDdp3zK")
+	table.insert(_args, 2, protocol)
 
 	if options["chain-id"] then
 		table.insert(_args, "--main-chain-id")

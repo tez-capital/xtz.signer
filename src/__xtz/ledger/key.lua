@@ -54,9 +54,15 @@ local function setup(options)
 		})
 	ami_assert(_proc.exitcode == 0, "Failed to import key to signer!")
 
+	local protocol = "ProtoALphaALphaALphaALphaALphaALphaALphaALphaDdp3zK"
+	if type(options.protocol) == "string" then
+		protocol = options.protocol
+	end
+
+
 	log_info("Please confirm key import for client...")
 	local _proc = proc.spawn("bin/client",
-		{ "import", "secret", "key", alias or "baker", "ledger://" .. ledgerId .. "/" .. derivationPath,
+		{ "-p", protocol, "import", "secret", "key", alias or "baker", "ledger://" .. ledgerId .. "/" .. derivationPath,
 			options.force and "--force" or nil }, {
 			stdio = "inherit",
 			wait = true,

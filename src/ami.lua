@@ -159,6 +159,10 @@ return {
                     description = "skip udev rules setup (if --platform specified and platform is linux)",
                     type = "boolean"
                 },
+                ["protocol"] = {
+                    description = "specify protocol (used only if --import-key or --authorize specified)",
+                    type = "string"
+                },
                 force = {
                     description = 'forces operation, e.g. key import',
                     type = "boolean"
