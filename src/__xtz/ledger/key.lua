@@ -25,7 +25,7 @@ local function setup(options)
 			env = { HOME = homedir }
 		})
 
-		ami_assert(_proc.exitcode == 0, "Failed to get connected ledgers: " .. _proc.stderrStream:read("a"))
+		ami_assert(_proc.exitcode == 0, "Failed to get connected ledgers: " .. (_proc.stderrStream:read("a") or "unknown"))
 		local _output = _proc.stdoutStream:read("a")
 		ledgerId = _output:match("## Ledger `(.-)`")
 		ami_assert(ledgerId, "No connected ledgers found!", EXIT_APP_INTERNAL_ERROR)
