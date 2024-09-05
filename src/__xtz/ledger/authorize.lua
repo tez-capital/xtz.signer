@@ -47,9 +47,9 @@ local function setup(options)
 		env = { HOME = path.combine(os.cwd(), "data") }
 	})
 
-	local _stderr = _proc.stderrStream:read("a")
+	local _stderr = _proc.stderrStream:read("a") or ""
 	ami_assert(_proc.exitcode == 0 or not _stderr:match("Error:"),
-		"Failed to setup ledger for baking: " .. (_stderr or ""))
+		"Failed to setup ledger for baking: " .. _stderr)
 
 	log_success("Ledger authorized for baking.")
 end

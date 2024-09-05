@@ -26,7 +26,7 @@ local function setup(options)
 		})
 
 		ami_assert(_proc.exitcode == 0, "Failed to get connected ledgers: " .. (_proc.stderrStream:read("a") or "unknown"))
-		local _output = _proc.stdoutStream:read("a")
+		local _output = _proc.stdoutStream:read("a") or ""
 		ledgerId = _output:match("## Ledger `(.-)`")
 		ami_assert(ledgerId, "No connected ledgers found!", EXIT_APP_INTERNAL_ERROR)
 		log_info("Using ledger id: " .. ledgerId)
