@@ -1,4 +1,5 @@
 -- SOURCE: https://gitlab.com/tezos/tezos/-/releases
+-- eli src/__xtz/update-sources.lua https://gitlab.com/tezos/tezos/-/packages/29781101
 
 local hjson = require "hjson"
 local args = table.pack(...)
