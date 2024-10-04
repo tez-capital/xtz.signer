@@ -47,9 +47,10 @@ if _ok then
 			if _pubKeyRecord["name"] == "baker" then
 				_info.baker_address = _pubKeyRecord["value"]
 
+				
 				if _info.baker_address and os.getenv("DISABLE_TEZBAKE_ANALYTICS") ~= "true" and am.app.get_configuration("DISABLE_ANALYTICS", false) ~= true then
 					local _analyticsCmd = string.interpolate(
-						[[net.RestClient:new("${ANALYTICS_URL}", { timeout = 60 }):safe_post({ bakerId = "${bakerId}", version = "${version}" }); os.exit(0);]],
+						[[net.RestClient:new("${ANALYTICS_URL}", { timeout = 2 }):safe_post({ bakerId = "${bakerId}", version = "${version}" }); os.exit(0);]],
 						{ bakerId = _info.baker_address, version = am.app.get_version(), ANALYTICS_URL = ANALYTICS_URL }
 					)
 					proc.spawn("eli", { "-e", _analyticsCmd }, {wait = false, stdio = "ignore"})
