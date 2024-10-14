@@ -172,6 +172,37 @@ return {
             action = '__xtz/setup_ledger.lua',
             contextFailExitCode = EXIT_APP_INTERNAL_ERROR
         },
+        ['setup-soft-wallet'] = {
+            description = "ami 'setup-soft-wallet' sub command",
+            summary = 'Setups ledger to bake for baker (or key based on alias).',
+            options = {
+                ["import-key"] = {
+                    description =
+                    "imports key for baking. To import custom derivation path use '--import-key=<key>'",
+                    type = "auto"
+                },
+                ["generate"] = {
+                    description = 'generate new key',
+                    type = "string"
+                },
+                ["key-alias"] = {
+                    description =
+                    "alias to use for the key we operate on (alias of imported key, key to use in hwm/chain setup etc.)",
+                    type = "auto"
+                },
+                ["sig"] = {
+                    description = "specify signature type (used only if --generate specified)",
+                    type = "string"
+                },
+                force = {
+                    description = 'forces operation, e.g. key import',
+                    type = "boolean"
+                }
+            },
+            index = 12,
+            action = '__xtz/setup_soft_wallet.lua',
+            contextFailExitCode = EXIT_APP_INTERNAL_ERROR
+        },
         ['get-key-hash'] = {
             description = "ami 'get-key-hash' sub command",
             summary = 'Returns hash if imported key.',
