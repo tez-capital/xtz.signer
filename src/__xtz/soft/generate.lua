@@ -20,6 +20,11 @@ local function setup(options)
         ami_assert(type(alias) == "string", "Invalid alias detected!", EXIT_CLI_ARG_VALIDATION_ERROR)
     end
 
+    local signature = "ed25519"
+    if type(options["generate"]) == "string" and options["generate"] ~= "" and options["generate"] ~= "true" then
+        signature = options["generate"]
+    end
+
     local protocol = "ProtoALphaALphaALphaALphaALphaALphaALphaALphaDdp3zK"
     if type(options.protocol) == "string" then
         protocol = options.protocol
@@ -27,7 +32,7 @@ local function setup(options)
 
     local _proc = proc.spawn("bin/signer",
         { "gen", "keys", alias or "baker",
-            "-s", options.sig or "ed25519",
+            "-s", signature,
             options.force and "--force" or nil }, {
             stdio = "inherit",
             wait = true,

@@ -178,21 +178,17 @@ return {
             options = {
                 ["import-key"] = {
                     description =
-                    "imports key for baking. To import custom derivation path use '--import-key=<key>'",
+                    "imports key for baking. Usage: '--import-key=<key>'",
                     type = "auto"
                 },
                 ["generate"] = {
-                    description = 'generate new key',
+                    description = "Generate new key. Usage: '--generate=[signature-algo]'",
                     type = "string"
                 },
                 ["key-alias"] = {
                     description =
                     "alias to use for the key we operate on (alias of imported key, key to use in hwm/chain setup etc.)",
                     type = "auto"
-                },
-                ["sig"] = {
-                    description = "specify signature type (used only if --generate specified)",
-                    type = "string"
                 },
                 force = {
                     description = 'forces operation, e.g. key import',
