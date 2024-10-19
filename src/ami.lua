@@ -10,12 +10,16 @@ return {
                     description = "Prints info about services",
                     type = "boolean"
                 },
-                ["ledger"] = {
-                    description = "Prints info about ledger",
-                    type = "boolean"
+                ["wallets"] = {
+                    description = "Prints info about wallets",
+                    type = "string"
                 },
                 ["skip-authorization-check"] = {
                     description = "Skips check baker authorization check on ledger",
+                    type = "boolean"
+                },
+                ["sensitive"] = {
+                    description = "Hide sensitive information",
                     type = "boolean"
                 }
             },
