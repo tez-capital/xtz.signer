@@ -23,7 +23,7 @@ return {
                     type = "boolean"
                 }
             },
-            contextFailExitCode = EXIT_APP_INFO_ERROR
+            context_fail_exit_code = EXIT_APP_INFO_ERROR
         },
         setup = {
             options = {
@@ -42,7 +42,7 @@ return {
                 end
 
                 if no_options or options.app then
-                    am.execute_extension('__xtz/download-binaries.lua', { contextFailExitCode = EXIT_SETUP_ERROR })
+                    am.execute_extension('__xtz/download-binaries.lua', { context_fail_exit_code = EXIT_SETUP_ERROR })
                 end
 
                 if no_options and not options['no-validate'] then
@@ -50,9 +50,9 @@ return {
                 end
 
                 if no_options or options.configure then
-                    am.execute_extension('__xtz/create_user.lua', { contextFailExitCode = EXIT_APP_CONFIGURE_ERROR })
+                    am.execute_extension('__xtz/create_user.lua', { context_fail_exit_code = EXIT_APP_CONFIGURE_ERROR })
                     am.app.render()
-                    am.execute_extension('__xtz/configure.lua', { contextFailExitCode = EXIT_APP_CONFIGURE_ERROR })
+                    am.execute_extension('__xtz/configure.lua', { context_fail_exit_code = EXIT_APP_CONFIGURE_ERROR })
                 end
                 log_success('XTZ signer setup complete.')
             end
@@ -61,13 +61,13 @@ return {
             description = "ami 'start' sub command",
             summary = 'Starts the XTZ signer',
             action = '__xtz/start.lua',
-            contextFailExitCode = EXIT_APP_START_ERROR
+            context_fail_exit_code = EXIT_APP_START_ERROR
         },
         stop = {
             description = "ami 'stop' sub command",
             summary = 'Stops the XTZ signer',
             action = '__xtz/stop.lua',
-            contextFailExitCode = EXIT_APP_STOP_ERROR
+            context_fail_exit_code = EXIT_APP_STOP_ERROR
         },
         validate = {
             description = "ami 'validate' sub command",
@@ -105,7 +105,7 @@ return {
             environment = {
                 HOME = path.combine(os.cwd(), "data")
             },
-            contextFailExitCode = EXIT_APP_INTERNAL_ERROR
+            context_fail_exit_code = EXIT_APP_INTERNAL_ERROR
         },
         client = {
             description = "ami 'signer' sub command",
@@ -116,14 +116,14 @@ return {
             environment = {
                 HOME = path.combine(os.cwd(), "data")
             },
-            contextFailExitCode = EXIT_APP_INTERNAL_ERROR
+            context_fail_exit_code = EXIT_APP_INTERNAL_ERROR
         },
         ['register-key'] = {
             description = "ami 'register-key' sub command",
             summary = 'Registers key as delegate.',
             index = 11,
             action = '__xtz/register_key.lua',
-            contextFailExitCode = EXIT_APP_INTERNAL_ERROR
+            context_fail_exit_code = EXIT_APP_INTERNAL_ERROR
         },
         ['setup-ledger'] = {
             description = "ami 'setup-ledger' sub command",
@@ -174,7 +174,7 @@ return {
             },
             index = 12,
             action = '__xtz/setup_ledger.lua',
-            contextFailExitCode = EXIT_APP_INTERNAL_ERROR
+            context_fail_exit_code = EXIT_APP_INTERNAL_ERROR
         },
         ['setup-soft-wallet'] = {
             description = "ami 'setup-soft-wallet' sub command",
@@ -201,12 +201,12 @@ return {
             },
             index = 12,
             action = '__xtz/setup_soft_wallet.lua',
-            contextFailExitCode = EXIT_APP_INTERNAL_ERROR
+            context_fail_exit_code = EXIT_APP_INTERNAL_ERROR
         },
         ['get-key-hash'] = {
             description = "ami 'get-key-hash' sub command",
             summary = 'Returns hash if imported key.',
-            contextFailExitCode = EXIT_APP_INTERNAL_ERROR,
+            context_fail_exit_code = EXIT_APP_INTERNAL_ERROR,
             options = {
                 alias = {
                     description = "key alias",
@@ -250,7 +250,7 @@ return {
             },
             type = "no-command",
             action = '__xtz/log.lua',
-            contextFailExitCode = EXIT_APP_INTERNAL_ERROR
+            context_fail_exit_code = EXIT_APP_INTERNAL_ERROR
         },
         ['deposits-limit'] = {
             description = "ami 'deposit-limit' sub command",
@@ -266,7 +266,7 @@ return {
                 }
             },
             action = '__xtz/deposits_limit.lua',
-            contextFailExitCode = EXIT_APP_INTERNAL_ERROR
+            context_fail_exit_code = EXIT_APP_INTERNAL_ERROR
         },
         about = {
             description = "ami 'about' sub command",
@@ -289,7 +289,7 @@ return {
             index = 7,
             action = function(options, _, _, _)
                 if options.all then
-                    am.execute_extension('__xtz/remove-all.lua', { contextFailExitCode = EXIT_RM_ERROR })
+                    am.execute_extension('__xtz/remove-all.lua', { context_fail_exit_code = EXIT_RM_ERROR })
                     am.app.remove()
                     log_success('Application removed.')
                 else
