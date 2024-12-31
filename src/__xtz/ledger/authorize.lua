@@ -7,9 +7,9 @@ local function setup(options)
 
 	log_info("Authorizing ledger for baking...")
 
-	local serviceManager = require "__xtz.service-manager"
-	local _services = require("__xtz.services")
-	local _ok, _status, _ = serviceManager.safe_get_service_status(_services.signerServiceId)
+	local service_manager = require "__xtz.service-manager"
+	local services = require("__xtz.services")
+	local ok, status, _ = service_manager.safe_get_service_status(services.signer_service_id)
 
 	local alias = "baker"
 	if options["key-alias"] then
@@ -17,39 +17,39 @@ local function setup(options)
 		ami_assert(type(alias) == "string", "Invalid alias detected!", EXIT_CLI_ARG_VALIDATION_ERROR)
 	end
 
-	local _args = { "setup", "ledger", "to", "bake", "for", alias }
-	if _ok and _status == "running" then
-		table.insert(_args, 1, "--remote-signer")
-		table.insert(_args, 2, "http://" .. am.app.get_model("SIGNER_ADDR") .. am.app.get_model("SIGNER_PORT"))
+	local args = { "setup", "ledger", "to", "bake", "for", alias }
+	if ok and status == "running" then
+		table.insert(args, 1, "--remote-signer")
+		table.insert(args, 2, "http://" .. am.app.get_model("SIGNER_ADDR") .. am.app.get_model("SIGNER_PORT"))
 	end
 
 	local protocol = "ProtoALphaALphaALphaALphaALphaALphaALphaALphaDdp3zK"
 	if type(options.protocol) == "string" then
 		protocol = options.protocol
 	end
-	table.insert(_args, 1, "-p")
-	table.insert(_args, 2, protocol)
+	table.insert(args, 1, "-p")
+	table.insert(args, 2, protocol)
 
 	if options["chain-id"] then
-		table.insert(_args, "--main-chain-id")
-		table.insert(_args, options["chain-id"])
+		table.insert(args, "--main-chain-id")
+		table.insert(args, options["chain-id"])
 	end
 
 	if options["hwm"] then
-		table.insert(_args, "--main-hwm")
-		table.insert(_args, options["hwm"])
+		table.insert(args, "--main-hwm")
+		table.insert(args, options["hwm"])
 	end
 
 	log_info("Please confirm ledger authorization for baking...")
-	local _proc = proc.spawn("bin/client", _args, {
+	local process = proc.spawn("bin/client", args, {
 		stdio = { stderr = "pipe" },
 		wait = true,
 		env = { HOME = path.combine(os.cwd(), "data") }
 	})
 
-	local _stderr = _proc.stderrStream:read("a") or ""
-	ami_assert(_proc.exitcode == 0 or not _stderr:match("Error:"),
-		"Failed to setup ledger for baking: " .. _stderr)
+	local stderr = process.stderr_stream:read("a") or ""
+	ami_assert(process.exit_code == 0 or not stderr:match("Error:"),
+		"Failed to setup ledger for baking: " .. stderr)
 
 	log_success("Ledger authorized for baking.")
 end

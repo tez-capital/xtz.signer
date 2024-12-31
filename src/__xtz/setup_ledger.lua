@@ -1,12 +1,12 @@
 local options = ...
 
-local setupLedgerPlatform = require("__xtz.ledger.platform")
-local setupLedgerKey = require("__xtz.ledger.key")
-local setupLedgerAuthorize = require("__xtz.ledger.authorize")
+local setup_ledger_platform = require("__xtz.ledger.platform")
+local setup_ledger_key = require("__xtz.ledger.key")
+local setup_ledger_authorize = require("__xtz.ledger.authorize")
 
-setupLedgerPlatform(options)
-setupLedgerKey(options)
-setupLedgerAuthorize(options)
+setup_ledger_platform(options)
+setup_ledger_key(options)
+setup_ledger_authorize(options)
 
 -- reset permissions, because of platform setups we might run as root
 require"__xtz.util".reset_datadir_permissions()

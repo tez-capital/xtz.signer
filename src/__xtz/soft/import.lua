@@ -7,10 +7,10 @@ local function setup(options)
 
 	local homedir = path.combine(os.cwd(), "data")
 
-	local serviceManager = require "__xtz.service-manager"
+	local service_manager = require "__xtz.service-manager"
 	local services = require "__xtz.services"
-	local ok, status, _ = serviceManager.safe_get_service_status(services.signerServiceId)
-	ami_assert(ok and status ~= "running", services.signerServiceId .. " is already running. Please stop it to import keys...",
+	local ok, status, _ = service_manager.safe_get_service_status(services.signer_service_id)
+	ami_assert(ok and status ~= "running", services.signer_service_id .. " is already running. Please stop it to import keys...",
 		EXIT_APP_INTERNAL_ERROR)
 
 	local key = options["import-key"]
@@ -22,28 +22,28 @@ local function setup(options)
 		ami_assert(type(alias) == "string", "Invalid alias detected!", EXIT_CLI_ARG_VALIDATION_ERROR)
 	end
 
-	local _proc = proc.spawn("bin/signer",
+	local process = proc.spawn("bin/signer",
 		{ "import", "secret", "key", alias or "baker", key,
 			options.force and "--force" or nil }, {
 			stdio = "inherit",
 			wait = true,
 			env = { HOME = homedir }
 		})
-	ami_assert(_proc.exitcode == 0, "Failed to import key to signer!")
+	ami_assert(process.exit_code == 0, "Failed to import key to signer!")
 
 	local protocol = "ProtoALphaALphaALphaALphaALphaALphaALphaALphaDdp3zK"
 	if type(options.protocol) == "string" then
 		protocol = options.protocol
 	end
 
-	local _proc = proc.spawn("bin/client",
+	local process = proc.spawn("bin/client",
 		{ "-p", protocol, "import", "secret", "key", alias or "baker", key,
 			options.force and "--force" or nil }, {
 			stdio = "inherit",
 			wait = true,
 			env = { HOME = homedir }
 		})
-	ami_assert(_proc.exitcode == 0, "Failed to import key to client!")
+	ami_assert(process.exit_code == 0, "Failed to import key to client!")
 
 	log_success("Soft-wallet key successfully imported.")
 end

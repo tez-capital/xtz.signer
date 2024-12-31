@@ -1,4 +1,4 @@
-local _services = require"__xtz.services"
-_services.remove_all_services()
+local services = require"__xtz.services"
+services.remove_all_services()
 
 log_success("Signer services succesfully removed.")

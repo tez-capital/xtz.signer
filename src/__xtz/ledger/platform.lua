@@ -1,32 +1,30 @@
-local platform = am.app.get_model("PLATFORM")
-
 local function add_udev_rules()
 	local user = am.app.get("user", "root")
 	ami_assert(type(user) == "string", "User not specified...", EXIT_INVALID_CONFIGURATION)
 
-	local ok, userPlugin = am.plugin.safe_get("user")
+	local ok, user_plugin = am.plugin.safe_get("user")
 	if not ok then
 		log_error("Failed to load user plugin!")
 		return
 	end
-	ami_assert(userPlugin.add_into_group(user, "plugdev"), "Failed to add user '" .. user .. "' to plugdev")
+	ami_assert(user_plugin.add_into_group(user, "plugdev"), "Failed to add user '" .. user .. "' to plugdev")
 
-	local tmpFile = os.tmpname()
-	local udevRulesUrl =
+	local tmp_file_path = os.tmpname()
+	local udev_rules_url =
 	"https://raw.githubusercontent.com/alis-is/udev-rules/f15dc1eb83a4f3c666f58c12a93c45c6fca3a004/add_udev_rules.sh"
-	local ok, error = net.safe_download_file(udevRulesUrl, tmpFile, { followRedirects = true })
+	local ok, error = net.safe_download_file(udev_rules_url, tmp_file_path, { follow_redirects = true })
 	if not ok then
-		fs.remove(tmpFile)
+		fs.remove(tmp_file_path)
 		ami_error("Failed to download: " .. tostring(error))
 	end
-	local _proc = proc.spawn("/bin/bash", { tmpFile }, {
+	local process = proc.spawn("/bin/bash", { tmp_file_path }, {
 		stdio = { stderr = "pipe" },
 		wait = true,
 		env = { HOME = path.combine(os.cwd(), "data") }
 	})
 
-	fs.remove(tmpFile)
-	ami_assert(_proc.exitcode == 0, "Failed to setup udev rules : " .. (_proc.stderrStream:read("a") or "unknown"))
+	fs.remove(tmp_file_path)
+	ami_assert(process.exit_code == 0, "Failed to setup udev rules : " .. (process.stderr_stream:read("a") or "unknown"))
 	log_info("udev rules setup completed")
 end
 
@@ -42,7 +40,7 @@ local function setup_linux(options)
 end
 
 ---@type {table<string, fun(options: table<string, any>)>}
-local platformSetups = {
+local platform_setups = {
 	unix = setup_linux,
 	linux = setup_linux,
 }
@@ -62,7 +60,7 @@ local function setup(options)
 	end
 	log_info("Configuring ledger for platform: " .. OS)
 
-	local setup = platformSetups[OS]
+	local setup = platform_setups[OS]
 	if type(setup) == "function" then
 		setup(options)
 	else

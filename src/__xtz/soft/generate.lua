@@ -7,11 +7,11 @@ local function setup(options)
 
     local homedir = path.combine(os.cwd(), "data")
 
-    local serviceManager = require "__xtz.service-manager"
+    local service_manager = require "__xtz.service-manager"
     local services = require "__xtz.services"
-    local ok, status, _ = serviceManager.safe_get_service_status(services.signerServiceId)
+    local ok, status, _ = service_manager.safe_get_service_status(services.signer_service_id)
     ami_assert(ok and status ~= "running",
-        services.signerServiceId .. " is already running. Please stop it to generate keys...",
+        services.signer_service_id .. " is already running. Please stop it to generate keys...",
         EXIT_APP_INTERNAL_ERROR)
 
     local alias = "baker"
@@ -30,7 +30,7 @@ local function setup(options)
         protocol = options.protocol
     end
 
-    local _proc = proc.spawn("bin/signer",
+    local process = proc.spawn("bin/signer",
         { "gen", "keys", alias or "baker",
             "-s", signature,
             options.force and "--force" or nil }, {
@@ -38,11 +38,11 @@ local function setup(options)
             wait = true,
             env = { HOME = homedir }
         })
-    ami_assert(_proc.exitcode == 0, "Failed to generate keys!")
+    ami_assert(process.exit_code == 0, "Failed to generate keys!")
 
     -- get private key
     -- show address <alias> -S
-    local _proc = proc.spawn("bin/signer",
+    local process = proc.spawn("bin/signer",
         { "show", "address", alias, "-S" }, {
             stdio = { output = "pipe" },
             wait = true,
@@ -52,18 +52,18 @@ local function setup(options)
     -- Hash: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     -- Public Key:  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     -- Secret Key: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    local output = _proc.stdoutStream:read("a") or ""
+    local output = process.stdout_stream:read("a") or ""
     local secret_key = output:match("Secret Key: (.+)")
 
     -- import into client
-    local _proc = proc.spawn("bin/client",
+    local process = proc.spawn("bin/client",
         { "-p", protocol, "import", "secret", "key", alias or "baker", secret_key,
             options.force and "--force" or nil }, {
             stdio = "inherit",
             wait = true,
             env = { HOME = homedir }
         })
-    ami_assert(_proc.exitcode == 0, "Failed to import key to client!")
+    ami_assert(process.exit_code == 0, "Failed to import key to client!")
 
     log_success("Soft-wallet keys successfully generated.")
 end

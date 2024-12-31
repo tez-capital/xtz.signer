@@ -1,12 +1,12 @@
-local _user = am.app.get("user", "root")
-ami_assert(type(_user) == "string", "User not specified...", EXIT_INVALID_CONFIGURATION)
+local user = am.app.get("user", "root")
+ami_assert(type(user) == "string", "User not specified...", EXIT_INVALID_CONFIGURATION)
 
-local _homedir = path.combine(os.cwd(), "data")
+local home_directory = path.combine(os.cwd(), "data")
 
-local _proc = proc.spawn("bin/client", { "register", "key", "baker", "as", "delegate" }, {
+local process = proc.spawn("bin/client", { "register", "key", "baker", "as", "delegate" }, {
 	stdio = "inherit" ,
 	wait = true,
-	env = { HOME = _homedir }
+	env = { HOME = home_directory }
 })
-ami_assert(_proc.exitcode == 0, "Failed to register key as delegate!")
+ami_assert(process.exit_code == 0, "Failed to register key as delegate!")
 log_success("Keys successfully registered as delegate.")
