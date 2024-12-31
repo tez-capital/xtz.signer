@@ -248,7 +248,7 @@ return {
                     type = "string"
                 }
             },
-            type = "no-command",
+            type = "namespace",
             action = '__xtz/log.lua',
             context_fail_exit_code = EXIT_APP_INTERNAL_ERROR
         },
