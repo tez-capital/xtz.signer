@@ -279,7 +279,7 @@ return {
                 about['App Type'] = am.app.get({ 'type', 'id' }, am.app.get('type'))
                 ami_assert(ok, 'Failed to parse about file!', EXIT_APP_ABOUT_ERROR)
                 if am.options.OUTPUT_FORMAT == 'json' then
-                    print(hjson.stringify_to_json(about, { indent = false, skipkeys = true }))
+                    print(hjson.stringify_to_json(about, { indent = false, skip_keys = true }))
                 else
                     print(hjson.stringify(about))
                 end

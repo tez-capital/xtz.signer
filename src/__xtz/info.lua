@@ -230,5 +230,5 @@ end
 if needs_json_output then
 	print(hjson.stringify_to_json(hide_secrets(info), { indent = false }))
 else
-	print(hjson.stringify(hide_secrets(info), { sortKeys = true }))
+	print(hjson.stringify(hide_secrets(info), { sort_keys = true }))
 end
