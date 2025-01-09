@@ -141,9 +141,7 @@ local function collect_wallet_info()
 			ledger_status = ledger and "disconnected" or nil, -- we set disconnected as default and update it later, nil means not a ledger wallet
 		}
 
-		if wallet_id and wallet_id:match("baker") then
-			send_analytics(wallet_id)
-		end
+		send_analytics(wallet.pkh)
 		::CONTINUE::
 	end
 
