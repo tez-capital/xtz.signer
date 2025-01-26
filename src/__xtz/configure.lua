@@ -1,6 +1,11 @@
 local ok, err = fs.safe_mkdirp("data")
 ami_assert(ok, "Failed to create data directory - " .. tostring(err) .. "!")
 
+local REMOTE_PRISM = am.app.get_configuration("PRISM")
+if REMOTE_PRISM then
+	require"__xtz.prism.setup"
+end
+
 local backend = am.app.get_configuration("backend", os.getenv("ASCEND_SERVICES") ~= nil and "ascend" or "systemd")
 local service_manager = require"__xtz.service-manager"
 local services = require"__xtz.services"
