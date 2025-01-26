@@ -12,6 +12,7 @@
         - dal.hjson
     config.hjson
 ]]
+log_info("setting up prism")
 local prism_key_generator = require("__xtz/prism/key_generator")
 
 fs.mkdirp("prism/keys")
