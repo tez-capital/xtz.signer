@@ -1,0 +1,14 @@
+{
+    executable: {{{ROOT_DIR}}}/bin/prism
+    args: [
+        -configuration
+        {{{ROOT_DIR}}}/prism/config.hjson
+    ]
+    environment: {
+        HOME: {{{ROOT_DIR}}}/data
+    }
+    working_directory: {{{ROOT_DIR}}}
+    restart: always
+    restart_delay: 1
+    user: {{{USER}}}
+}

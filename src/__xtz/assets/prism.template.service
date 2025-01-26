@@ -1,0 +1,23 @@
+[Unit]
+Description=Setup a secure tunnel to baker node
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+User={{{USER}}}
+Group={{{USER}}}
+RestartSec=1
+
+Type=simple
+
+Environment="HOME={{{ROOT_DIR}}}/data"
+WorkingDirectory={{{ROOT_DIR}}}
+ExecStart={{{ROOT_DIR}}}/bin/prism -configuration "{{{ROOT_DIR}}}/prism/config.hjson"
+
+{{#configuration.SERVICE_CONFIGURATION_PRISM_SERVICE__ARRAY}}
+{{{key}}}={{{value}}}
+{{/configuration.SERVICE_CONFIGURATION_PRISM_SERVICE__ARRAY}}
+
+Restart=always
+[Install]
+WantedBy=multi-user.target
