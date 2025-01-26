@@ -18,7 +18,7 @@ local prism_key_generator = require("__xtz/prism/key_generator")
 fs.mkdirp("prism/keys")
 -- fs.mkdirp("prism/conf.d") -- not needed for signer
 
-local ok, err = prism_key_generator.generate("prism/keys/signer.prism", "signer.prism", "tezos-signer")
+local ok, err = prism_key_generator.generate_client("prism/keys/signer", "tezos-signer")
 ami_assert(ok, err or "failed to generate signer key")
 
 -- generate configuration

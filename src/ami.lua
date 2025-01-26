@@ -252,20 +252,25 @@ return {
             action = '__xtz/log.lua',
             context_fail_exit_code = EXIT_APP_INTERNAL_ERROR
         },
-        ['deposits-limit'] = {
-            description = "ami 'deposit-limit' sub command",
-            summary = 'Sets or unsets deposit limit.',
+        ['generate-prism-key'] = {
+            description = "ami 'generate-prism-key' sub command",
+            summary = 'Generates key for prism tunneling.',
             options = {
-                ["unset"] = {
-                    description = "Unsets deposit limit.",
-                    type = "boolean"
+                ["path"] = {
+                    description = "Output file path",
+                    type = "string"
                 },
-                ["set"] = {
-                    description = "Set deposit limit to specific amount of tez",
-                    type = "number"
+                ["common-name"] = {
+                    aliases = { "cn" },
+                    description = "Common name",
+                    type = "string"
+                },
+                ["kind"] = {
+                    description = "Kind of key to generate (client/server)",
+                    type = "string"
                 }
             },
-            action = '__xtz/deposits_limit.lua',
+            action = '__xtz/generate_prism_key.lua',
             context_fail_exit_code = EXIT_APP_INTERNAL_ERROR
         },
         about = {
