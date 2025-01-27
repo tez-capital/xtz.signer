@@ -3,11 +3,11 @@
     linux-arm64: {
         signer: https://gitlab.com/tezos/tezos/-/package_files/171290856/download
         client: https://gitlab.com/tezos/tezos/-/package_files/171290964/download
-        prism: https://github.com/alis-is/prism-releases/releases/download/0.0.6/prism-linux-arm64
+        prism: https://github.com/alis-is/prism-releases/releases/download/0.0.7/prism-linux-arm64
     }
     linux-x86_64: {
         signer: https://gitlab.com/tezos/tezos/-/package_files/171290228/download
         client: https://gitlab.com/tezos/tezos/-/package_files/171290286/download
-        prism: https://github.com/alis-is/prism-releases/releases/download/0.0.6/prism-linux-amd64
+        prism: https://github.com/alis-is/prism-releases/releases/download/0.0.7/prism-linux-amd64
     }
 }
