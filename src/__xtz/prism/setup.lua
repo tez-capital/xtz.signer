@@ -21,7 +21,17 @@ fs.mkdirp("prism/keys")
 local ok, err = prism_key_generator.generate_client("prism/keys/signer", "tezos-signer")
 ami_assert(ok, err or "failed to generate signer key")
 
--- generate configuration
+--- load and validate configuration
+--- 
+--- {
+---     remote: <default_remote>,
+---     listening_forwarders: {} # see prism docs
+---     connecting_forwarders: {} # see prism docs
+---     default_forwarder: {
+---         signer: <true|false> # whether to provide access to signer for default_remote
+---         node: <true|false> # whether default_remote provides access to the node
+---     }
+--- }
 local PRISM_CONFIGURATION = am.app.get_configuration("PRISM")
 ami_assert(PRISM_CONFIGURATION, "PRISM configuration must be provided")
 
@@ -34,6 +44,7 @@ local are_connecting_forwarders_valid_type = type(PRISM_CONFIGURATION.connecting
     type(PRISM_CONFIGURATION.connecting_forwarders) == "table"
 ami_assert(are_connecting_forwarders_valid_type, "invalid connecting_forwarders type")
 
+-- generate configuration
 local prism_configuration = {
     variables = {
         default_remote = PRISM_CONFIGURATION.remote,
