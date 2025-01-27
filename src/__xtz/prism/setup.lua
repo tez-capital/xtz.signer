@@ -77,6 +77,7 @@ if type(PRISM_CONFIGURATION.default_forwarder) == "table" then
         forward_from = PRISM_CONFIGURATION.default_forwarder.rpc and "${local_rpc_endpoint}" or nil,
 
         key_path =  PRISM_CONFIGURATION.default_forwarder.key or "prism/keys/signer.prism",
+        server_name = "tezos-node",
     }
     prism_configuration.connecting_forwarders = connecting_forwarders
 end
