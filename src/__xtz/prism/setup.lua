@@ -30,6 +30,7 @@ ami_assert(ok, err or "failed to generate signer key")
 ---     default_forwarder: {
 ---         signer: <true|false> # whether to provide access to signer for default_remote
 ---         node: <true|false> # whether default_remote provides access to the node
+---         keys: path to prism key to use, defaults to "prism/keys/signer.prism"
 ---     }
 --- }
 local PRISM_CONFIGURATION = am.app.get_configuration("PRISM")
@@ -49,33 +50,35 @@ local prism_configuration = {
     variables = {
         default_remote = PRISM_CONFIGURATION.remote,
         signer_endpoint = am.app.get_configuration("SIGNER_ENDPOINT", "127.0.0.1:20090"),
-        local_rpc_endpoint = "127.0.0.1" .. am.app.get_model("LOCAL_RPC_PORT", "8732")
+        local_rpc_endpoint = "127.0.0.1:" .. am.app.get_model("LOCAL_RPC_PORT", "8732")
     },
-    listening_forwarders = PRISM_CONFIGURATION.listening_forwarders or {},
-    connecting_forwarders = PRISM_CONFIGURATION.connecting_forwarders or {},
+    listening_forwarders = PRISM_CONFIGURATION.listening_forwarders,
+    connecting_forwarders = PRISM_CONFIGURATION.connecting_forwarders,
 }
 
 ami_assert(type(PRISM_CONFIGURATION.default_forwarder) == "nil" or PRISM_CONFIGURATION.default_forwarder == true or type(PRISM_CONFIGURATION.default_forwarder) == "table",
     "invalid 'PRISM.default_forwarder' type")
-if type(prism_configuration.connecting_forwarders.default_forwarder) ~= "nil" and type(PRISM_CONFIGURATION.default_forwarder) ~= "nil" then
+if type(table.get(prism_configuration.connecting_forwarders, "default_forwarder", nil)) ~= "nil" and type(PRISM_CONFIGURATION.default_forwarder) ~= "nil" then
     ami_error("PRISM.default_forwarder collides with PRISM.connecting_forwarders")
 end
 
 if PRISM_CONFIGURATION.default_forwarder == true then
     PRISM_CONFIGURATION.default_forwarder = {
         signer = true,
-        rpc = true
+        rpc = true,
     }
 end
 
 if type(PRISM_CONFIGURATION.default_forwarder) == "table" then
-    prism_configuration.connecting_forwarders.default_forwarder = {
+    local connecting_forwarders = prism_configuration.connecting_forwarders or {}
+    connecting_forwarders.default_forwarder = {
         connect_to = "${default_remote}",
         forward_to = PRISM_CONFIGURATION.default_forwarder.signer and "${signer_endpoint}" or nil,
         forward_from = PRISM_CONFIGURATION.default_forwarder.rpc and "${local_rpc_endpoint}" or nil,
 
-        key_path = "prism/keys/signer.prism",
+        key_path =  PRISM_CONFIGURATION.default_forwarder.key or "prism/keys/signer.prism",
     }
+    prism_configuration.connecting_forwarders = connecting_forwarders
 end
 
 local ok = fs.safe_write_file("prism/config.hjson", hjson.stringify(prism_configuration))
