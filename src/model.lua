@@ -41,6 +41,10 @@ local services = require("__xtz.services")
 local wanted_binaries = table.keys(services.signer_service_names)
 table.insert(wanted_binaries, "client")
 
+if am.app.get_configuration("PRISM") then
+    table.insert(wanted_binaries, "prism")
+end
+
 local endpoint = am.app.get_configuration("SIGNER_ENDPOINT", "127.0.0.1:20090")
 local signer_addr = endpoint:match('([%d%.:]*):') or "127.0.0.1"
 local signer_port = endpoint:match('[%d%.:]*:(%d*)') or "20090"

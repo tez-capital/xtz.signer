@@ -16,5 +16,11 @@ for k, v in pairs(services.all) do
 	ami_assert(ok, "Failed to install " .. service_id .. ".service " .. (err or ""))
 end
 
+-- prism
+local REMOTE_PRISM = am.app.get_configuration("PRISM")
+if REMOTE_PRISM then
+	require"__xtz.prism.setup"
+end
+
 -- adjust data directory permissions
 require"__xtz.util".reset_datadir_permissions()
