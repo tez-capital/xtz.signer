@@ -1,5 +1,5 @@
-NOTE: if you at any point you feel like it is taking too long and you can not make it work...
-    **just comment out or remove PRISM parts from config and rerun tezbake upgrade**
+> **Note:** If at any point you feel like it is taking too long and you cannot make it work, you can simply comment out or remove the PRISM parts from the configuration and rerun `tezbake upgrade` or `sudo ami setup`.
+> **Note2:** The `ami` commands have to be run separately for the node and the signer. `tezbake` does this for you automatically.
 
 1. backup app.json from signer and node
     - `cp /bake-buddy/signer/app.json /bake-buddy/signer/app.json.backup`
