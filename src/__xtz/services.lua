@@ -29,7 +29,7 @@ for k, _ in pairs(tunnel_services) do
 	tunnel_service_names[k:sub((#(app_id .. "-xtz-") + 1))] = k
 end
 -- add not used tunnel services to possible residues
-possible_residues = util.merge_arrays(possible_residues, uses_prism and table.values(ssh_tunnel_services) or table.values(prism_tunnel_services)) or {}
+possible_residues = util.merge_arrays(possible_residues, uses_prism and table.keys(ssh_tunnel_services) or table.keys(prism_tunnel_services)) or {}
 -- end tunnel services
 
 local all = util.clone(signer_services)
