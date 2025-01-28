@@ -34,7 +34,7 @@ NOTE: if you at any point you feel like it is taking too long and you can not ma
         ...
 }
 ```
-3. gets latest packages and sets up prism 
+3. upgrade/setup to apply changes
    - `tezbake upgrade` or `sudo ami setup`
 4. `tezbake start` or `sudo ami start`
 
