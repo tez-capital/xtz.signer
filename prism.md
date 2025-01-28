@@ -1,4 +1,5 @@
 > **Note:** If at any point you feel like it is taking too long and you cannot make it work, you can simply comment out or remove the PRISM parts from the configuration and rerun `tezbake upgrade` or `sudo ami setup`.
+
 > **Note2:** The `ami` commands have to be run separately for the node and the signer. `tezbake` does this for you automatically.
 
 1. backup app.json from signer and node
