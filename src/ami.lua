@@ -18,6 +18,10 @@ return {
                     description = "Skips check baker authorization check on ledger",
                     type = "boolean"
                 },
+                ["skip-ledger-connection-check"] = {
+                    description = "Skips check baker connection check on ledger",
+                    type = "boolean"
+                },
                 ["sensitive"] = {
                     description = "Hide sensitive information",
                     type = "boolean"

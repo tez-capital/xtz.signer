@@ -5,6 +5,7 @@ local print_service_info = options.services
 local print_wallet_info = options.wallets
 local is_sensitive_mode = options["sensitive"]
 local skip_ledger_authorization_check = options["skip-authorization-check"]
+local skip_ledger_connection_check = options["skip-ledger-connection-check"]
 local print_all = (not print_wallet_info) and (not print_service_info)
 
 local home_directory = path.combine(os.cwd() or ".", "data")
@@ -145,33 +146,36 @@ local function collect_wallet_info()
 		::CONTINUE::
 	end
 
-	local args = { "list", "connected", "ledgers" }
-	local process = proc.spawn("bin/signer", args, {
-		stdio = { stderr = "pipe" },
-		wait = true,
-		env = { HOME = home_directory }
-	})
-
 	local connected_ledgers = {}
-	local output = process.exit_code == 0 and process.stdout_stream:read("a") or "failed"
-	for ledger_id, backing_app_info, device, address in output:gmatch("## Ledger `(%S+-%S+-%S+)`%s+(.-)Ledger%s+(.-) at %[([%d%-%.]+:%d%.%d)%]") do
-		local version = backing_app_info:match("Found%s+a%s+Tezos%s+Baking%s+(%d+%.%d+%.%d+)")
-		if not version then
-			set_status("error", "Baking app not found or not active on ledger: " .. ledger_id)
+	if not skip_ledger_connection_check then
+		local args = { "list", "connected", "ledgers" }
+		local process = proc.spawn("bin/signer", args, {
+			stdio = { stderr = "pipe" },
+			wait = true,
+			env = { HOME = home_directory }
+		})
+
+		local output = process.exit_code == 0 and process.stdout_stream:read("a") or "failed"
+		for ledger_id, backing_app_info, device, address in output:gmatch("## Ledger `(%S+-%S+-%S+)`%s+(.-)Ledger%s+(.-) at %[([%d%-%.]+:%d%.%d)%]") do
+			local version = backing_app_info:match("Found%s+a%s+Tezos%s+Baking%s+(%d+%.%d+%.%d+)")
+			if not version then
+				set_status("error", "Baking app not found or not active on ledger: " .. ledger_id)
+			end
+			connected_ledgers[ledger_id] = {
+				baking_app = version,
+				device_address = address,
+				device = device,
+				ledger_status = "connected",
+			}
 		end
-		connected_ledgers[ledger_id] = {
-			baking_app = version,
-			device_address = address,
-			device = device,
-			ledger_status = "connected",
-		}
 	end
+
 
 	for name, wallet in pairs(wallets) do
 		if wallet.kind == "ledger" then
 			local ledger = wallet.ledger
 			local ledger_info = connected_ledgers[ledger]
-			if not ledger_info then
+			if not ledger_info and not skip_ledger_connection_check then
 				set_status("error", "Ledger device not found for wallet " .. name)
 				goto CONTINUE
 			end
