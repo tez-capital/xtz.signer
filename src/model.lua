@@ -40,6 +40,7 @@ am.app.set_model({
 local services = require("__xtz.services")
 local wanted_binaries = table.keys(services.signer_service_names)
 table.insert(wanted_binaries, "client")
+table.insert(wanted_binaries, "check-ledger")
 
 if am.app.get_configuration("PRISM") then
     table.insert(wanted_binaries, "prism")

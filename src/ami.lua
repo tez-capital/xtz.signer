@@ -14,12 +14,8 @@ return {
                     description = "Prints info about wallets",
                     type = "string"
                 },
-                ["skip-authorization-check"] = {
-                    description = "Skips check baker authorization check on ledger",
-                    type = "boolean"
-                },
-                ["skip-ledger-connection-check"] = {
-                    description = "Skips check baker connection check on ledger",
+                ["skip-ledger-check"] = {
+                    description = "Skips checking ledgers",
                     type = "boolean"
                 },
                 ["sensitive"] = {

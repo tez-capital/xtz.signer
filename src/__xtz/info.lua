@@ -4,8 +4,7 @@ local options = ...
 local print_service_info = options.services
 local print_wallet_info = options.wallets
 local is_sensitive_mode = options["sensitive"]
-local skip_ledger_authorization_check = options["skip-authorization-check"]
-local skip_ledger_connection_check = options["skip-ledger-connection-check"]
+local skip_ledger_check = options["skip-ledger-check"]
 local print_all = (not print_wallet_info) and (not print_service_info)
 
 local home_directory = path.combine(os.cwd() or ".", "data")
@@ -129,7 +128,7 @@ local function collect_wallet_info()
 		end
 
 		local kind = "soft"
-		local ledger = wallet.locator:match("ledger://([^/]+)/")
+		local ledger, path = wallet.locator:match("ledger://([^/]+)/(.+)")
 		if ledger then kind = "ledger" end
 		-- "locator": "remote:<pkh>",
 		local is_remote = wallet.locator:match("remote:([^,]+)") ~= nil
@@ -140,62 +139,36 @@ local function collect_wallet_info()
 			kind = kind,
 			ledger = ledger,
 			ledger_status = ledger and "disconnected" or nil, -- we set disconnected as default and update it later, nil means not a ledger wallet
+			path = path
 		}
 
 		send_analytics(wallet.pkh)
 		::CONTINUE::
 	end
 
+	---@type table<string, LedgerInfo>
 	local connected_ledgers = {}
-	if not skip_ledger_connection_check then
-		local args = { "list", "connected", "ledgers" }
-		local process = proc.spawn("bin/signer", args, {
-			stdio = { stderr = "pipe" },
-			wait = true,
-			env = { HOME = home_directory }
-		})
-
-		local output = process.exit_code == 0 and process.stdout_stream:read("a") or "failed"
-		for ledger_id, backing_app_info, device, address in output:gmatch("## Ledger `(%S+-%S+-%S+)`%s+(.-)Ledger%s+(.-) at %[([%d%-%.]+:%d%.%d)%]") do
-			local version = backing_app_info:match("Found%s+a%s+Tezos%s+Baking%s+(%d+%.%d+%.%d+)")
-			if not version then
-				set_status("error", "Baking app not found or not active on ledger: " .. ledger_id)
-			end
-			connected_ledgers[ledger_id] = {
-				baking_app = version,
-				device_address = address,
-				device = device,
-				ledger_status = "connected",
-			}
-		end
+	if not skip_ledger_check then
+		local check_ledger = require "__xtz.ledger.check_ledger"
+		connected_ledgers = check_ledger.list(3)
 	end
-
 
 	for name, wallet in pairs(wallets) do
 		if wallet.kind == "ledger" then
 			local ledger = wallet.ledger
 			local ledger_info = connected_ledgers[ledger]
-			if not ledger_info and not skip_ledger_connection_check then
+			if not ledger_info and not skip_ledger_check then
 				set_status("error", "Ledger device not found for wallet " .. name)
 				goto CONTINUE
 			end
-			wallets[name] = util.merge_tables(wallet, ledger_info, true)
-			-- check authorized
-			if skip_ledger_authorization_check then
-				goto CONTINUE
-			end
-
-			local process = proc.spawn("bin/signer", { "get", "ledger", "authorized", "path", "for", name }, {
-				stdio = { stderr = "pipe" },
-				wait = true,
-				env = { HOME = home_directory }
-			})
-
-			local output = process.exit_code == 0 and process.stdout_stream:read("a") or "failed"
-			local authorized = output:match("Authorized baking")
-			wallets[name].authorized = authorized and true or false
-			if not authorized then
-				set_status("error", "Ledger device not authorized for wallet " .. name)
+			if ledger_info then
+				wallet.app_version = ledger_info.app_version
+				wallet.ledger_status = "connected"
+				wallet.bus = ledger_info.bus
+				wallet.address = ledger_info.address
+				wallet.authorized = wallet.path == ledger_info.authorized_path_short
+			else
+				wallet.ledger_status = "disconnected"
 			end
 		end
 		::CONTINUE::
