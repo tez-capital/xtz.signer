@@ -149,8 +149,18 @@ local function collect_wallet_info()
 	---@type table<string, LedgerInfo>
 	local connected_ledgers = {}
 	if not skip_ledger_check then
-		local check_ledger = require "__xtz.ledger.check_ledger"
-		connected_ledgers = check_ledger.list(3)
+		local check_ledger = require "__xtz.ledger.check"
+		if wallets_to_check then
+			local ledger_ids = table.map(wallets_to_check, function(wallet_id)
+				local wallet = wallets[wallet_id]
+				if wallet and wallet.kind == "ledger" then
+					return wallet.ledger
+				end
+			end)
+			connected_ledgers = check_ledger.list(3, string.join_strings(",", table.unpack(ledger_ids)))
+		else
+			connected_ledgers = check_ledger.list(3)
+		end
 	end
 
 	for name, wallet in pairs(wallets) do

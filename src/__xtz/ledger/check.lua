@@ -13,19 +13,35 @@ local function extract_checker_value(val)
     return val
 end
 
+local function get_ledger_id(ledger)
+    if type(ledger) ~= "table" then
+        return "invalid ledger device"
+    end
+    if type(ledger.id) == "string" and #ledger.id > 0 then
+        return ledger.id
+    end
+    local bus = ledger.bus or ""
+    local address = ledger.address or ""
+    return "unknown-ledger-" .. bus .. "-" .. address
+end
+
 ---@param bus string?
 ---@param address string?
----@param retries number?
-local function list_ledgers(bus, address, retries)
+---@param ledger_id string?
+local function list_ledgers(bus, address, ledger_id)
     local args = {}
 
     if type(bus) == "string" and #bus > 0 then
         table.insert(args, "--bus")
         table.insert(args, bus)
     end
-    if type(address) == "string" then
+    if type(address) == "string" and #address > 0 then
         table.insert(args, "--address")
         table.insert(args, address)
+    end
+    if type(ledger_id) == "string" and #ledger_id > 0 then
+        table.insert(args, "--ledger-id")
+        table.insert(args, ledger_id)
     end
 
     local process = proc.spawn("bin/check-ledger", args, {
@@ -72,8 +88,11 @@ local function list_ledgers(bus, address, retries)
         end
 
         -- ed25519 and 44/1729/0/0 -> ed25519/0h/0h
-        local p1, p2 = authorizedPath:match("%d+/%d+/(%d+)/(%d+)")
-        local authorized_path_short = curve .. "/" .. p1 .. "h/" .. p2 .. "h"
+        local authorized_path_short
+        if type(authorizedPath) == "string" then
+            local p1, p2 = authorizedPath:match("%d+/%d+/(%d+)/(%d+)")
+            authorized_path_short = curve .. "/" .. p1 .. "h/" .. p2 .. "h"
+        end
 
         table.insert(ledgers, {
             id = ledgerId,
@@ -101,13 +120,14 @@ end
 
 ---List connected ledgers
 ---@param retries number? Number of retries
+---@param ledgerId string? Ledger id to check_ledger
 ---@return table<string, LedgerInfo>
-function check_ledger.list(retries)
+function check_ledger.list(retries, ledgerId)
     if type(retries) ~= "number" or retries < 1 then
         retries = 1
     end
 
-    local ledgers = list_ledgers(nil, nil, retries)
+    local ledgers = list_ledgers(nil, nil, ledgerId)
 
     local valid_ledgers = table.filter(ledgers, function(_, ledger)
         return type(ledger.id) == "string" and #ledger.id > 0
@@ -137,10 +157,10 @@ function check_ledger.list(retries)
 
     local result = {}
     for _, ledger in ipairs(valid_ledgers) do
-        result[ledger.id] = ledger
+        result[get_ledger_id(ledger)] = ledger
     end
     for _, ledger in ipairs(ledgers_not_loaded) do
-        result[ledger.id] = ledger
+        result[get_ledger_id(ledger)] = ledger
     end
 
     return result
