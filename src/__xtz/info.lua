@@ -18,12 +18,20 @@ local info = {
 	services = {}
 }
 
-local function set_status(level, status)
-	if info.level == "ok" then
-		info.level = level
-		info.status = status
+local levels = { "ok", "warning", "error" }
+local function index_of(tbl, value)
+	for i, v in ipairs(tbl) do
+		if v == value then
+			return i
+		end
 	end
-	if info.level == "warning" and level == "error" then
+	return -1
+end
+
+local function set_status(level, status)
+	local level_index = index_of(levels, level)
+	local info_index = index_of(levels, info.level)
+	if level_index > info_index then
 		info.level = level
 		info.status = status
 	end
@@ -177,8 +185,12 @@ local function collect_wallet_info()
 				wallet.bus = ledger_info.bus
 				wallet.address = ledger_info.address
 				wallet.authorized = wallet.path == ledger_info.authorized_path_short
+				if not wallet.authorized then
+					set_status("error", "Ledger device not authorized for wallet " .. name)
+				end
 			else
 				wallet.ledger_status = "disconnected"
+				set_status("error", "Ledger device not found for wallet " .. name)
 			end
 		end
 		::CONTINUE::
