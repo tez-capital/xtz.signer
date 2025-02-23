@@ -182,8 +182,8 @@ local function collect_wallet_info()
 			if ledger_info then
 				wallet.app_version = ledger_info.app_version
 				wallet.ledger_status = "connected"
-				wallet.bus = ledger_info.bus
-				wallet.address = ledger_info.address
+				wallet.device_bus = ledger_info.bus
+				wallet.device_address = ledger_info.address
 				wallet.authorized = wallet.path == ledger_info.authorized_path_short
 				if not wallet.authorized then
 					set_status("error", "Ledger device not authorized for wallet " .. name)
