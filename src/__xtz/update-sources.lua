@@ -26,7 +26,12 @@ for platform, sources in pairs(current_sources) do
 	local new_sources = {}
 	-- extract arch from linux-x86_64
 	local arch = platform:match("linux%-(.*)")
-	for source_id, _ in pairs(sources) do
+	for source_id, source_url in pairs(sources) do
+		if source_id == "prism" or source_id == "check-ledger" then
+			new_sources[source_id] = source_url
+			goto CONTINUE
+		end
+
 		-- build asset id => <arch>-octez-<source_id>
 		local asset_ids = { [source_id] = arch .. "-octez-" .. source_id }
 		for asset_id, asset_name in pairs(asset_ids) do
@@ -40,11 +45,12 @@ for platform, sources in pairs(current_sources) do
 				end
 			end
 		end
+		::CONTINUE::
 	end
 	current_sources[platform] = new_sources
 end
 
 local new_content = "// SOURCE: https://gitlab.com/tezos/tezos/-/releases"
-new_content = new_content .. "\n" .. hjson.stringify(current_sources, { separator = true })
+new_content = new_content .. "\n" .. hjson.stringify(current_sources, { separator = true, sort_keys = true })
 
 fs.write_file("src/__xtz/sources.hjson", new_content)
