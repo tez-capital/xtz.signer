@@ -153,11 +153,13 @@ function check_ledger.list(retries, ledgerId)
         end
         ledgers_not_loaded = new_ledgers_not_loaded
         retries = retries - 1
+        os.sleep(200, "ms") -- wait 200ms
     end
 
     local result = {}
     for _, ledger in ipairs(valid_ledgers) do
         result[get_ledger_id(ledger)] = ledger
+        log_debug("ledger device found: " .. get_ledger_id(ledger) .. " path: " .. tostring(ledger.authorized_path_short) .. " app version: " .. tostring(ledger.app_version))
     end
     for _, ledger in ipairs(ledgers_not_loaded) do
         result[get_ledger_id(ledger)] = ledger
