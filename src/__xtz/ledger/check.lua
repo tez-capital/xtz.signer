@@ -66,12 +66,12 @@ local function list_ledgers(bus, address, ledger_id)
         if not appVersion then
             table.insert(errors, err)
         end
-        local curve, authorizedPath
-        local authorizedPathInfo, err = extract_checker_value(p3)
-        if not authorizedPathInfo then
+        local curve, authorized_path
+        local authorized_path_info, err = extract_checker_value(p3)
+        if not authorized_path_info then
             table.insert(errors, err)
         else
-            curve, authorizedPath = authorizedPathInfo:match("([^:]+):(.*)")
+            curve, authorized_path = authorized_path_info:match("([^:]+):(.*)")
             if not curve then
                 table.insert(errors, "unexpected value format")
             end
@@ -87,19 +87,11 @@ local function list_ledgers(bus, address, ledger_id)
             end
         end
 
-        -- ed25519 and 44/1729/0/0 -> ed25519/0h/0h
-        local authorized_path_short
-        if type(authorizedPath) == "string" then
-            local p1, p2 = authorizedPath:match("%d+/%d+/(%d+)/(%d+)")
-            authorized_path_short = curve .. "/" .. p1 .. "h/" .. p2 .. "h"
-        end
-
         table.insert(ledgers, {
             id = ledgerId,
             app_version = appVersion,
             curve = curve,
-            authorized_path = authorizedPath,
-            authorized_path_short = authorized_path_short,
+            authorized_path = tostring(curve) .. "/" .. tostring(authorized_path),
             bus = bus,
             address = address,
             errors = errors

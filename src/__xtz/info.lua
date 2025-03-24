@@ -113,6 +113,33 @@ local function load_public_keys()
 	return true, public_keys
 end
 
+
+local function are_ledger_paths_equal(path1, path2)
+	-- split by / where first is curve and rest are parts
+
+	local parts1 = string.split(path1, "/")
+	local parts2 = string.split(path2, "/")
+
+	-- compare curve
+	if #parts1 < 2 or #parts2 < 2 or parts1[1] ~= parts2[1] then
+		return false
+	end
+
+	-- compare parts
+	-- we compare from the end to the start and only up to the length of shortest path
+	-- this may not be the best way to compare paths but it should work sufficiently
+	local number_of_parts_to_compare = math.min(#parts1, #parts2) - 1 -- we skip curve
+	for i = 0, number_of_parts_to_compare - 1 --[[ -1 because we of subtraction ]] do
+		local p1 = tostring(parts1[#parts1 - i]):match("(%d+)h?")
+		local p2 = tostring(parts2[#parts2 - i]):match("(%d+)h?")
+		if p1 ~= p2 then
+			return false
+		end
+	end
+
+	return true
+end
+
 local function collect_wallet_info()
 	---@type table?
 	local wallets_to_check = nil
@@ -184,7 +211,7 @@ local function collect_wallet_info()
 				wallet.ledger_status = "connected"
 				wallet.device_bus = ledger_info.bus
 				wallet.device_address = ledger_info.address
-				wallet.authorized = wallet.path == ledger_info.authorized_path_short
+				wallet.authorized = are_ledger_paths_equal(wallet.path, ledger_info.authorized_path)
 				if not wallet.authorized then
 					set_status("error", "Ledger device not authorized for wallet " .. name)
 				end
