@@ -129,7 +129,7 @@ local function are_ledger_paths_equal(path1, path2)
 	-- we compare from the end to the start and only up to the length of shortest path
 	-- this may not be the best way to compare paths but it should work sufficiently
 	local number_of_parts_to_compare = math.min(#parts1, #parts2) - 1 -- we skip curve
-	for i = 0, number_of_parts_to_compare - 1 --[[ -1 because we of subtraction ]] do
+	for i = 0, number_of_parts_to_compare - 1 --[[ -1 because of subtraction ]] do
 		local p1 = tostring(parts1[#parts1 - i]):match("(%d+)h?")
 		local p2 = tostring(parts2[#parts2 - i]):match("(%d+)h?")
 		if p1 ~= p2 then
