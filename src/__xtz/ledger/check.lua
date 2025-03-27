@@ -105,7 +105,6 @@ end
 ---@field app_version string
 ---@field curve string
 ---@field authorized_path string
----@field authorized_path_short string
 ---@field bus string
 ---@field address string
 ---@field errors string[]
@@ -151,7 +150,7 @@ function check_ledger.list(retries, ledgerId)
     local result = {}
     for _, ledger in ipairs(valid_ledgers) do
         result[get_ledger_id(ledger)] = ledger
-        log_debug("ledger device found: " .. get_ledger_id(ledger) .. " path: " .. tostring(ledger.authorized_path_short) .. " app version: " .. tostring(ledger.app_version))
+        log_debug("ledger device found: " .. get_ledger_id(ledger) .. " path: " .. tostring(ledger.authorized_path) .. " app version: " .. tostring(ledger.app_version))
     end
     for _, ledger in ipairs(ledgers_not_loaded) do
         result[get_ledger_id(ledger)] = ledger

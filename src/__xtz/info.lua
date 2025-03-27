@@ -125,6 +125,10 @@ local function are_ledger_paths_equal(path1, path2)
 		return false
 	end
 
+	if #parts1 ~= #parts2 then
+		return false
+	end
+
 	-- compare parts
 	-- we compare from the end to the start and only up to the length of shortest path
 	-- this may not be the best way to compare paths but it should work sufficiently
