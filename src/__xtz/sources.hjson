@@ -3,13 +3,13 @@
     linux-arm64: {
         check-ledger: https://github.com/tez-capital/tezos-ledger-check/releases/download/0.0.15/tezos-check-ledger-linux-arm64
         client: https://gitlab.com/tezos/tezos/-/package_files/185568194/download
-        prism: https://github.com/alis-is/prism-releases/releases/download/0.1.1/prism-linux-arm64
+        prism: https://github.com/alis-is/prism-releases/releases/download/0.1.2/prism-linux-arm64
         signer: https://gitlab.com/tezos/tezos/-/package_files/185568029/download
     }
     linux-x86_64: {
         check-ledger: https://github.com/tez-capital/tezos-ledger-check/releases/download/0.0.15/tezos-check-ledger-linux-amd64
         client: https://gitlab.com/tezos/tezos/-/package_files/185566293/download
-        prism: https://github.com/alis-is/prism-releases/releases/download/0.1.1/prism-linux-amd64
+        prism: https://github.com/alis-is/prism-releases/releases/download/0.1.2/prism-linux-amd64
         signer: https://gitlab.com/tezos/tezos/-/package_files/185566064/download
     }
 }
