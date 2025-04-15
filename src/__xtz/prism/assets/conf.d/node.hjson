@@ -1,0 +1,16 @@
+{
+    nodes: {
+        main: {
+            named_tunnels: {
+                tezos-node: {
+                    disabled: ${tezos_node_forwarding_disabled}
+                    connect: ${prism_server}
+                    exit_to: ${signer_endpoint}
+                    enter_from: ${node_rpc_endpoint}
+                    server_name: tezos-node
+                    key_file: prism/keys/signer.prism
+                }
+            }
+        }
+    }
+}
