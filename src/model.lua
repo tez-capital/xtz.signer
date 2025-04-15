@@ -52,8 +52,6 @@ local signer_port = endpoint:match('[%d%.:]*:(%d*)') or "20090"
 
 local TEZOS_LOG_LEVEL = am.app.get_configuration("TEZOS_LOG_LEVEL", "info")
 
-local prism_remote = am.app.get_configuration({ "PRISM", "remote" })
-
 am.app.set_model(
     {
         WANTED_BINARIES = wanted_binaries,
@@ -63,7 +61,7 @@ am.app.set_model(
         LOCAL_RPC_PORT = am.app.get_configuration("LOCAL_RPC_PORT", "8732"),
         SIGNER_LOG_LEVEL = TEZOS_LOG_LEVEL,
         -- prism
-        PRISM_REMOTE = prism_remote,
+        PRISM_REMOTE = am.app.get_configuration({ "PRISM", "remote" }),
         PRISM_NODE_FORWARDING_DISABLED = am.app.get_configuration({ "PRISM", "node" }, false) ~= true,
     },
     { merge = true, overwrite = true }
