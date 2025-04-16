@@ -17,11 +17,9 @@ for k, v in pairs(services.all) do
 end
 
 -- prism
-local REMOTE_PRISM = am.app.get_configuration("PRISM")
-if REMOTE_PRISM then
-	log_warn("PRISM is enabled. Please configure it manually...")
-	-- // TODO: implement prism configuration
-	-- require"__xtz.prism.setup"
+local PRISM = am.app.get_configuration("PRISM")
+if PRISM then
+	require"__xtz.prism.setup"
 end
 
 -- adjust data directory permissions
