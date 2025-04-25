@@ -2,14 +2,17 @@
     variables: {
         node_rpc_endpoint: 127.0.0.1:{{{model.LOCAL_RPC_PORT}}}
         signer_endpoint: {{{model.SIGNER_ADDR}}}:{{{model.SIGNER_PORT}}}
-        prism_server: {{{model.PRISM_REMOTE}}}
-        tezos_node_forwarding_disabled: {{{model.PRISM_NODE_FORWARDING_DISABLED}}}
+        key_file: prism/keys/signer.prism
     }
     includes: [
         "./conf.d/*.hjson",
     ]
     nodes: {
         main: {
+            {{#model.PRISM_SERVER_LISTEN_ON}}
+            listen: {{{model.PRISM_SERVER_LISTEN_ON}}}
+            {{/model.PRISM_SERVER_LISTEN_ON}}
+            key_file: ${key_file}
         }
     }
 }

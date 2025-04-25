@@ -3,12 +3,14 @@
         main: {
             named_tunnels: {
                 tezos-node: {
-                    disabled: ${tezos_node_forwarding_disabled}
-                    connect: ${prism_server}
+                    disabled: {{{model.PRISM_NODE_FORWARDING_DISABLED}}}
+                    {{#model.PRISM_REMOTE}}
+                    connect: {{{model.PRISM_REMOTE}}}
+                    {{/model.PRISM_REMOTE}}
                     exit_to: ${signer_endpoint}
                     enter_from: ${node_rpc_endpoint}
                     server_name: tezos-node
-                    key_file: prism/keys/signer.prism
+                    key_file: ${key_file}
                 }
             }
         }
