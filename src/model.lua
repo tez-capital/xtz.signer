@@ -62,7 +62,7 @@ am.app.set_model(
         SIGNER_LOG_LEVEL = TEZOS_LOG_LEVEL,
         -- prism
         PRISM_REMOTE = am.app.get_configuration({ "PRISM", "remote" }),
-        PRISM_NODE_FORWARDING_DISABLED = am.app.get_configuration({ "PRISM", "node" }, false) ~= true,
+        PRISM_NODE_FORWARDING_DISABLED = am.app.get_configuration({ "PRISM", "node" }, false) == true,
         PRISM_SERVER_LISTEN_ON = am.app.get_configuration({ "PRISM", "listen" }),
     },
     { merge = true, overwrite = true }
