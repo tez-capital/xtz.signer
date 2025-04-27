@@ -1,7 +1,9 @@
 local app_id = am.app.get("id")
 local signer_service_id = app_id .. "-xtz-signer"
 
-local possible_residues = {}
+local possible_residues = {
+	app_id .. "-xtz-prism-tunnel"
+}
 
 -- signer services
 local signer_services = {
@@ -19,7 +21,7 @@ local ssh_tunnel_services = {
 	[app_id .. "-xtz-node-tunnel"] = "__xtz/assets/node-tunnel"
 }
 local prism_tunnel_services = {
-	[app_id .. "-xtz-prism-tunnel"] = "__xtz/assets/prism"
+	[app_id .. "-xtz-prism"] = "__xtz/assets/prism"
 }
 
 local uses_prism = am.app.get_configuration("PRISM")
