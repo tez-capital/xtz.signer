@@ -264,10 +264,6 @@ return {
                     aliases = { "cn" },
                     description = "Common name",
                     type = "string"
-                },
-                ["kind"] = {
-                    description = "Kind of key to generate (client/server)",
-                    type = "string"
                 }
             },
             action = '__xtz/generate_prism_key.lua',

@@ -12,21 +12,21 @@
         - dal.hjson
     config.hjson
 ]]
-log_info("setting up prism")
-local prism_key_generator = require("__xtz/prism/key_generator")
+log_info("generating prism keys...")
+local prism_key_generator = require"__xtz.prism.key_generator"
 
 fs.mkdirp("prism/keys")
 fs.mkdirp("prism/conf.d") -- not needed right now
 
 fs.copy("__xtz/prism/assets", "prism", { overwrite = true })
 
-local ok, err = prism_key_generator.generate_client("prism/keys/signer", "tezos-signer")
+local ok, err = prism_key_generator.generate("prism/keys/signer", "tezos-signer")
 ami_assert(ok, err or "failed to generate signer key")
 
-local ok, err = prism_key_generator.generate_server("prism/keys/node", "tezos-node")
+local ok, err = prism_key_generator.generate("prism/keys/node", "tezos-node")
 ami_assert(ok, err or "failed to generate signer key")
 
-local ok, err = prism_key_generator.generate_client("prism/keys/dal", "tezos-dal")
+local ok, err = prism_key_generator.generate("prism/keys/dal", "tezos-dal")
 ami_assert(ok, err or "failed to generate signer key")
 
 

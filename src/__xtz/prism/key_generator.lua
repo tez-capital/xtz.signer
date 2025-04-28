@@ -14,7 +14,7 @@ end
 ---@param path string
 ---@param CN string
 ---@return boolean, string?
-local function generate_client(path, CN)
+local function generate(path, CN)
     generate_ca()
 
     local has_valid_key = os.execute("bin/prism  validate-prism-key -path " .. path)
@@ -30,27 +30,6 @@ local function generate_client(path, CN)
     return true
 end
 
---- Generate a new key for a prism server
----@param path string
----@param CN string
----@return boolean, string?
-local function generate_server(path, CN)
-    generate_ca()
-
-    local has_valid_key = os.execute("bin/prism  validate-prism-key -path " .. path)
-    if not has_valid_key then
-        log_info "generating prism key"
-        if not os.execute("bin/prism generate-server-key --ca 'prism/keys/ca' --output '" .. path .. "' --name '" .. CN .. "'") then
-            return false, "Failed to generate server key"
-        end
-    else
-        log_info("valid key already exists at " .. path)
-    end
-
-    return true
-end
-
 return {
-    generate_client = generate_client,
-    generate_server = generate_server
+    generate = generate,
 }
