@@ -20,7 +20,7 @@ local function generate(path, CN)
     local has_valid_key = os.execute("bin/prism  validate-prism-key -path " .. path)
     if not has_valid_key then
         log_info "generating prism key"
-        if not os.execute("bin/prism generate-client-key --ca 'prism/keys/ca' --output '" .. path .. "' --name '" .. CN .. "'") then
+        if not os.execute("bin/prism generate-key --ca 'prism/keys/ca' --output '" .. path .. "' --name '" .. CN .. "'") then
             return false, "Failed to generate " .. path .. " key"
         end
     else
