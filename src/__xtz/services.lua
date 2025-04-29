@@ -24,7 +24,7 @@ local prism_tunnel_services = {
 	[app_id .. "-xtz-prism"] = "__xtz/assets/prism"
 }
 
-local uses_prism = am.app.get_configuration("PRISM")
+local uses_prism = am.app.get_configuration({ "PRISM", "remote" }) or am.app.get_configuration({ "PRISM", "listen" })
 local tunnel_services =  uses_prism and prism_tunnel_services or ssh_tunnel_services
 local tunnel_service_names = {}
 for k, _ in pairs(tunnel_services) do

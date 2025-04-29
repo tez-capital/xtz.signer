@@ -1,6 +1,6 @@
 {
     "id": "xtz.signer",
-    "version" : "0.34.1+octez.22.0",
+    "version" : "0.34.2+octez.22.0",
     "dependencies": [
         { "id":"xtz.base" }
     ]
