@@ -118,6 +118,13 @@ return {
             },
             context_fail_exit_code = EXIT_APP_INTERNAL_ERROR
         },
+        prism = {
+            description = "ami 'prism' sub command",
+            summary = "Passes any passed arguments directly to prism.",
+            type = "external",
+            exec = "bin/prism",
+            context_fail_exit_code = EXIT_APP_INTERNAL_ERROR
+        },
         ['register-key'] = {
             description = "ami 'register-key' sub command",
             summary = 'Registers key as delegate.',
@@ -250,23 +257,6 @@ return {
             },
             type = "namespace",
             action = '__xtz/log.lua',
-            context_fail_exit_code = EXIT_APP_INTERNAL_ERROR
-        },
-        ['generate-prism-key'] = {
-            description = "ami 'generate-prism-key' sub command",
-            summary = 'Generates key for prism tunneling.',
-            options = {
-                ["path"] = {
-                    description = "Output file path",
-                    type = "string"
-                },
-                ["common-name"] = {
-                    aliases = { "cn" },
-                    description = "Common name",
-                    type = "string"
-                }
-            },
-            action = '__xtz/generate_prism_key.lua',
             context_fail_exit_code = EXIT_APP_INTERNAL_ERROR
         },
         about = {
