@@ -24,6 +24,7 @@ local prism_tunnel_services = {
 	[app_id .. "-xtz-prism"] = "__xtz/assets/prism"
 }
 
+local uses_remote = type(am.app.get_model("REMOTE_NODE")) == "string"
 local uses_prism = am.app.get_configuration({ "PRISM", "remote" }) or am.app.get_configuration({ "PRISM", "listen" })
 local tunnel_services =  uses_prism and prism_tunnel_services or ssh_tunnel_services
 local tunnel_service_names = {}
@@ -37,8 +38,7 @@ possible_residues = util.merge_arrays(possible_residues, uses_prism and table.ke
 local all = util.clone(signer_services)
 local all_names = util.clone(signer_service_names)
 
-local remote_node_addr = am.app.get_model("REMOTE_NODE")
-if type(remote_node_addr) == "string" then
+if uses_remote or uses_prism then
 	for k, v in pairs(tunnel_service_names) do
 		all_names[k] = v
 	end
