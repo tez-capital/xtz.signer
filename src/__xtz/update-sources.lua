@@ -54,7 +54,7 @@ for platform, sources in pairs(current_sources) do
 	local arch = platform:match("darwin%-(.*)")
 	if arch then -- macos
 		for source_id, source_url in pairs(sources) do
-			if source_id == "prism" then
+			if source_id == "prism" or source_id == "check-ledger" then
 				new_sources[source_id] = source_url
 				goto CONTINUE
 			end

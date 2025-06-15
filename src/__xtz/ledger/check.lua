@@ -44,11 +44,16 @@ local function list_ledgers(bus, address, ledger_id)
         table.insert(args, ledger_id)
     end
 
-    local process = proc.spawn("bin/check-ledger", args, {
+    local process, err = proc.spawn("bin/check-ledger", args, {
         stdio = { stderr = "pipe" },
         wait = true,
         env = { HOME = home_directory }
     })
+
+    if not process then
+        log_error("Failed to spawn check-ledger process: " .. tostring(err))
+        return {}
+    end
 
     local output = process.exit_code == 0 and process.stdout_stream:read("a") or "failed"
     -- split by line
