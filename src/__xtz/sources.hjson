@@ -1,21 +1,22 @@
-// SOURCE: https://gitlab.com/tezos/tezos/-/releases
+// SOURCE: https://gitlab.com/tezos/tezos/-/packages/40366546 
+// macOS SOURCE: https://github.com/tez-capital/tezos-macos-pipeline/releases/tag/octez-v22.1-2025-06-11_20-14
 {
-    linux-arm64: {
-        check-ledger: https://github.com/tez-capital/tezos-ledger-check/releases/download/0.0.17/tezos-check-ledger-linux-arm64
-        client: https://gitlab.com/tezos/tezos/-/package_files/185568194/download
-        prism: https://github.com/alis-is/prism-releases/releases/download/0.4.1/prism-linux-arm64
-        signer: https://gitlab.com/tezos/tezos/-/package_files/185568029/download
-    }
-    linux-x86_64: {
-        check-ledger: https://github.com/tez-capital/tezos-ledger-check/releases/download/0.0.17/tezos-check-ledger-linux-amd64
-        client: https://gitlab.com/tezos/tezos/-/package_files/185566293/download
-        prism: https://github.com/alis-is/prism-releases/releases/download/0.4.1/prism-linux-amd64
-        signer: https://gitlab.com/tezos/tezos/-/package_files/185566064/download
-    }
-    darwin-arm64: {
-        check-ledger: https://github.com/tez-capital/tezos-ledger-check/releases/download/0.0.17/tezos-check-ledger-macos-arm64
-        client: https://github.com/tez-capital/tezos-macos-pipeline/releases/download/octez-v22.0-2025-06-04_13-26/octez-client
-        prism: https://github.com/alis-is/prism-releases/releases/download/0.4.1/prism-macos-arm64
-        signer: https://github.com/tez-capital/tezos-macos-pipeline/releases/download/octez-v22.0-2025-06-04_13-26/octez-signer
-    }
+	darwin-arm64: {
+		check-ledger: https://github.com/tez-capital/tezos-macos-pipeline/releases/download/octez-v22.1-2025-06-11_20-14/octez-check-ledger
+		client: https://github.com/tez-capital/tezos-macos-pipeline/releases/download/octez-v22.1-2025-06-11_20-14/octez-client
+		prism: https://github.com/alis-is/prism-releases/releases/download/0.4.1/prism-macos-arm64
+		signer: https://github.com/tez-capital/tezos-macos-pipeline/releases/download/octez-v22.1-2025-06-11_20-14/octez-signer
+	}
+	linux-arm64: {
+		check-ledger: https://github.com/tez-capital/tezos-ledger-check/releases/download/0.0.17/tezos-check-ledger-linux-arm64
+		client: https://gitlab.com/tezos/tezos/-/package_files/200919257/download
+		prism: https://github.com/alis-is/prism-releases/releases/download/0.4.1/prism-linux-arm64
+		signer: https://gitlab.com/tezos/tezos/-/package_files/200919149/download
+	}
+	linux-x86_64: {
+		check-ledger: https://github.com/tez-capital/tezos-ledger-check/releases/download/0.0.17/tezos-check-ledger-linux-amd64
+		client: https://gitlab.com/tezos/tezos/-/package_files/200918321/download
+		prism: https://github.com/alis-is/prism-releases/releases/download/0.4.1/prism-linux-amd64
+		signer: https://gitlab.com/tezos/tezos/-/package_files/200918245/download
+	}
 }
