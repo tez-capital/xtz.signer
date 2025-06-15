@@ -9,7 +9,7 @@ local function setup(options)
 
 	local service_manager = require "__xtz.service-manager"
 	local services = require("__xtz.services")
-	local ok, status, _ = service_manager.safe_get_service_status(services.signer_service_id)
+	local is_signer_running = service_manager.have_all_services_status({services.signer_service_id}, "running")
 
 	local alias = "baker"
 	if options["key-alias"] then
@@ -18,7 +18,7 @@ local function setup(options)
 	end
 
 	local args = { "setup", "ledger", "to", "bake", "for", alias }
-	if ok and status == "running" then
+	if is_signer_running then
 		table.insert(args, 1, "--remote-signer")
 		table.insert(args, 2, "http://" .. am.app.get_model("SIGNER_ADDR") .. am.app.get_model("SIGNER_PORT"))
 	end

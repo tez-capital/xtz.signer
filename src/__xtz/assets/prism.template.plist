@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>{{{ID}}}-xtz-prism</string>
+
+    <key>UserName</key>
+    <string>{{{USER}}}</string>
+    <key>GroupName</key>
+    <string>{{{USER}}}</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>{{{ROOT_DIR}}}/bin/prism</string>
+        <string>-configuration</string>
+        <string>{{{ROOT_DIR}}}/prism/config.hjson</string>
+    </array>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>HOME</key>
+        <string>{{{ROOT_DIR}}}/data</string>
+    </dict>
+
+    <key>WorkingDirectory</key>
+    <string>{{{ROOT_DIR}}}/data</string>
+
+    <key>KeepAlive</key>
+    <true/>
+    <key>ThrottleInterval</key>
+    <integer>1</integer>
+
+    <key>StandardOutPath</key>
+    <string>/usr/local/var/log/{{{ID}}}-xtz-prism.log</string>
+    <key>StandardErrorPath</key>
+    <string>/usr/local/var/log/{{{ID}}}-xtz-prism.log</string>
+
+    {{#configuration.SERVICE_CONFIGURATION_PRISM_SERVICE__ARRAY}}
+    <key>{{{key}}}</key>
+    <string>{{{value}}}</string>
+    {{/configuration.SERVICE_CONFIGURATION_PRISM_SERVICE__ARRAY}}
+</dict>
+</plist>

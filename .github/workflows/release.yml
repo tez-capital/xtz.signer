@@ -22,7 +22,9 @@ jobs:
     - name: Generate env
       id: repository_info
       run: |
-        eli .github/get-variables.lua >> $GITHUB_OUTPUT	
+        eli .github/get-variables.lua >> $GITHUB_OUTPUT
+    - name: Validate
+      run: eli .github/validate.lua
 
     - name: Generate SHA256 and PACKAGE_SOURCE
       if: ${{ steps.repository_info.outputs.NEEDS_RELEASE == 'true'}}

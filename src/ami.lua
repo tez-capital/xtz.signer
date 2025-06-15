@@ -221,10 +221,10 @@ return {
                 }
             },
             action = function(_options, _, _, _)
-                local ok, pkh_file = fs.safe_read_file("data/.tezos-client/public_key_hashs")
-                assert(ok, "Failed to read 'public_key_hashes' file!")
-                local ok, pkh = hjson.safe_parse(pkh_file)
-                assert(ok, "Failed to parse 'public_key_hashes' file!")
+                local pkh_file, err = fs.read_file("data/.tezos-client/public_key_hashs")
+                assert(pkh_file, "failed to read 'public_key_hashes' file - " .. tostring(err))
+                local pkh, err = hjson.parse(pkh_file)
+                assert(pkh, "failed to parse 'public_key_hashes' file - " .. tostring(err))
                 for _, v in ipairs(pkh) do
                     if v.name == (_options.alias or "baker") then
                         print(v.value)
@@ -263,12 +263,13 @@ return {
             description = "ami 'about' sub command",
             summary = 'Prints information about application',
             action = function(_options, _, _, _)
-                local ok, about_raw = fs.safe_read_file('__xtz/about.hjson')
-                ami_assert(ok, 'Failed to read about file!', EXIT_APP_ABOUT_ERROR)
+                local about_raw, err = fs.read_file('__xtz/about.hjson')
+                ami_assert(about_raw, 'failed to read about file - ' .. tostring(err), EXIT_APP_ABOUT_ERROR)
 
-                local ok, about = hjson.safe_parse(about_raw)
+                local about, err = hjson.parse(about_raw)
+                ami_assert(about, 'failed to parse about file - ' .. tostring(err), EXIT_APP_ABOUT_ERROR)
                 about['App Type'] = am.app.get({ 'type', 'id' }, am.app.get('type'))
-                ami_assert(ok, 'Failed to parse about file!', EXIT_APP_ABOUT_ERROR)
+
                 if am.options.OUTPUT_FORMAT == 'json' then
                     print(hjson.stringify_to_json(about, { indent = false, skip_keys = true }))
                 else
@@ -293,12 +294,11 @@ return {
                 if options.all then
                     am.execute_extension('__xtz/remove-all.lua', { context_fail_exit_code = EXIT_RM_ERROR })
                     am.app.remove()
-                    log_success('Application removed.')
-                else
-                    am.app.remove_data()
-                    log_success('Application data removed.')
+                    log_success('application removed.')
+                    return
                 end
-                return
+                am.app.remove_data()
+                log_success('application data removed.')
             end
         }
     }

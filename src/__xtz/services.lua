@@ -35,39 +35,37 @@ end
 possible_residues = util.merge_arrays(possible_residues, uses_prism and table.keys(ssh_tunnel_services) or table.keys(prism_tunnel_services)) or {}
 -- end tunnel services
 
-local all = util.clone(signer_services)
-local all_names = util.clone(signer_service_names)
+-- binaries
+local wanted_binaries = { "signer", "client", "check-ledger" }
+
+if am.app.get_configuration("PRISM") then
+	table.insert(wanted_binaries, "prism")
+end
+-- end of binaries
+
+local active_services = util.clone(signer_services)
+local active_names = util.clone(signer_service_names)
 
 if uses_remote or uses_prism then
 	for k, v in pairs(tunnel_service_names) do
-		all_names[k] = v
+		active_names[k] = v
 	end
 	for k, v in pairs(tunnel_services) do
-		all[k] = v
+		active_services[k] = v
 	end
 end
 
--- includes potential residues
-local function remove_all_services()
-	local service_manager = require"__xtz.service-manager"
-
-	local all = util.merge_arrays(table.values(signer_service_names), table.values(tunnel_service_names))
-	all = util.merge_arrays(all, possible_residues)
-
-	for _, service in ipairs(all) do
-		if type(service) ~= "string" then goto CONTINUE end
-		local ok, rtt = service_manager.safe_remove_service(service)
-		if not ok then
-			ami_error("Failed to remove " .. service .. ": " .. (rtt or ""))
-		end
-		::CONTINUE::
-	end
-end
+--- cleanup names include everything including residues
+---@type string[]
+local cleanup_names = {}
+cleanup_names = util.merge_arrays(cleanup_names, table.values(signer_service_names))
+cleanup_names = util.merge_arrays(cleanup_names, table.values(tunnel_service_names))
+cleanup_names = util.merge_arrays(cleanup_names, table.values(possible_residues))
 
 return {
 	signer_service_id = signer_service_id,
-	all = all,
-	all_names = all_names,
-	signer_service_names = signer_service_names,
-	remove_all_services = remove_all_services
+	active = active_services,
+	active_names = active_names,
+	wanted_binaries = wanted_binaries,
+	cleanup_names = cleanup_names,
 }

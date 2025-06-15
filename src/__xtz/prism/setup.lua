@@ -91,5 +91,5 @@ ami_assert(ok, err or "failed to generate signer key")
 --     prism_configuration.connecting_forwarders = connecting_forwarders
 -- end
 
--- local ok = fs.safe_write_file("prism/config.hjson", hjson.stringify(prism_configuration))
+-- local ok = fs.write_file("prism/config.hjson", hjson.stringify(prism_configuration))
 -- ami_assert(ok, "failed to write prism configuration")

@@ -9,8 +9,7 @@ local function setup(options)
 
     local service_manager = require "__xtz.service-manager"
     local services = require "__xtz.services"
-    local ok, status, _ = service_manager.safe_get_service_status(services.signer_service_id)
-    ami_assert(ok and status ~= "running",
+    ami_assert(not service_manager.have_all_services_status({ services.signer_service_id }, "running"),
         services.signer_service_id .. " is already running. Please stop it to generate keys...",
         EXIT_APP_INTERNAL_ERROR)
 

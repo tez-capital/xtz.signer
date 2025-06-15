@@ -1,4 +1,6 @@
+local service_manager = require"__xtz.service-manager"
 local services = require"__xtz.services"
-services.remove_all_services()
 
-log_success("Signer services succesfully removed.")
+service_manager.remove_services(services.cleanup_names) 
+
+log_success("Signer services successfully removed.")

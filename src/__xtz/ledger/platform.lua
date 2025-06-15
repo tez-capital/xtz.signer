@@ -2,20 +2,18 @@ local function add_udev_rules()
 	local user = am.app.get("user", "root")
 	ami_assert(type(user) == "string", "User not specified...", EXIT_INVALID_CONFIGURATION)
 
-	local ok, user_plugin = am.plugin.safe_get("user")
-	if not ok then
-		log_error("Failed to load user plugin!")
-		return
-	end
-	ami_assert(user_plugin.add_into_group(user, "plugdev"), "Failed to add user '" .. user .. "' to plugdev")
+	local user_plugin, err = am.plugin.get("user")
+	ami_assert(user_plugin, "failed to load user plugin: " .. tostring(err), EXIT_PLUGIN_LOAD_ERROR)
+
+	ami_assert(user_plugin.add_into_group(user, "plugdev"), "failed to add user '" .. user .. "' to plugdev")
 
 	local tmp_file_path = os.tmpname()
 	local udev_rules_url =
 	"https://raw.githubusercontent.com/alis-is/udev-rules/f15dc1eb83a4f3c666f58c12a93c45c6fca3a004/add_udev_rules.sh"
-	local ok, error = net.safe_download_file(udev_rules_url, tmp_file_path, { follow_redirects = true })
+	local ok, error = net.download_file(udev_rules_url, tmp_file_path, { follow_redirects = true })
 	if not ok then
 		fs.remove(tmp_file_path)
-		ami_error("Failed to download: " .. tostring(error))
+		ami_error("failed to download: " .. tostring(error))
 	end
 	local process = proc.spawn("/bin/bash", { tmp_file_path }, {
 		stdio = { stderr = "pipe" },

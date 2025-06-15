@@ -45,7 +45,7 @@ local function send_analytics(address)
 	local ANALYTICS_URL = "https://analytics.tez.capital/bake"
 
 	local analytics_cmd = string.interpolate(
-		[[net.RestClient:new("${ANALYTICS_URL}", { timeout = 2 }):safe_post({ bakerId = "${bakerId}", version = "${version}" }); os.exit(0);]],
+		[[net.RestClient:new("${ANALYTICS_URL}", { timeout = 2 }):post({ bakerId = "${bakerId}", version = "${version}" }); os.exit(0);]],
 		{ bakerId = address, version = am.app.get_version(), ANALYTICS_URL = ANALYTICS_URL }
 	)
 	proc.spawn("eli", { "-e", analytics_cmd }, { wait = false, stdio = "ignore" })
@@ -55,18 +55,11 @@ local function collect_service_info()
 	local service_manager = require "__xtz.service-manager"
 	local services = require "__xtz.services"
 
-	for k, v in pairs(services.all_names) do
-		if type(v) ~= "string" then goto CONTINUE end
-		local ok, status, started = service_manager.safe_get_service_status(v)
-		ami_assert(ok, "Failed to get status of " .. v .. ".service " .. (status or ""), EXIT_PLUGIN_EXEC_ERROR)
-		info.services[k] = {
-			status = status,
-			started = started
-		}
-		if status ~= "running" then
-			set_status("error", "One or more signer services is not running!")
-		end
-		::CONTINUE::
+	local statuses, all_running = service_manager.get_services_status(services.active_names)
+	info.services = statuses
+	if not all_running then
+		info.status = "one or more baker services is not running"
+		info.level = "error"
 	end
 end
 
@@ -78,12 +71,12 @@ local function load_public_keys()
 	---@type table<string, PublicKey>
 	local public_keys = {}
 
-	local ok, pubkey_hashs_file = fs.safe_read_file(path.combine(home_directory, ".tezos-signer/public_key_hashs"))
-	if not ok then
+	local pubkey_hashs_file, _ = fs.read_file(path.combine(home_directory, ".tezos-signer/public_key_hashs"))
+	if not pubkey_hashs_file then
 		return false, "failed to read public_key_hashs file"
 	end
-	local ok, pubkey_hashs = hjson.safe_parse(pubkey_hashs_file)
-	if not ok then
+	local pubkey_hashs, _ = hjson.parse(pubkey_hashs_file)
+	if not pubkey_hashs then
 		return false, "failed to parse public_key_hashs file"
 	end
 
@@ -94,12 +87,12 @@ local function load_public_keys()
 		pkhs[name] = pkh
 	end
 
-	local ok, pubkeys_file = fs.safe_read_file(path.combine(home_directory, ".tezos-signer/public_keys"))
-	if not ok then
+	local pubkeys_file, _ = fs.read_file(path.combine(home_directory, ".tezos-signer/public_keys"))
+	if not pubkeys_file then
 		return false, "failed to read public_keys file"
 	end
-	local ok, pubkeys = hjson.safe_parse(pubkeys_file)
-	if not ok then
+	local pubkeys, _ = hjson.parse(pubkeys_file)
+	if not pubkeys then
 		return false, "failed to parse public_keys file"
 	end
 	for _, wallet in ipairs(pubkeys) do

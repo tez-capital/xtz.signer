@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>{{{ID}}}-xtz-signer</string>
+
+    <key>UserName</key>
+    <string>{{{USER}}}</string>
+    <key>GroupName</key>
+    <string>{{{USER}}}</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>{{{ROOT_DIR}}}/bin/signer</string>
+        <string>launch</string>
+        <string>http</string>
+        <string>signer</string>
+        <string>-a</string>
+        <string>{{{model.SIGNER_ADDR}}}</string>
+        <string>-p</string>
+        <string>{{{model.SIGNER_PORT}}}</string>
+        {{#model.STARTUP_SIGNER_ARGS}}
+        <string>{{{.}}}</string>
+        {{/model.STARTUP_SIGNER_ARGS}}
+    </array>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>HOME</key>
+        <string>{{{ROOT_DIR}}}/data</string>
+        <key>TEZOS_LOG</key>
+        <string>* -> {{{model.SIGNER_LOG_LEVEL}}}</string>
+    </dict>
+
+    <key>WorkingDirectory</key>
+    <string>{{{ROOT_DIR}}}/data</string>
+
+    <key>KeepAlive</key>
+    <true/>
+    <key>ThrottleInterval</key>
+    <integer>1</integer>
+
+    <key>StandardOutPath</key>
+    <string>/usr/local/var/log/{{{ID}}}-xtz-signer.log</string>
+    <key>StandardErrorPath</key>
+    <string>/usr/local/var/log/{{{ID}}}-xtz-signer.log</string>
+
+    {{#configuration.SERVICE_CONFIGURATION_SIGNER__ARRAY}}
+    <key>{{{key}}}</key>
+    <string>{{{value}}}</string>
+    {{/configuration.SERVICE_CONFIGURATION_SIGNER__ARRAY}}
+
+    {{#model.SERVICE_CONFIGURATION_SIGNER__ARRAY}}
+    <key>{{{key}}}</key>
+    <string>{{{value}}}</string>
+    {{/model.SERVICE_CONFIGURATION_SIGNER__ARRAY}}
+</dict>
+</plist>

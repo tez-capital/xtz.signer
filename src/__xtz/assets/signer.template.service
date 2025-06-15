@@ -1,5 +1,5 @@
 [Unit]
-Description={{{ID}}} baker service
+Description={{{ID}}} signer service
 After=network.target
 StartLimitIntervalSec=0
 
