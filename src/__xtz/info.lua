@@ -58,7 +58,7 @@ local function collect_service_info()
 	local statuses, all_running = service_manager.get_services_status(services.active_names)
 	info.services = statuses
 	if not all_running then
-		info.status = "one or more baker services is not running"
+		info.status = "one or more signer services is not running"
 		info.level = "error"
 	end
 end
