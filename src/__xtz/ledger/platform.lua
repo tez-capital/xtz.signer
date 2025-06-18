@@ -50,19 +50,18 @@ local function setup(options)
 		return
 	end
 
-	local OS = options["platform"]
-	if OS == "true" then
-		log_info("Platform not specified. Detecting...")
-		local platform = am.app.get_model("PLATFORM")
-		OS = platform.OS
+	local system_os = options["platform"]
+	if system_os == "true" then
+		log_trace("using autodetected platform")
+		system_os = am.app.get_model("SYSTEM_OS", "unknown")
 	end
-	log_info("Configuring ledger for platform: " .. OS)
+	log_info("Configuring ledger for platform: " .. tostring(system_os))
 
-	local setup = platform_setups[OS]
+	local setup = platform_setups[system_os]
 	if type(setup) == "function" then
 		setup(options)
 	else
-		log_debug("No setup for platform: " .. OS .. " found. Skipping...")
+		log_debug("No setup for platform: '" .. tostring(system_os) .. "' found. Skipping...")
 	end
 
 	log_success("Ledger platform setup completed.")
