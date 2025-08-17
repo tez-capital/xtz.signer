@@ -24,7 +24,7 @@ local function setup(options)
 	end
 
 	local protocol = "ProtoALphaALphaALphaALphaALphaALphaALphaALphaDdp3zK"
-	if type(options.protocol) == "string" then
+	if type(options.protocol) == "string" and options.protocol ~= "" then
 		protocol = options.protocol
 	end
 	table.insert(args, 1, "-p")

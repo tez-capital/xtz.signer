@@ -20,24 +20,18 @@ local function get_ledger_id(ledger)
     if type(ledger.id) == "string" and #ledger.id > 0 then
         return ledger.id
     end
-    local bus = ledger.bus or ""
-    local address = ledger.address or ""
-    return "unknown-ledger-" .. bus .. "-" .. address
+    local path = ledger.path or ""
+    return "unknown-ledger-" .. path
 end
 
----@param bus string?
----@param address string?
+---@param path string?
 ---@param ledger_id string?
-local function list_ledgers(bus, address, ledger_id)
+local function list_ledgers(path, ledger_id)
     local args = {}
 
-    if type(bus) == "string" and #bus > 0 then
-        table.insert(args, "--bus")
-        table.insert(args, bus)
-    end
-    if type(address) == "string" and #address > 0 then
-        table.insert(args, "--address")
-        table.insert(args, address)
+    if type(path) == "string" and #path > 0 then
+        table.insert(args, "--path")
+        table.insert(args, path)
     end
     if type(ledger_id) == "string" and #ledger_id > 0 then
         table.insert(args, "--ledger-id")
@@ -59,7 +53,7 @@ local function list_ledgers(bus, address, ledger_id)
     -- split by line
     local ledgers = {}
     for line in output:gmatch("[^\r\n]+") do
-        -- format: <id>;<app version>;<curve>:<authorized path>;<bus>:<address>
+        -- format: <id>;<app version>;<curve>:<authorized path>;<path>
         local errors = {}
 
         local p1, p2, p3, p4 = line:match("([^;]+);([^;]+);([^;]+);(.*)")
@@ -81,15 +75,9 @@ local function list_ledgers(bus, address, ledger_id)
                 table.insert(errors, "unexpected value format")
             end
         end
-        local busAddressInfo, err = extract_checker_value(p4)
-        local bus, address
-        if not busAddressInfo then
+        local path, err = extract_checker_value(p4)
+        if not path then
             table.insert(errors, err)
-        else
-            bus, address = busAddressInfo:match("([^:]+):(.*)")
-            if not bus then
-                table.insert(errors, "unexpected value format")
-            end
         end
 
         table.insert(ledgers, {
@@ -97,8 +85,7 @@ local function list_ledgers(bus, address, ledger_id)
             app_version = appVersion,
             curve = curve,
             authorized_path = tostring(curve) .. "/" .. tostring(authorized_path),
-            bus = bus,
-            address = address,
+            path = path,
             errors = errors
         })
     end
@@ -110,8 +97,7 @@ end
 ---@field app_version string
 ---@field curve string
 ---@field authorized_path string
----@field bus string
----@field address string
+---@field path string
 ---@field errors string[]
 
 ---List connected ledgers
@@ -135,7 +121,7 @@ function check_ledger.list(retries, ledgerId)
     while retries > 0 and #ledgers_not_loaded > 0 do
         local new_ledgers_not_loaded = {}
         for _, ledger in ipairs(ledgers_not_loaded) do
-            local reloaded_ledgers = list_ledgers(ledger.bus, ledger.address, 1)
+            local reloaded_ledgers = list_ledgers(ledger.path, 1)
             if #reloaded_ledgers > 0 then
                 local ledgerInfo = reloaded_ledgers[1]
                 if type(ledgerInfo.id) == "string" and #ledgerInfo.id > 0 then
