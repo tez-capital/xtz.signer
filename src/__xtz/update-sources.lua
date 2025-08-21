@@ -19,7 +19,7 @@ if not package_id then
 end
 
 local response = net.download_string("https://gitlab.com/api/v4/projects/3836952/packages/" ..
-	package_id .. "/package_files?per_page=100")
+	package_id .. "/package_files?per_page=1000")
 local files = hjson.parse(response)
 
 local current_sources = hjson.parse(fs.read_file("src/__xtz/sources.hjson"))
