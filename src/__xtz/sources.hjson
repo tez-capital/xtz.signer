@@ -1,22 +1,22 @@
-// SOURCE: https://gitlab.com/tezos/tezos/-/packages/44442504 
-// macOS SOURCE: https://github.com/tez-capital/tezos-macos-pipeline/releases/tag/octez-v23.0-2025-08-21_18-43
+// SOURCE: https://gitlab.com/tezos/tezos/-/packages/45049813 
+// macOS SOURCE: https://github.com/tez-capital/tezos-macos-pipeline/releases/tag/octez-v23.1-2025-09-03_09-02
 {
 	darwin-arm64: {
 		check-ledger: https://github.com/tez-capital/tezos-ledger-check/releases/download/0.0.26/tezos-check-ledger-macos-arm64
-		client: https://github.com/tez-capital/tezos-macos-pipeline/releases/download/octez-v23.0-2025-08-21_18-43/octez-client
+		client: https://github.com/tez-capital/tezos-macos-pipeline/releases/download/octez-v23.1-2025-09-03_09-02/octez-client
 		prism: https://github.com/alis-is/prism-releases/releases/download/0.4.1/prism-macos-arm64
-		signer: https://github.com/tez-capital/tezos-macos-pipeline/releases/download/octez-v23.0-2025-08-21_18-43/octez-signer
+		signer: https://github.com/tez-capital/tezos-macos-pipeline/releases/download/octez-v23.1-2025-09-03_09-02/octez-signer
 	}
 	linux-arm64: {
 		check-ledger: https://github.com/tez-capital/tezos-ledger-check/releases/download/0.0.26/tezos-check-ledger-linux-arm64
-		client: https://gitlab.com/tezos/tezos/-/package_files/222280580/download
+		client: https://gitlab.com/tezos/tezos/-/package_files/225464125/download
 		prism: https://github.com/alis-is/prism-releases/releases/download/0.4.1/prism-linux-arm64
-		signer: https://gitlab.com/tezos/tezos/-/package_files/222280398/download
+		signer: https://gitlab.com/tezos/tezos/-/package_files/225463555/download
 	}
 	linux-x86_64: {
 		check-ledger: https://github.com/tez-capital/tezos-ledger-check/releases/download/0.0.26/tezos-check-ledger-linux-amd64
-		client: https://gitlab.com/tezos/tezos/-/package_files/222279340/download
+		client: https://gitlab.com/tezos/tezos/-/package_files/225462288/download
 		prism: https://github.com/alis-is/prism-releases/releases/download/0.4.1/prism-linux-amd64
-		signer: https://gitlab.com/tezos/tezos/-/package_files/222279222/download
+		signer: https://gitlab.com/tezos/tezos/-/package_files/225462156/download
 	}
 }
