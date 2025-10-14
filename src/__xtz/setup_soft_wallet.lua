@@ -1,11 +1,11 @@
 local options = ...
 
-local active_exclisve_flags = 0
-active_exclisve_flags = active_exclisve_flags + (options["generate"] and 1 or 0)
-active_exclisve_flags = active_exclisve_flags + (options["import-key"] and 1 or 0)
+local active_exclusive_flags = 0
+active_exclusive_flags = active_exclusive_flags + (options["generate"] and 1 or 0)
+active_exclusive_flags = active_exclusive_flags + (options["import-key"] and 1 or 0)
 
-ami_assert(active_exclisve_flags > 0, "At least one of the options 'generate' or 'import-key' must be specified!", EXIT_CLI_ARG_VALIDATION_ERROR)
-ami_assert(active_exclisve_flags == 1, "Only one of the options 'generate' or 'import-key' can be specified!", EXIT_CLI_ARG_VALIDATION_ERROR)
+ami_assert(active_exclusive_flags > 0, "At least one of the options 'generate' or 'import-key' must be specified!", EXIT_CLI_ARG_VALIDATION_ERROR)
+ami_assert(active_exclusive_flags == 1, "Only one of the options 'generate' or 'import-key' can be specified!", EXIT_CLI_ARG_VALIDATION_ERROR)
 
 local warning_message = [[
 

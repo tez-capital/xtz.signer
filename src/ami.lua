@@ -199,7 +199,7 @@ return {
                 ["key-alias"] = {
                     description =
                     "alias to use for the key we operate on (alias of imported key, key to use in hwm/chain setup etc.)",
-                    type = "auto"
+                    type = "string"
                 },
                 force = {
                     description = 'forces operation, e.g. key import',
