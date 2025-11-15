@@ -125,6 +125,13 @@ return {
             exec = "bin/prism",
             context_fail_exit_code = EXIT_APP_INTERNAL_ERROR
         },
+        tezsign = {
+            description = "ami 'tezsign' sub command",
+            summary = "Passes any passed arguments directly to tezsign.",
+            type = "external",
+            exec = "bin/tezsign",
+            context_fail_exit_code = EXIT_APP_INTERNAL_ERROR
+        },
         ['register-key'] = {
             description = "ami 'register-key' sub command",
             summary = 'Registers key as delegate.',
@@ -210,6 +217,36 @@ return {
             action = '__xtz/setup_soft_wallet.lua',
             context_fail_exit_code = EXIT_APP_INTERNAL_ERROR
         },
+        ['setup-tezsign'] = {
+            description = "ami 'setup-tezsign' sub command",
+            summary = 'Setups tezsign',
+            options = {
+                ["platform"] = {
+                    description = "platform to setup ledger for",
+                    type = "string"
+                },
+                ["import-key"] = {
+                    description = "imports key for baking. Usage: '--import-key=<tezsign alias>'",
+                    type = "auto"
+                },
+                ["device-id"] = {
+                    description = 'setups tezsign for specific device',
+                    type = "string"
+                },
+                ["key-alias"] = {
+                    description =
+                    "alias to use for the key we operate on (alias of imported key, key to use in hwm/chain setup etc.)",
+                    type = "string"
+                },
+                force = {
+                    description = 'forces operation, e.g. key import',
+                    type = "boolean"
+                }
+            },
+            index = 13,
+            action = '__xtz/setup_tezsign.lua',
+            context_fail_exit_code = EXIT_APP_INTERNAL_ERROR
+        },
         ['get-key-hash'] = {
             description = "ami 'get-key-hash' sub command",
             summary = 'Returns hash if imported key.',
@@ -293,7 +330,8 @@ return {
             action = function(options, _, _, _)
                 if options.all then
                     am.execute_extension('__xtz/remove-all.lua', { context_fail_exit_code = EXIT_RM_ERROR })
-                    am.app.remove()
+                    local constants = require "__xtz/constants"
+                    am.app.remove(constants.protected_files)
                     log_success('application removed.')
                     return
                 end

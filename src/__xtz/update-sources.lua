@@ -1,6 +1,12 @@
 -- SOURCE: https://gitlab.com/tezos/tezos/-/releases
 -- eli src/__xtz/update-sources.lua https://gitlab.com/tezos/tezos/-/packages/29781101 https://github.com/tez-capital/tezos-macos-pipeline/releases/tag/octez-v22.1-2025-06-11_20-14
 
+local STATIC_SOURCES = {
+	"prism",
+	"check-ledger",
+	"tezsign"
+}
+
 local hjson = require "hjson"
 local args = table.pack(...)
 if #args < 1 then
@@ -29,7 +35,7 @@ for platform, sources in pairs(current_sources) do
 	local arch = platform:match("linux%-(.*)")
 	if arch then -- linux
 		for source_id, source_url in pairs(sources) do
-			if source_id == "prism" or source_id == "check-ledger" then
+			if table.includes(STATIC_SOURCES, source_id) then
 				new_sources[source_id] = source_url
 				goto CONTINUE
 			end
@@ -54,7 +60,7 @@ for platform, sources in pairs(current_sources) do
 	local arch = platform:match("darwin%-(.*)")
 	if arch then -- macos
 		for source_id, source_url in pairs(sources) do
-			if source_id == "prism" or source_id == "check-ledger" then
+			if table.includes(STATIC_SOURCES, source_id) then
 				new_sources[source_id] = source_url
 				goto CONTINUE
 			end

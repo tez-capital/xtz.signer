@@ -8,6 +8,9 @@
 		{{{model.SIGNER_ADDR}}}
 		-p
 		{{{model.SIGNER_PORT}}}
+        {{#model.STARTUP_SIGNER_ARGS}}
+        {{.}}
+        {{/model.STARTUP_SIGNER_ARGS}}
         {{#configuration.STARTUP_SIGNER_ARGS}}
         {{.}}
         {{/configuration.STARTUP_SIGNER_ARGS}}

@@ -28,18 +28,18 @@ am.app.set_model({
 	{merge = true, overwrite = true}
 )
 
-local services = require("__xtz.services")
-local wanted_binaries = services.wanted_binaries or {}
-
 local endpoint = am.app.get_configuration("SIGNER_ENDPOINT", "127.0.0.1:20090")
 local signer_addr = endpoint:match('([%d%.:]*):') or "127.0.0.1"
 local signer_port = endpoint:match('[%d%.:]*:(%d*)') or "20090"
 
 local TEZOS_LOG_LEVEL = am.app.get_configuration("TEZOS_LOG_LEVEL", "info")
 
+local constants = require("__xtz.constants")
+local tezsign_configuration = require("__xtz.tezsign.configuration")
+
 am.app.set_model(
     {
-        WANTED_BINARIES = wanted_binaries,
+        WANTED_BINARIES = constants.wanted_binaries,
         SIGNER_ADDR = signer_addr,
         SIGNER_PORT = signer_port,
         SIGNER_ENDPOINT = endpoint,
@@ -49,6 +49,8 @@ am.app.set_model(
         PRISM_REMOTE = am.app.get_configuration({ "PRISM", "remote" }),
         PRISM_NODE_FORWARDING_DISABLED = am.app.get_configuration({ "PRISM", "node" }, false) ~= true,
         PRISM_SERVER_LISTEN_ON = am.app.get_configuration({ "PRISM", "listen" }),
+        -- tezsign
+        TEZSIGN_CONFIGURATION = tezsign_configuration,
     },
     { merge = true, overwrite = true }
 )

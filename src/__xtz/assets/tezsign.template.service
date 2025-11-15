@@ -1,0 +1,26 @@
+[Unit]
+Description={{{ID}}} tezsign service
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+User={{{USER}}}
+Group={{{USER}}}
+RestartSec=20
+
+Type=simple
+Restart=always
+
+Environment="HOME={{{ROOT_DIR}}}/data"
+ExecStart={{{ROOT_DIR}}}/__bin_generated/tezsign.service.sh
+
+{{#model.SERVICE_CONFIGURATION_TEZSIGN__ARRAY}}
+{{{key}}}={{{value}}}
+{{/model.SERVICE_CONFIGURATION_TEZSIGN__ARRAY}}
+
+{{#configuration.SERVICE_CONFIGURATION_TEZSIGN__ARRAY}}
+{{{key}}}={{{value}}}
+{{/configuration.SERVICE_CONFIGURATION_TEZSIGN__ARRAY}}
+
+[Install]
+WantedBy=default.target
