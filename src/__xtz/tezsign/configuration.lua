@@ -10,14 +10,18 @@ if not tezsign_configuration then
 end
 
 -- normalize configuration
+local default_endpoint = "127.0.0.1:20091"
+if am.app.get_configuration("BACKEND", "octez") == "tezsign" then
+    default_endpoint = am.app.get_configuration("SIGNER_ENDPOINT", "127.0.0.1:20090")
+end
 
 local listen = tezsign_configuration.listen
 if listen == nil then
-    listen = "127.0.0.1:20091"
+    listen = default_endpoint
 end
 if type(listen) ~= "string"  then
     log_warn("invalid tezsign configuration: listen must be a string")
-    listen = "127.0.0.1:20091"
+    listen = default_endpoint
 end
 
 return util.merge_tables(tezsign_configuration, {

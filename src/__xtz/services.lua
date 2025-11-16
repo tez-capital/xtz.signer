@@ -34,6 +34,7 @@ for k, _ in pairs(tezsign_services) do
 end
 
 local uses_remote = type(am.app.get_model("REMOTE_NODE")) == "string"
+local uses_octez = am.app.get_configuration("BACKEND", "octez") == "octez"
 local uses_prism = am.app.get_configuration({ "PRISM", "remote" }) or am.app.get_configuration({ "PRISM", "listen" })
 local uses_tezsign = am.app.get_model("TEZSIGN_CONFIGURATION", nil) ~= nil
 
@@ -46,8 +47,17 @@ end
 possible_residues = util.merge_arrays(possible_residues, uses_prism and table.keys(ssh_tunnel_services) or table.keys(prism_tunnel_services)) or {}
 -- end tunnel services
 
-local active_services = util.clone(signer_services)
-local active_names = util.clone(signer_service_names)
+local active_services = {}
+local active_names = {}
+
+if uses_octez then
+	for k, v in pairs(signer_services) do
+		active_services[k] = v
+	end
+	for k, v in pairs(signer_service_names) do
+		active_names[k] = v
+	end
+end
 
 if uses_remote or uses_prism then
 	for k, v in pairs(tunnel_service_names) do

@@ -1,7 +1,13 @@
 local tezsign_configuration = require"__xtz.tezsign.configuration"
 
 -- binaries
-local wanted_binaries = { "signer", "client", "check-ledger" }
+local wanted_binaries = {}
+
+if am.app.get_configuration("BACKEND", "octez") == "octez" then
+    table.insert(wanted_binaries, "signer")
+    table.insert(wanted_binaries, "client")
+    table.insert(wanted_binaries, "check-ledger")
+end
 
 if am.app.get_configuration("PRISM") then
 	table.insert(wanted_binaries, "prism")

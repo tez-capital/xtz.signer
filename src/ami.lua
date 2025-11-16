@@ -32,7 +32,7 @@ return {
                 }
             },
             action = function(options, _, _, _)
-                local no_options = #table.keys(options) == 0
+                local no_options = not options or #table.keys(options) == 0
                 if no_options or options.environment then
                     am.app.prepare()
                 end
@@ -221,6 +221,10 @@ return {
             description = "ami 'setup-tezsign' sub command",
             summary = 'Setups tezsign',
             options = {
+                ["init"] = {
+                    description = "Initializes tezsign configuration",
+                    type = "string"
+                },
                 ["platform"] = {
                     description = "platform to setup ledger for",
                     type = "string"
@@ -228,10 +232,6 @@ return {
                 ["import-key"] = {
                     description = "imports key for baking. Usage: '--import-key=<tezsign alias>'",
                     type = "auto"
-                },
-                ["device-id"] = {
-                    description = 'setups tezsign for specific device',
-                    type = "string"
                 },
                 ["key-alias"] = {
                     description =

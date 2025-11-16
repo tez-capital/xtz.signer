@@ -8,6 +8,7 @@ local skip_ledger_check = options["skip-ledger-check"]
 local print_all = (not print_wallet_info) and (not print_service_info)
 
 local home_directory = path.combine(os.cwd() or ".", "data")
+local backend = am.app.get_configuration("BACKEND", "octez")
 
 local info = {
 	level = "ok",
@@ -139,7 +140,7 @@ local function are_ledger_paths_equal(path1, path2)
 	return true
 end
 
-local function collect_wallet_info()
+local function collect_octez_wallet_info()
 	---@type table?
 	local wallets_to_check = nil
 	if type(options.wallets) == "string" and options.wallets ~= "true" then
@@ -224,12 +225,23 @@ local function collect_wallet_info()
 	info.wallets = wallets
 end
 
+local function collect_tezsign_wallet_info()
+	local check = require "__xtz.tezsign.check"
+	local wallets = check.get_wallets()
+	info.wallets = wallets
+end
+
 if print_all or print_service_info then
 	collect_service_info()
 end
 
 if print_all or print_wallet_info then
-	collect_wallet_info()
+	if backend == "octez" then
+		collect_octez_wallet_info()
+	end
+	if backend == "tezsign" then
+		collect_tezsign_wallet_info()
+	end
 end
 
 local SENSITIVE_FIELDS = { "ledger" }

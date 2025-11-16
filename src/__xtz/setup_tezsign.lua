@@ -1,8 +1,19 @@
 local options = ...
 
+local init = options.init
+local platform = options.platform
+local import_key = options["import-key"]
+
+if init and (platform or import_key) then
+    ami_error("The '--init' option cannot be used together with '--platform' or '--import-key' options!",
+        EXIT_CLI_ARG_VALIDATION_ERROR)
+end
+
+local init = require("__xtz.tezsign.init")
 local setup_tezsign_platform = require("__xtz.tezsign.platform")
 local setup_tezsign_key = require("__xtz.tezsign.key")
 
+init(options)
 setup_tezsign_platform(options)
 setup_tezsign_key(options)
 

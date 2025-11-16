@@ -1,7 +1,6 @@
 local tezsign_configuration = require("__xtz.tezsign.configuration")
 local homedir = path.combine(os.cwd(), "data")
 
-
 local tezsign_service_id = require("__xtz.services").tezsign_service_id
 local function is_tezsign_running()
 	local service_manager = require "__xtz.service-manager"
@@ -12,25 +11,16 @@ local function is_tezsign_running()
 	return status[tezsign_service_id] and all_running == true
 end
 
+local function resolve_tezsign_key(alias)
+	local args = {"list"}
 
-local function get_devices()
-	local process = proc.spawn("bin/tezsign", { "list-devices" }, {
-		stdio = { stderr = "pipe" },
-		wait = true,
-		env = { HOME = homedir }
-	})
+	local device_id = tezsign_configuration.device_id
+	if type(device_id) == "string" then
+		table.insert(args, 1, device_id)
+		table.insert(args, 1, "--device")
+	end
 
-	ami_assert(process.exit_code == 0,
-		"Failed to get connected devices: " .. (process.stderr_stream:read("a") or "unknown"))
-	local output = process.stdout_stream:read("a") or ""
-	-- json: [{"Serial":"444F57BB6DD642A29FC6B6B0F0222117","Manufacturer":"TzC","Product":"tezsign-gadget"}]
-	local devices = hjson.parse(output)
-	ami_assert(type(devices) == "table" and #devices > 0, "No connected devices found!", EXIT_APP_INTERNAL_ERROR)
-	return devices
-end
-
-local function resolve_tezsign_key(device, alias)
-	local process = proc.spawn("bin/tezsign", { "--device", device, "list" }, {
+	local process = proc.spawn("bin/tezsign", args, {
 		stdio = { stderr = "pipe" },
 		wait = true,
 		env = { HOME = homedir }
@@ -53,6 +43,11 @@ local function setup(options)
 		return
 	end
 
+	if am.app.get_configuration("BACKEND", "octez") ~= "octez" then
+		log_warn("Key import is only supported for octez backend. Skipping...")
+		return
+	end
+
 	local key_id = options["import-key"]
 	if type(key_id) ~= "string" then
 		key_id = "baker"
@@ -60,25 +55,7 @@ local function setup(options)
 	end
 
 	log_info("Importing tezsign key...")
-
-	-- local service_manager = require "__xtz.service-manager"
-	-- local services = require "__xtz.services"
-	-- ami_assert(not service_manager.have_all_services_status({ services.signer_service_id }, "running"),
-	-- 	services.signer_service_id .. " is already running. Please stop it to import keys...",
-	-- 	EXIT_APP_INTERNAL_ERROR)
-
-
-	local device_id = options["device-id"]
-	if type(device_id) ~= "string" then
-		log_info("Device id not specified. Looking up connected devices...")
-		local devices = get_devices()
-		device_id = devices[1].Serial
-		log_info("Using device id: " .. device_id)
-	end
-	ami_assert(type(device_id) == "string", "Failed to get ledger id!")
-
-
-	local tz4 = resolve_tezsign_key(device_id, key_id)
+	local tz4 = resolve_tezsign_key(key_id)
 	assert(type(tz4) == "string" and tz4:match("^tz4"), "Failed to resolve tezsign key " .. tostring(key_id) .. "!",
 		EXIT_APP_INTERNAL_ERROR)
 
