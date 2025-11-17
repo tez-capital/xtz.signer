@@ -1,11 +1,10 @@
 local options = ...
 
 local init = options.init
-local platform = options.platform
 local import_key = options["import-key"]
 
-if init and (platform or import_key) then
-    ami_error("The '--init' option cannot be used together with '--platform' or '--import-key' options!",
+if init and import_key then
+    ami_error("The '--init' option cannot be used together with '--import-key' option.",
         EXIT_CLI_ARG_VALIDATION_ERROR)
 end
 
