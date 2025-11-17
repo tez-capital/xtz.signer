@@ -68,7 +68,7 @@ end
 ---@field pkh string
 ---@field locator string
 
-local function load_public_keys()
+local function load_octez_public_keys()
 	---@type table<string, PublicKey>
 	local public_keys = {}
 
@@ -148,7 +148,7 @@ local function collect_octez_wallet_info()
 	end
 
 	local wallets = {}
-	local ok, public_keys = load_public_keys()
+	local ok, public_keys = load_octez_public_keys()
 	if not ok then
 		set_status("error", public_keys)
 		return
@@ -169,15 +169,17 @@ local function collect_octez_wallet_info()
 		local is_remote = wallet.locator:match("remote:([^,]+)") ~= nil
 		if is_remote then kind = "remote" end
 
+		local is_http = wallet.locator:match("http[s]?://([^,]+)") ~= nil
+		if is_http then kind = "http" end
+
 		wallets[wallet_id] = {
 			pkh = wallet.pkh,
 			kind = kind,
 			ledger = ledger,
 			ledger_status = ledger and "disconnected" or nil, -- we set disconnected as default and update it later, nil means not a ledger wallet
-			path = path
+			path = path,
+			locator = wallet.locator,
 		}
-
-		send_analytics(wallet.pkh)
 		::CONTINUE::
 	end
 
@@ -219,6 +221,22 @@ local function collect_octez_wallet_info()
 				set_status("error", "Ledger device not found for wallet " .. name)
 			end
 		end
+
+		if wallet.kind == "http" then
+			-- http://127.0.0.1:20091/tz4PLVFDLuEmzEP658FbXoDdggNRWe25ZgaZ
+			-- extract url without pkh
+			local endpoint, pkh = wallet.locator:match("^(https?://[^/]+.*)/([^/]+)$")
+			wallet.status = "unreachable"
+			wallet.endpoint = endpoint
+			if endpoint and pkh then
+				local result = net.download_string(endpoint .. "/keys/"..pkh, { timeout = 1 })
+				if result then
+					wallet.status = "reachable"
+				else
+					set_status("warning", "HTTP wallet endpoint unreachable for wallet " .. name)
+				end
+			end
+		end
 		::CONTINUE::
 	end
 
@@ -228,6 +246,12 @@ end
 local function collect_tezsign_wallet_info()
 	local check = require "__xtz.tezsign.check"
 	local wallets = check.get_wallets()
+	for id, wallet in pairs(wallets) do
+		if not wallet.authorized then
+			set_status("warning", "tezsign wallet " .. id .. " is locked")
+		end
+	end
+
 	info.wallets = wallets
 end
 
@@ -259,6 +283,10 @@ local function hide_secrets(value)
 		end
 	end
 	return value
+end
+
+for _, wallet in pairs(info.wallets) do
+	send_analytics(wallet.pkh)
 end
 
 if needs_json_output then
