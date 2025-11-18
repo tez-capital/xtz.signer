@@ -238,6 +238,10 @@ return {
                     "alias to use for the key we operate on (alias of imported key, key to use in hwm/chain setup etc.)",
                     type = "string"
                 },
+                ["no-udev"] = {
+                    description = "skip udev rules setup (if --platform specified and platform is linux)",
+                    type = "boolean"
+                },
                 force = {
                     description = 'forces operation, e.g. key import',
                     type = "boolean"
