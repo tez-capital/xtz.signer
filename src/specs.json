@@ -1,6 +1,6 @@
 {
     "id": "xtz.signer",
-    "version" : "23.2.4+S",
+    "version" : "23.2.5+S",
     "dependencies": [
         { "id":"xtz.base" }
     ]
