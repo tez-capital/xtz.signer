@@ -1,4 +1,4 @@
-local tezsign_configuration = require("__xtz.tezsign.configuration")
+local tezsign_configuration = require("__xtz.tezsign.configuration").load()
 local homedir = path.combine(os.cwd(), "data")
 
 local tezsign_service_id = require("__xtz.services").tezsign_service_id

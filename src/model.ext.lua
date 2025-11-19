@@ -35,8 +35,8 @@ local signer_port = endpoint:match('[%d%.:]*:(%d*)') or "20090"
 
 local TEZOS_LOG_LEVEL = am.app.get_configuration("TEZOS_LOG_LEVEL", "info")
 
-local constants = require("__xtz.constants")
-local tezsign_configuration = require("__xtz.tezsign.configuration")
+local constants = require("__xtz.constants").load()
+local tezsign_configuration = require("__xtz.tezsign.configuration").load()
 local tezsign_user = require "__xtz.tezsign.user".username
 
 local tezsign_custom_file_permissions = {
@@ -53,10 +53,11 @@ local tezign_custom_file_ownership = {
         group = tezsign_user,
     },
 }
+-- we set wanted binaries separately because on model reload the merge would combine old and new values
+am.app.set_model(constants.wanted_binaries, "WANTED_BINARIES", { overwrite = true })
 
 am.app.set_model(
     {
-        WANTED_BINARIES = constants.wanted_binaries,
         SIGNER_ADDR = signer_addr,
         SIGNER_PORT = signer_port,
         SIGNER_ENDPOINT = endpoint,

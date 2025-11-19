@@ -35,6 +35,7 @@ local function init(options)
         log_info("tezsign configuration already exists.")
     end
 
+    am.app.load_model() -- reload models to get updated configuration
     am.execute("setup", { "--app", "--configure", "--no-validate" })
 end
 

@@ -334,7 +334,7 @@ return {
             action = function(options, _, _, _)
                 if options.all then
                     am.execute_extension('__xtz/remove-all.lua', { context_fail_exit_code = EXIT_RM_ERROR })
-                    local constants = require "__xtz/constants"
+                    local constants = require "__xtz/constants".load()
                     am.app.remove(constants.protected_files)
                     log_success('application removed.')
                     return
