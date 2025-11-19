@@ -1,11 +1,13 @@
 local function add_udev_rules()
 	local user = am.app.get("user", "root")
 	ami_assert(type(user) == "string", "User not specified...", EXIT_INVALID_CONFIGURATION)
+	local tezsign_user = require "__xtz.tezsign.user".username
 
 	local user_plugin, err = am.plugin.get("user")
 	ami_assert(user_plugin, "failed to load user plugin: " .. tostring(err), EXIT_PLUGIN_LOAD_ERROR)
 
 	ami_assert(user_plugin.add_into_group(user, "plugdev"), "failed to add user '" .. user .. "' to plugdev")
+	ami_assert(user_plugin.add_into_group(tezsign_user, "plugdev"), "failed to add user '" .. tezsign_user .. "' to plugdev")
 
 	local tmp_file_path = os.tmpname()
 	local udev_rules_url =

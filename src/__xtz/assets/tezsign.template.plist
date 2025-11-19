@@ -6,20 +6,14 @@
     <string>{{{ID}}}-xtz-signer</string>
 
     <key>UserName</key>
-    <string>{{{USER}}}</string>
+    <string>{{{model.TEZSIGN_USER}}}</string>
     <key>GroupName</key>
-    <string>{{{USER}}}</string>
+    <string>{{{model.TEZSIGN_USER}}}</string>
 
     <key>ProgramArguments</key>
     <array>
         <string>{{{ROOT_DIR}}}/__bin_generated/tezsign.service.sh</string>
     </array>
-
-    <key>EnvironmentVariables</key>
-    <dict>
-        <key>HOME</key>
-        <string>{{{ROOT_DIR}}}/data</string>
-    </dict>
 
     <key>WorkingDirectory</key>
     <string>{{{ROOT_DIR}}}/data</string>

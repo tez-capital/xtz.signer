@@ -1,13 +1,3 @@
--- protect generated binaries as they may contain sensitive data
-local binaries = fs.read_dir("__bin_generated", { return_full_paths = true }) --[=[@as string[]]=]
-if #binaries > 0 then
-    require "__xtz.base_utils".setup_file_ownership() -- ensure correct ownership first
-
-    for _, bin_path in ipairs(binaries) do
-        fs.chmod(bin_path, "r-x------", { recurse = true }) -- set to readonly + execute
-    end
-end
-
 -- create data directory
 local ok, err = fs.mkdirp("data")
 ami_assert(ok, "failed to create data directory - " .. tostring(err))
@@ -22,6 +12,10 @@ log_success(am.app.get("id") .. " services configured")
 -- prism
 local PRISM = am.app.get_configuration("PRISM")
 if PRISM then require "__xtz.prism.setup" end
+
+-- tezsign
+local should_prepare_tezsign = fs.exists("./tezsign.config.hjson")
+if should_prepare_tezsign then require "__xtz.tezsign.setup" end
 
 -- adjust data directory permissions
 require "__xtz.base_utils".setup_file_ownership()

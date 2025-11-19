@@ -36,6 +36,7 @@ local TEZOS_LOG_LEVEL = am.app.get_configuration("TEZOS_LOG_LEVEL", "info")
 
 local constants = require("__xtz.constants")
 local tezsign_configuration = require("__xtz.tezsign.configuration")
+local tezsign_user = require "__xtz.tezsign.user".username
 
 am.app.set_model(
     {
@@ -51,6 +52,22 @@ am.app.set_model(
         PRISM_SERVER_LISTEN_ON = am.app.get_configuration({ "PRISM", "listen" }),
         -- tezsign
         TEZSIGN_CONFIGURATION = tezsign_configuration,
+        TEZSIGN_USER = tezsign_user,
+        CUSTOM_FILE_PERMISSIONS = {
+            ["__bin_generated/tezsign.service.sh"] = "r-x------",
+            ["tezsign.config.hjson"] = "r--------",
+        },
+        CUSTOM_FILE_OWNERSHIP = {
+            ["__bin_generated/tezsign.service.sh"] = {
+                user = tezsign_user,
+                group = tezsign_user,
+            },
+            ["tezsign.config.hjson"] = {
+                user = tezsign_user,
+                group = tezsign_user,
+            },
+        }
+
     },
     { merge = true, overwrite = true }
 )

@@ -35,8 +35,6 @@ local function init(options)
         log_info("tezsign configuration already exists.")
     end
 
-    fs.chmod("./tezsign.config.hjson", "rw-------") -- protect sensitive data
-
     am.execute("setup", { "--app", "--configure", "--no-validate" })
 end
 

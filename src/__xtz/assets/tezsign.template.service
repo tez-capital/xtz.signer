@@ -4,14 +4,13 @@ After=network.target
 StartLimitIntervalSec=0
 
 [Service]
-User={{{USER}}}
-Group={{{USER}}}
-RestartSec=20
+User={{{model.TEZSIGN_USER}}}
+Group={{{model.TEZSIGN_USER}}}
+RestartSec=3
 
 Type=simple
 Restart=always
 
-Environment="HOME={{{ROOT_DIR}}}/data"
 ExecStart={{{ROOT_DIR}}}/__bin_generated/tezsign.service.sh
 
 {{#model.SERVICE_CONFIGURATION_TEZSIGN__ARRAY}}

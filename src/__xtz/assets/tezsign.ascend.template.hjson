@@ -4,10 +4,9 @@
 		{{{ROOT_DIR}}}/__bin_generated/tezsign.service.sh
     ]
     environment: {
-        HOME: {{{ROOT_DIR}}}/data
     }
     restart: always
     restart_delay: 3
     stop_timeout: 300
-    user: {{{USER}}}
+    user: {{{model.TEZSIGN_USER}}}
 }
