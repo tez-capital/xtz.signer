@@ -4,10 +4,8 @@ if not tezsign_configuration_raw then
 end
 
 local tezsign_configuration = hjson.parse(tezsign_configuration_raw)
-if not tezsign_configuration then
-    log_warn("failed to parse tezsign configuration")
-    return false
-end
+ami_assert(tezsign_configuration,
+    "failed to parse tezsign configuration file './tezsign.config.hjson'")
 
 -- normalize configuration
 local default_endpoint = "127.0.0.1:20091"
