@@ -2,7 +2,8 @@ local function get_devices()
 	local process = proc.spawn("bin/tezsign", { "list-devices" }, {
 		stdio = { stderr = "pipe" },
 		wait = true,
-		env = { HOME = homedir }
+		env = { HOME = homedir },
+        username = am.app.get("user"),
 	})
 
 	ami_assert(process.exit_code == 0,
@@ -29,7 +30,8 @@ local function get_wallets()
     local process = proc.spawn("bin/tezsign", args, {
         stdio = { stderr = "pipe" },
         wait = true,
-        env = { HOME = homedir }
+        env = { HOME = homedir },
+        username = am.app.get("user"),
     })
     ami_assert(process.exit_code == 0,
         "Failed to get wallets: " .. (process.stderr_stream:read("a") or "unknown"))

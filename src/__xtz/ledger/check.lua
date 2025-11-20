@@ -41,7 +41,8 @@ local function list_ledgers(path, ledger_id)
     local process, err = proc.spawn("bin/check-ledger", args, {
         stdio = { stderr = "pipe" },
         wait = true,
-        env = { HOME = home_directory }
+        env = { HOME = home_directory },
+        username = am.app.get("user"),
     })
 
     if not process then

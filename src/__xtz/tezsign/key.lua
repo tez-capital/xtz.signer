@@ -23,7 +23,8 @@ local function resolve_tezsign_key(alias)
 	local process = proc.spawn("bin/tezsign", args, {
 		stdio = { stderr = "pipe" },
 		wait = true,
-		env = { HOME = homedir }
+		env = { HOME = homedir },
+		username = am.app.get("user"),
 	})
 
 	ami_assert(process.exit_code == 0,
@@ -77,7 +78,8 @@ local function setup(options)
 			options.force and "--force" or nil }, {
 			stdio = "inherit",
 			wait = true,
-			env = { HOME = homedir, OPENSSL_CONF = "/dev/null" }
+			env = { HOME = homedir },
+			username = am.app.get("user"),
 		})
 	ami_assert(process.exit_code == 0, "Failed to import key to signer!")
 
@@ -92,7 +94,8 @@ local function setup(options)
 			options.force and "--force" or nil }, {
 			stdio = "inherit",
 			wait = true,
-			env = { HOME = homedir, OPENSSL_CONF = "/dev/null" }
+			env = { HOME = homedir },
+			username = am.app.get("user"),
 		})
 	ami_assert(process.exit_code == 0, "Failed to import key to client!")
 

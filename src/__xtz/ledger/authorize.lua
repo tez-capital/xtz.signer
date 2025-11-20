@@ -44,7 +44,8 @@ local function setup(options)
 	local process = proc.spawn("bin/client", args, {
 		stdio = { stderr = "pipe" },
 		wait = true,
-		env = { HOME = path.combine(os.cwd(), "data") }
+		env = { HOME = path.combine(os.cwd(), "data") },
+		username = am.app.get("user"),
 	})
 
 	local stderr = process.stderr_stream:read("a") or ""
