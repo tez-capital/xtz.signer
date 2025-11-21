@@ -18,4 +18,4 @@ local should_prepare_tezsign = fs.exists("./tezsign.config.hjson")
 if should_prepare_tezsign then require "__xtz.tezsign.setup" end
 
 -- adjust data directory permissions
-require "__xtz.base_utils".setup_file_ownership()
+require "__xtz.base_utils".setup_file_permissions()
