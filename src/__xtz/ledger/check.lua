@@ -26,7 +26,8 @@ end
 
 ---@param path string?
 ---@param ledger_id string?
-local function list_ledgers(path, ledger_id)
+---@param protected_paths string?
+local function list_ledgers(path, ledger_id, protected_paths)
     local args = {}
 
     if type(path) == "string" and #path > 0 then
@@ -36,6 +37,10 @@ local function list_ledgers(path, ledger_id)
     if type(ledger_id) == "string" and #ledger_id > 0 then
         table.insert(args, "--ledger-id")
         table.insert(args, ledger_id)
+    end
+    if type(protected_paths) == "string" and #protected_paths > 0 then
+        table.insert(args, "--skip-device-paths")
+        table.insert(args, protected_paths)
     end
 
     local process, err = proc.spawn("bin/check-ledger", args, {
@@ -104,13 +109,14 @@ end
 ---List connected ledgers
 ---@param retries number? Number of retries
 ---@param ledgerId string? Ledger id to check_ledger
+---@param protected_paths string? Comma separated list of device paths
 ---@return table<string, LedgerInfo>
-function check_ledger.list(retries, ledgerId)
+function check_ledger.list(retries, ledgerId, protected_paths)
     if type(retries) ~= "number" or retries < 1 then
         retries = 1
     end
 
-    local ledgers = list_ledgers(nil, nil, ledgerId)
+    local ledgers = list_ledgers(nil, ledgerId, protected_paths)
 
     local valid_ledgers = table.filter(ledgers, function(_, ledger)
         return type(ledger.id) == "string" and #ledger.id > 0
@@ -122,7 +128,7 @@ function check_ledger.list(retries, ledgerId)
     while retries > 0 and #ledgers_not_loaded > 0 do
         local new_ledgers_not_loaded = {}
         for _, ledger in ipairs(ledgers_not_loaded) do
-            local reloaded_ledgers = list_ledgers(ledger.path, 1)
+            local reloaded_ledgers = list_ledgers(ledger.path, 1, protected_paths)
             if #reloaded_ledgers > 0 then
                 local ledgerInfo = reloaded_ledgers[1]
                 if type(ledgerInfo.id) == "string" and #ledgerInfo.id > 0 then

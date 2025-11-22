@@ -18,6 +18,10 @@ return {
                     description = "Skips checking ledgers",
                     type = "boolean"
                 },
+                ["skip-device-paths"] = {
+                    description = "Skips checking device paths for ledgers (comma separated list of device paths)",
+                    type = "string"
+                },
                 ["sensitive"] = {
                     description = "Hide sensitive information",
                     type = "boolean"

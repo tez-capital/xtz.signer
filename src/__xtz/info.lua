@@ -5,6 +5,7 @@ local print_service_info = options.services
 local print_wallet_info = options.wallets
 local is_sensitive_mode = options["sensitive"]
 local skip_ledger_check = options["skip-ledger-check"]
+local skip_device_paths = options["skip-device-paths"]
 local print_all = (not print_wallet_info) and (not print_service_info)
 
 local home_directory = path.combine(os.cwd() or ".", "data")
@@ -194,9 +195,9 @@ local function collect_octez_wallet_info()
 					return wallet.ledger
 				end
 			end)
-			connected_ledgers = check_ledger.list(3, string.join_strings(",", table.unpack(ledger_ids)))
+			connected_ledgers = check_ledger.list(3, string.join_strings(",", table.unpack(ledger_ids)), skip_device_paths)
 		else
-			connected_ledgers = check_ledger.list(3)
+			connected_ledgers = check_ledger.list(3, nil, skip_device_paths)
 		end
 	end
 
