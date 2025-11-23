@@ -9,9 +9,7 @@ local empty_configuration = [[
     // if left empty and password is set all keys will be unlocked
     // unlock_keys: alias1,alias2
 
-    // and the password to unlock them here
-    // unlock_password: your_password_here
-
+    // you can set the unlock password by creating a file named 'tezsign.secret'
     // usually you do not want to do this
     // if not set the ami/tezbake handles it for you automatically
     // but if you need to run multiple tezbake instances on the same machine

@@ -23,6 +23,13 @@ local function load_tezsign_configuration()
         listen = default_endpoint
     end
 
+    local secret, _ = fs.read_file("./tezsign.secret")
+    if secret then
+        tezsign_configuration.unlock_password = secret:match("^%s*(.-)%s*$")     -- trim whitespace
+    else
+        tezsign_configuration.unlock_password = nil
+    end
+
     return util.merge_tables(tezsign_configuration, {
         listen = listen,
     })

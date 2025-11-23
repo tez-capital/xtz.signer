@@ -41,14 +41,14 @@ local tezsign_user = require "__xtz.tezsign.user".username
 
 local tezsign_custom_file_permissions = {
     ["__bin_generated/tezsign.service.sh"] = "r-x------",
-    ["tezsign.config.hjson"] = "r--------",
+    ["tezsign.secret"] = "r--------",
 }
-local tezign_custom_file_ownership = {
+local tezsign_custom_file_ownership = {
     ["__bin_generated/tezsign.service.sh"] = {
         user = tezsign_user,
         group = tezsign_user,
     },
-    ["tezsign.config.hjson"] = {
+    ["tezsign.secret"] = {
         user = tezsign_user,
         group = tezsign_user,
     },
@@ -71,7 +71,7 @@ am.app.set_model(
         TEZSIGN_CONFIGURATION = tezsign_configuration,
         TEZSIGN_USER = tezsign_user,
         CUSTOM_FILE_PERMISSIONS = tezsign_configuration and tezsign_custom_file_permissions or {},
-        CUSTOM_FILE_OWNERSHIP = tezsign_configuration and tezign_custom_file_ownership or {}
+        CUSTOM_FILE_OWNERSHIP = tezsign_configuration and tezsign_custom_file_ownership or {}
     },
     { merge = true, overwrite = true }
 )
