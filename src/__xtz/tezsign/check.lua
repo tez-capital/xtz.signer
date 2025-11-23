@@ -20,7 +20,7 @@ local function get_wallets()
     ami_assert(tezsign_configuration,
         "Tezsign configuration not found!", EXIT_APP_INTERNAL_ERROR)
     local device_id = tezsign_configuration.device_id
-    
+
     local args = {"status"}
     if type(device_id) == "string" then
         table.insert(args, 1, device_id)

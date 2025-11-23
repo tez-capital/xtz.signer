@@ -1,4 +1,7 @@
 local tezsign_configuration = require("__xtz.tezsign.configuration").load()
+assert(tezsign_configuration,
+	"Tezsign configuration could not be loaded. Please ensure tezsign.config.hjson exists and is valid.",
+	EXIT_APP_INTERNAL_ERROR)
 local homedir = path.combine(os.cwd(), "data")
 
 local tezsign_service_id = require("__xtz.services").tezsign_service_id

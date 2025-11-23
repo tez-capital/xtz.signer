@@ -36,7 +36,7 @@ end
 local uses_remote = type(am.app.get_model("REMOTE_NODE")) == "string"
 local uses_octez = am.app.get_configuration("BACKEND", "octez") == "octez"
 local uses_prism = am.app.get_configuration({ "PRISM", "remote" }) or am.app.get_configuration({ "PRISM", "listen" })
-local uses_tezsign = am.app.get_model("TEZSIGN_CONFIGURATION", nil) ~= nil
+local uses_tezsign = am.app.get_model("TEZSIGN_CONFIGURATION", false) ~= false
 
 local tunnel_services =  uses_prism and prism_tunnel_services or ssh_tunnel_services
 local tunnel_service_names = {}
