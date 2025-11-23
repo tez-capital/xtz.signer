@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
     <key>Label</key>
-    <string>{{{ID}}}-xtz-signer</string>
+    <string>{{{ID}}}-tezsign</string>
 
     <key>UserName</key>
     <string>{{{model.TEZSIGN_USER}}}</string>
@@ -24,9 +24,9 @@
     <integer>1</integer>
 
     <key>StandardOutPath</key>
-    <string>/usr/local/var/log/{{{ID}}}-xtz-tezsign.log</string>
+    <string>/usr/local/var/log/{{{ID}}}-tezsign.log</string>
     <key>StandardErrorPath</key>
-    <string>/usr/local/var/log/{{{ID}}}-xtz-tezsign.log</string>
+    <string>/usr/local/var/log/{{{ID}}}-tezsign.log</string>
 
     {{#configuration.SERVICE_CONFIGURATION_TEZSIGN__ARRAY}}
     <key>{{{key}}}</key>
