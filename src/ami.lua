@@ -246,6 +246,10 @@ return {
                     description = "skip udev rules setup (if --platform specified and platform is linux)",
                     type = "boolean"
                 },
+                ["password"] = {
+                    description = "prompt for tezsign unlock password",
+                    type = "boolean"
+                },
                 force = {
                     description = 'forces operation, e.g. key import',
                     type = "boolean"

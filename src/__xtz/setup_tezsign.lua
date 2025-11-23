@@ -14,6 +14,9 @@ init(options)
 local setup_tezsign_platform = require("__xtz.tezsign.platform")
 setup_tezsign_platform(options)
 
+local setup_tezsign_password = require("__xtz.tezsign.password")
+setup_tezsign_password(options)
+
 local setup_tezsign_key = require("__xtz.tezsign.key")
 setup_tezsign_key(options)
 
