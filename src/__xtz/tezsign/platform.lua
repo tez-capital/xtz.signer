@@ -30,7 +30,8 @@ end
 
 ---@param options table<string, any>
 local function setup_linux(options)
-	if not options["no-udev"] then
+	local system_distro = am.app.get_model("SYSTEM_DISTRO", "unknown")
+	if not options["no-udev"] and system_distro ~= "MacOS" then
 		if os.execute("which udevadm > /dev/null") then
 			add_udev_rules()
 		else
