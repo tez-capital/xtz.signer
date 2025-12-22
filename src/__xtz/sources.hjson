@@ -6,20 +6,20 @@
 		client: https://github.com/tez-capital/tezos-macos-pipeline/releases/download/octez-v23.3-2025-12-03_16-30/octez-client
 		prism: https://github.com/alis-is/prism-releases/releases/download/0.4.6/prism-macos-arm64
 		signer: https://github.com/tez-capital/tezos-macos-pipeline/releases/download/octez-v23.3-2025-12-03_16-30/octez-signer
-		tezsign: https://github.com/tez-capital/tezsign/releases/download/release-202512061113/tezsign-host-macos-arm64
+		tezsign: https://github.com/tez-capital/tezsign/releases/download/release-202512172133/tezsign-host-macos-arm64
 	}
 	linux-arm64: {
 		check-ledger: https://github.com/tez-capital/tezos-ledger-check/releases/download/0.1.0/tezos-check-ledger-linux-arm64
 		client: https://gitlab.com/tezos/tezos/-/package_files/251686941/download
 		prism: https://github.com/alis-is/prism-releases/releases/download/0.4.6/prism-linux-arm64
 		signer: https://gitlab.com/tezos/tezos/-/package_files/251686637/download
-		tezsign: https://github.com/tez-capital/tezsign/releases/download/release-202512061113/tezsign-host-linux-arm64
+		tezsign: https://github.com/tez-capital/tezsign/releases/download/release-202512172133/tezsign-host-linux-arm64
 	}
 	linux-x86_64: {
 		check-ledger: https://github.com/tez-capital/tezos-ledger-check/releases/download/0.1.0/tezos-check-ledger-linux-amd64
 		client: https://gitlab.com/tezos/tezos/-/package_files/251684588/download
 		prism: https://github.com/alis-is/prism-releases/releases/download/0.4.6/prism-linux-amd64
 		signer: https://gitlab.com/tezos/tezos/-/package_files/251684476/download
-		tezsign: https://github.com/tez-capital/tezsign/releases/download/release-202512061113/tezsign-host-linux-amd64
+		tezsign: https://github.com/tez-capital/tezsign/releases/download/release-202512172133/tezsign-host-linux-amd64
 	}
 }
