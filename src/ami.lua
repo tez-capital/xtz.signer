@@ -221,6 +221,14 @@ return {
             action = '__xtz/setup_soft_wallet.lua',
             context_fail_exit_code = EXIT_APP_INTERNAL_ERROR
         },
+        ["import-key"] = {
+            description = "ami 'import-key' sub command",
+            summary = "Attempts to import ledger key (Assumes only one ledger is connected).",
+            index = 10,
+            action = "__xtz/import_key.lua",
+            type = "raw",
+            context_fail_exit_code = EXIT_APP_INTERNAL_ERROR
+        },
         ['setup-tezsign'] = {
             description = "ami 'setup-tezsign' sub command",
             summary = 'Setups tezsign',
