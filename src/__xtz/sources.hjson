@@ -1,25 +1,88 @@
-// SOURCE: https://gitlab.com/tezos/tezos/-/packages/51144825 
-// macOS SOURCE: https://github.com/tez-capital/tezos-macos-pipeline/releases/tag/octez-v24.0-2026-01-08_17-18
+// SOURCE: https://octez.tezos.com/releases 
+// macOS SOURCE: https://github.com/tez-capital/tezos-macos-pipeline/releases 
+// PRISM SOURCE: https://github.com/alis-is/prism-releases/releases 
+// check-ledger SOURCE: https://github.com/tez-capital/tezos-ledger-check/releases 
+// TezSign SOURCE: https://github.com/tez-capital/tezsign/releases 
 {
 	darwin-arm64: {
-		check-ledger: https://github.com/tez-capital/tezos-ledger-check/releases/download/0.1.0/tezos-check-ledger-macos-arm64
-		client: https://github.com/tez-capital/tezos-macos-pipeline/releases/download/octez-v24.0-2026-01-08_17-18/octez-client
-		prism: https://github.com/alis-is/prism-releases/releases/download/0.4.7/prism-macos-arm64
-		signer: https://github.com/tez-capital/tezos-macos-pipeline/releases/download/octez-v24.0-2026-01-08_17-18/octez-signer
-		tezsign: https://github.com/tez-capital/tezsign/releases/download/release-202601061517/tezsign-host-macos-arm64
+		check-ledger: {
+			sha256: f986f6252e1aae2c0301da9c1440bf3593ec6ee772abf76cc6fe2d543ef51188
+			url: https://github.com/tez-capital/tezos-ledger-check/releases/download/0.1.0/tezos-check-ledger-macos-arm64
+			version: 0.1.0
+		}
+		client: {
+			sha256: f5c67462b8077ccb1a865fa8d0dcabffa564a490d55932abb1f91cab2770c449
+			url: https://github.com/tez-capital/tezos-macos-pipeline/releases/download/octez-v24.0-2026-01-08_17-18/octez-client
+			version: "24.0"
+		}
+		prism: {
+			sha256: a9352724d479fcdce5eccc63b340cc3c82ccebd50c5e25bc9627da3b9898feaa
+			url: https://github.com/alis-is/prism-releases/releases/download/0.4.7/prism-macos-arm64
+			version: 0.4.7
+		}
+		signer: {
+			sha256: bb0702a7aaef072c54ccdf78c0f4486257dd250ef2fde3283bdbeb548130b1b8
+			url: https://github.com/tez-capital/tezos-macos-pipeline/releases/download/octez-v24.0-2026-01-08_17-18/octez-signer
+			version: "24.0"
+		}
+		tezsign: {
+			sha256: 2761fe6f0ec08ac9c57c83d5a487e8ce250f4a16bbd4ec0ed6604d9bcbb57da2
+			url: https://github.com/tez-capital/tezsign/releases/download/release-202601181345/tezsign-host-macos-arm64
+			version: release-202601181345
+		}
 	}
 	linux-arm64: {
-		check-ledger: https://github.com/tez-capital/tezos-ledger-check/releases/download/0.1.0/tezos-check-ledger-linux-arm64
-		client: https://gitlab.com/tezos/tezos/-/package_files/258591042/download
-		prism: https://github.com/alis-is/prism-releases/releases/download/0.4.7/prism-linux-arm64
-		signer: https://gitlab.com/tezos/tezos/-/package_files/258590702/download
-		tezsign: https://github.com/tez-capital/tezsign/releases/download/release-202601061517/tezsign-host-linux-arm64
+		check-ledger: {
+			sha256: 1e03aff9dc16c2b664d67816cf79767bdb87a5c85e727a178b5c074d0d2d6598
+			url: https://github.com/tez-capital/tezos-ledger-check/releases/download/0.1.0/tezos-check-ledger-linux-arm64
+			version: 0.1.0
+		}
+		client: {
+			sha256: 1aaa3ffd0224bf0cd34fe7d875d6f081930c8ed6e4433bac01c37ff9f96d8f7a
+			url: https://octez.tezos.com/releases/octez-v24.0/binaries/arm64/octez-client
+			version: "24.0"
+		}
+		prism: {
+			sha256: 4b8b51bc6bf7a4de3938a1aa36e4d6bc07dcceebe9de5052ad1d2f158ba550b3
+			url: https://github.com/alis-is/prism-releases/releases/download/0.4.7/prism-linux-arm64
+			version: 0.4.7
+		}
+		signer: {
+			sha256: e3058b720082578fc105d0766137f694f0c7dd73712d7c0406599fc6a0800292
+			url: https://octez.tezos.com/releases/octez-v24.0/binaries/arm64/octez-signer
+			version: "24.0"
+		}
+		tezsign: {
+			sha256: 7fab46a5e2cc0b649cb56e24a775092b505294434142d6409e4a28f12c0a8872
+			url: https://github.com/tez-capital/tezsign/releases/download/release-202601181345/tezsign-host-linux-arm64
+			version: release-202601181345
+		}
 	}
 	linux-x86_64: {
-		check-ledger: https://github.com/tez-capital/tezos-ledger-check/releases/download/0.1.0/tezos-check-ledger-linux-amd64
-		client: https://gitlab.com/tezos/tezos/-/package_files/258588075/download
-		prism: https://github.com/alis-is/prism-releases/releases/download/0.4.7/prism-linux-amd64
-		signer: https://gitlab.com/tezos/tezos/-/package_files/258587869/download
-		tezsign: https://github.com/tez-capital/tezsign/releases/download/release-202601061517/tezsign-host-linux-amd64
+		check-ledger: {
+			sha256: 5243c41ed8f480e9a3a51f2624c71196a97f34a5eade092993da9ce2417f72cd
+			url: https://github.com/tez-capital/tezos-ledger-check/releases/download/0.1.0/tezos-check-ledger-linux-amd64
+			version: 0.1.0
+		}
+		client: {
+			sha256: c0c05066c619ab8e29299d93c4bffe6210af3ff23365b9e6c57ec8eda452d7fa
+			url: https://octez.tezos.com/releases/octez-v24.0/binaries/x86_64/octez-client
+			version: "24.0"
+		}
+		prism: {
+			sha256: 184e10f55a2b5de60a26682207325d3b0addfcce5e02f328be37272013dd2445
+			url: https://github.com/alis-is/prism-releases/releases/download/0.4.7/prism-linux-amd64
+			version: 0.4.7
+		}
+		signer: {
+			sha256: ea830e400962bb6d81c5afe77d7e008c628510d10c5e42bcb92d9e03cd22e0f7
+			url: https://octez.tezos.com/releases/octez-v24.0/binaries/x86_64/octez-signer
+			version: "24.0"
+		}
+		tezsign: {
+			sha256: 7e1bfeaa58fbdd567edbc4a634c53ee9440bf291d5c1a8ff5b4d5f849e9a9487
+			url: https://github.com/tez-capital/tezsign/releases/download/release-202601181345/tezsign-host-linux-amd64
+			version: release-202601181345
+		}
 	}
 }
