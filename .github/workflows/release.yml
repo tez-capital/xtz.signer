@@ -86,4 +86,4 @@ jobs:
       env:
         DISCORD_WEBHOOK: ${{ secrets.XTZ_PACKAGES_DISCORD_WEBHOOK }}
       with:
-        args: "New ${{github.repository}} - ${{ needs.build.outputs.version }} released. (<https://github.com/${{github.repository}}/releases>)"
+        args: "New ${{github.repository}} - ${{ needs.build.outputs.version }} released. (<https://github.com/${{github.repository}}/releases/tag/${{ needs.build.outputs.version }}>)"
