@@ -11,9 +11,9 @@
 			version: 0.1.0
 		}
 		client: {
-			sha256: f5c67462b8077ccb1a865fa8d0dcabffa564a490d55932abb1f91cab2770c449
-			url: https://github.com/tez-capital/tezos-macos-pipeline/releases/download/octez-v24.0-2026-01-08_17-18/octez-client
-			version: "24.0"
+			sha256: 7de03765f87dc7efbc1673ba7265506bc5ade2d8caabcf8666d4b5554c1c5a62
+			url: https://github.com/tez-capital/tezos-macos-pipeline/releases/download/octez-v24.1-2026-01-23_13-16/octez-client
+			version: "24.1"
 		}
 		prism: {
 			sha256: a9352724d479fcdce5eccc63b340cc3c82ccebd50c5e25bc9627da3b9898feaa
@@ -21,9 +21,9 @@
 			version: 0.4.7
 		}
 		signer: {
-			sha256: bb0702a7aaef072c54ccdf78c0f4486257dd250ef2fde3283bdbeb548130b1b8
-			url: https://github.com/tez-capital/tezos-macos-pipeline/releases/download/octez-v24.0-2026-01-08_17-18/octez-signer
-			version: "24.0"
+			sha256: 1b5e8a39037cccf501263cc2f0d5ba039d7c24a84956824c53a9d75cd759eefd
+			url: https://github.com/tez-capital/tezos-macos-pipeline/releases/download/octez-v24.1-2026-01-23_13-16/octez-signer
+			version: "24.1"
 		}
 		tezsign: {
 			sha256: 2761fe6f0ec08ac9c57c83d5a487e8ce250f4a16bbd4ec0ed6604d9bcbb57da2
@@ -38,9 +38,9 @@
 			version: 0.1.0
 		}
 		client: {
-			sha256: 1aaa3ffd0224bf0cd34fe7d875d6f081930c8ed6e4433bac01c37ff9f96d8f7a
-			url: https://octez.tezos.com/releases/octez-v24.0/binaries/arm64/octez-client
-			version: "24.0"
+			sha256: cf25b797c1b349785100ba684c24f84a18beff84c1eb4a13934a06fcbaaed82e
+			url: https://octez.tezos.com/releases/octez-v24.1/binaries/arm64/octez-client
+			version: "24.1"
 		}
 		prism: {
 			sha256: 4b8b51bc6bf7a4de3938a1aa36e4d6bc07dcceebe9de5052ad1d2f158ba550b3
@@ -48,9 +48,9 @@
 			version: 0.4.7
 		}
 		signer: {
-			sha256: e3058b720082578fc105d0766137f694f0c7dd73712d7c0406599fc6a0800292
-			url: https://octez.tezos.com/releases/octez-v24.0/binaries/arm64/octez-signer
-			version: "24.0"
+			sha256: 8abeb7c48090212efee11f3c90d873a6167f958ff6ba84772c2b872c631efa39
+			url: https://octez.tezos.com/releases/octez-v24.1/binaries/arm64/octez-signer
+			version: "24.1"
 		}
 		tezsign: {
 			sha256: 7fab46a5e2cc0b649cb56e24a775092b505294434142d6409e4a28f12c0a8872
@@ -65,9 +65,9 @@
 			version: 0.1.0
 		}
 		client: {
-			sha256: c0c05066c619ab8e29299d93c4bffe6210af3ff23365b9e6c57ec8eda452d7fa
-			url: https://octez.tezos.com/releases/octez-v24.0/binaries/x86_64/octez-client
-			version: "24.0"
+			sha256: 2c00970f65ab6fb489df3d0b322719c46431b4755360b276d6e2f09459ec6280
+			url: https://octez.tezos.com/releases/octez-v24.1/binaries/x86_64/octez-client
+			version: "24.1"
 		}
 		prism: {
 			sha256: 184e10f55a2b5de60a26682207325d3b0addfcce5e02f328be37272013dd2445
@@ -75,9 +75,9 @@
 			version: 0.4.7
 		}
 		signer: {
-			sha256: ea830e400962bb6d81c5afe77d7e008c628510d10c5e42bcb92d9e03cd22e0f7
-			url: https://octez.tezos.com/releases/octez-v24.0/binaries/x86_64/octez-signer
-			version: "24.0"
+			sha256: 0dbb86eb6e13061d7a39b723d2272afd8589f991c497b641f4c43c0c695316e5
+			url: https://octez.tezos.com/releases/octez-v24.1/binaries/x86_64/octez-signer
+			version: "24.1"
 		}
 		tezsign: {
 			sha256: 7e1bfeaa58fbdd567edbc4a634c53ee9440bf291d5c1a8ff5b4d5f849e9a9487
