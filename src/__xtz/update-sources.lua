@@ -145,13 +145,15 @@ local platforms = {
 		octez_linux_arch = "x86_64",
 		prism_pattern = "prism%-linux%-amd64",
 		check_ledger_pattern = "tezos%-check%-ledger%-linux%-amd64",
-		tezsign_pattern = "tezsign%-host%-linux%-amd64"
+		tezsign_pattern = "tezsign%-host%-linux%-amd64",
+		gitlab_arch_prefix = "x86_64-"
 	},
 	["linux-arm64"] = {
 		octez_linux_arch = "arm64",
 		prism_pattern = "prism%-linux%-arm64",
 		check_ledger_pattern = "tezos%-check%-ledger%-linux%-arm64",
-		tezsign_pattern = "tezsign%-host%-linux%-arm64"
+		tezsign_pattern = "tezsign%-host%-linux%-arm64",
+		gitlab_arch_prefix = "arm64-"
 	},
 	["darwin-arm64"] = {
 		is_mac = true,
@@ -219,10 +221,22 @@ for platform, config in pairs(platforms) do
 						local url = "https://octez.tezos.com/releases/" ..
 							target_version .. "/binaries/" .. bin_arch .. "/" .. filename
 						local octez_version = target_version:match("^octez%-v(.+)$") or target_version
+
+						local mirrors = nil
+						if config.gitlab_arch_prefix then
+							local gitlab_url =
+								"https://gitlab.com/api/v4/projects/3836952/packages/generic/octez-binaries-" ..
+								octez_version .. "/" .. octez_version .. "/" .. config.gitlab_arch_prefix .. filename
+							mirrors = {
+								gitlab = gitlab_url
+							}
+						end
+
 						new_platform_sources[key] = {
 							url = url,
 							sha256 = hash,
-							version = octez_version
+							version = octez_version,
+							mirrors = mirrors
 						}
 					end
 				end

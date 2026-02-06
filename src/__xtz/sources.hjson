@@ -38,6 +38,9 @@
 			version: 0.1.0
 		}
 		client: {
+			mirrors: {
+				gitlab: https://gitlab.com/api/v4/projects/3836952/packages/generic/octez-binaries-24.1/24.1/arm64-octez-client
+			}
 			sha256: cf25b797c1b349785100ba684c24f84a18beff84c1eb4a13934a06fcbaaed82e
 			url: https://octez.tezos.com/releases/octez-v24.1/binaries/arm64/octez-client
 			version: "24.1"
@@ -48,6 +51,9 @@
 			version: 0.4.7
 		}
 		signer: {
+			mirrors: {
+				gitlab: https://gitlab.com/api/v4/projects/3836952/packages/generic/octez-binaries-24.1/24.1/arm64-octez-signer
+			}
 			sha256: 8abeb7c48090212efee11f3c90d873a6167f958ff6ba84772c2b872c631efa39
 			url: https://octez.tezos.com/releases/octez-v24.1/binaries/arm64/octez-signer
 			version: "24.1"
@@ -65,6 +71,9 @@
 			version: 0.1.0
 		}
 		client: {
+			mirrors: {
+				gitlab: https://gitlab.com/api/v4/projects/3836952/packages/generic/octez-binaries-24.1/24.1/x86_64-octez-client
+			}
 			sha256: 2c00970f65ab6fb489df3d0b322719c46431b4755360b276d6e2f09459ec6280
 			url: https://octez.tezos.com/releases/octez-v24.1/binaries/x86_64/octez-client
 			version: "24.1"
@@ -75,6 +84,9 @@
 			version: 0.4.7
 		}
 		signer: {
+			mirrors: {
+				gitlab: https://gitlab.com/api/v4/projects/3836952/packages/generic/octez-binaries-24.1/24.1/x86_64-octez-signer
+			}
 			sha256: 0dbb86eb6e13061d7a39b723d2272afd8589f991c497b641f4c43c0c695316e5
 			url: https://octez.tezos.com/releases/octez-v24.1/binaries/x86_64/octez-signer
 			version: "24.1"
