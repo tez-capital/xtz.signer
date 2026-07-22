@@ -11,7 +11,7 @@
 			version: 0.1.0
 		}
 		client: {
-			sha256: ad898c0c7dbb13b4fd14b8fe6326e98dc4287db69c9f9594a5373a14b585b839
+			sha256: 6feaa325fe1dee1638cec458a5eb8d6bf9a809ceaa92d0cf096f654b800bda58
 			url: https://github.com/tez-capital/tezos-macos-pipeline/releases/download/octez-v25.1-2026-07-21_12-46/octez-client
 			version: "25.0"
 		}
@@ -21,7 +21,7 @@
 			version: 0.4.7
 		}
 		signer: {
-			sha256: 673f0ef6dd55abf777b84f4ed1efde64a0635d8e73f2951aeeafeecdfe7af0a4
+			sha256: eea54ecf73307fc96d50adac2bdc143d3a22803a8684bec29450f8d3424c505f
 			url: https://github.com/tez-capital/tezos-macos-pipeline/releases/download/octez-v25.1-2026-07-21_12-46/octez-signer
 			version: "25.0"
 		}
@@ -41,7 +41,7 @@
 			mirrors: {
 				gitlab: https://gitlab.com/api/v4/projects/3836952/packages/generic/octez-binaries-25.1/25.1/arm64-octez-client
 			}
-			sha256: 839d051e0908172bb8ef3dc1be5703e1ca2e0e8be92acfa3883fb8c9acb8a23d
+			sha256: 031c8885de8784d51b2cdfabe8371eb96464ff1e78b32e2e78f5bfa2bb9604d1
 			url: https://octez.tezos.com/releases/octez-v25.1/binaries/arm64/octez-client
 			version: "25.0"
 		}
@@ -54,7 +54,7 @@
 			mirrors: {
 				gitlab: https://gitlab.com/api/v4/projects/3836952/packages/generic/octez-binaries-25.1/25.1/arm64-octez-signer
 			}
-			sha256: 275a533d0bb777c24417ad3fff4c4da64a7047e3b8d2ba38db1692ed91777e89
+			sha256: 29c9d1a7784760d5ea00bb8a4473127c7b4ab72593627361fdd68d1c216d64b1
 			url: https://octez.tezos.com/releases/octez-v25.1/binaries/arm64/octez-signer
 			version: "25.0"
 		}
@@ -74,7 +74,7 @@
 			mirrors: {
 				gitlab: https://gitlab.com/api/v4/projects/3836952/packages/generic/octez-binaries-25.1/25.1/x86_64-octez-client
 			}
-			sha256: d946cbcb7effce2059070be15d1ff10295c60e6beab46d896b567e68c2ef4c3b
+			sha256: 405b6acc2e1c9ab81e3d08fcae84a662764396ba9162dd448b3ae561847e5754
 			url: https://octez.tezos.com/releases/octez-v25.1/binaries/x86_64/octez-client
 			version: "25.0"
 		}
@@ -87,7 +87,7 @@
 			mirrors: {
 				gitlab: https://gitlab.com/api/v4/projects/3836952/packages/generic/octez-binaries-25.1/25.1/x86_64-octez-signer
 			}
-			sha256: ce2dccfd397828ad035609502b6d42ec9558f79d3c32f3dd8247c99329611367
+			sha256: 0de9e2270214b0b2096bbbc4428bb4857338caf72a862d56e193d96f4b0753cb
 			url: https://octez.tezos.com/releases/octez-v25.1/binaries/x86_64/octez-signer
 			version: "25.0"
 		}
