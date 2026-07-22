@@ -13,7 +13,7 @@
 		client: {
 			sha256: 6feaa325fe1dee1638cec458a5eb8d6bf9a809ceaa92d0cf096f654b800bda58
 			url: https://github.com/tez-capital/tezos-macos-pipeline/releases/download/octez-v25.1-2026-07-21_12-46/octez-client
-			version: "25.0"
+			version: "25.1"
 		}
 		prism: {
 			sha256: a9352724d479fcdce5eccc63b340cc3c82ccebd50c5e25bc9627da3b9898feaa
@@ -23,7 +23,7 @@
 		signer: {
 			sha256: eea54ecf73307fc96d50adac2bdc143d3a22803a8684bec29450f8d3424c505f
 			url: https://github.com/tez-capital/tezos-macos-pipeline/releases/download/octez-v25.1-2026-07-21_12-46/octez-signer
-			version: "25.0"
+			version: "25.1"
 		}
 		tezsign: {
 			sha256: 341b231e784ce61230280425b9f858193d607cd4475d81a0d5b2faba49a30124
@@ -43,7 +43,7 @@
 			}
 			sha256: 031c8885de8784d51b2cdfabe8371eb96464ff1e78b32e2e78f5bfa2bb9604d1
 			url: https://octez.tezos.com/releases/octez-v25.1/binaries/arm64/octez-client
-			version: "25.0"
+			version: "25.1"
 		}
 		prism: {
 			sha256: 4b8b51bc6bf7a4de3938a1aa36e4d6bc07dcceebe9de5052ad1d2f158ba550b3
@@ -56,7 +56,7 @@
 			}
 			sha256: 29c9d1a7784760d5ea00bb8a4473127c7b4ab72593627361fdd68d1c216d64b1
 			url: https://octez.tezos.com/releases/octez-v25.1/binaries/arm64/octez-signer
-			version: "25.0"
+			version: "25.1"
 		}
 		tezsign: {
 			sha256: 6f9b7cc5e74766c6f28b2cb5b01bc8996eab74883c5fb5f5f9b4fd29a67fa783
@@ -76,7 +76,7 @@
 			}
 			sha256: 405b6acc2e1c9ab81e3d08fcae84a662764396ba9162dd448b3ae561847e5754
 			url: https://octez.tezos.com/releases/octez-v25.1/binaries/x86_64/octez-client
-			version: "25.0"
+			version: "25.1"
 		}
 		prism: {
 			sha256: 184e10f55a2b5de60a26682207325d3b0addfcce5e02f328be37272013dd2445
@@ -89,7 +89,7 @@
 			}
 			sha256: 0de9e2270214b0b2096bbbc4428bb4857338caf72a862d56e193d96f4b0753cb
 			url: https://octez.tezos.com/releases/octez-v25.1/binaries/x86_64/octez-signer
-			version: "25.0"
+			version: "25.1"
 		}
 		tezsign: {
 			sha256: f449913cdb1deb6e137f0660622202d87e0ec4736441405f77001a31af6eed6d
