@@ -26,9 +26,9 @@
 			version: "25.2"
 		}
 		tezsign: {
-			sha256: 341b231e784ce61230280425b9f858193d607cd4475d81a0d5b2faba49a30124
-			url: https://github.com/tez-capital/tezsign/releases/download/release-202606151659/tezsign-host-macos-arm64
-			version: release-202606151659
+			sha256: 44e2455ad2ea15b3e7066b9d630053d0851dafe68f02126366aab18999cd0dc5
+			url: https://github.com/tez-capital/tezsign/releases/download/release-202610041210/tezsign-host-macos-arm64
+			version: release-202610041210
 		}
 	}
 	linux-arm64: {
@@ -59,9 +59,9 @@
 			version: "25.2"
 		}
 		tezsign: {
-			sha256: 6f9b7cc5e74766c6f28b2cb5b01bc8996eab74883c5fb5f5f9b4fd29a67fa783
-			url: https://github.com/tez-capital/tezsign/releases/download/release-202606151659/tezsign-host-linux-arm64
-			version: release-202606151659
+			sha256: 522f95c4363bf3ad2d8bb3ada2827efedad40e7e5c66181da1a669af282ff1f8
+			url: https://github.com/tez-capital/tezsign/releases/download/release-202610041210/tezsign-host-linux-arm64
+			version: release-202610041210
 		}
 	}
 	linux-x86_64: {
@@ -92,9 +92,9 @@
 			version: "25.2"
 		}
 		tezsign: {
-			sha256: f449913cdb1deb6e137f0660622202d87e0ec4736441405f77001a31af6eed6d
-			url: https://github.com/tez-capital/tezsign/releases/download/release-202606151659/tezsign-host-linux-amd64
-			version: release-202606151659
+			sha256: 5e3b52b7ab5cc85f4781d2be5b0192bc838641bf6a7d8ca13a87e11740ee7343
+			url: https://github.com/tez-capital/tezsign/releases/download/release-202610041210/tezsign-host-linux-amd64
+			version: release-202610041210
 		}
 	}
 }
