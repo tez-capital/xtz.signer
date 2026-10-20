@@ -11,9 +11,9 @@
 			version: 0.1.0
 		}
 		client: {
-			sha256: aaa29b60fc7dc92ac1ae6b9f64f281945cc6d16c0a82689fbc9d5af82f79bcf2
-			url: https://github.com/tez-capital/tezos-macos-pipeline/releases/download/octez-v25.2-2026-09-03_13-10/octez-client
-			version: "25.2"
+			sha256: f6f81a1cb51d085775dd49a0b2c958551c1b3cf2048cb1cbbcace13278e58ee5
+			url: https://github.com/tez-capital/tezos-macos-pipeline/releases/download/octez-v25.3-2026-10-20_09-39/octez-client
+			version: "25.3"
 		}
 		prism: {
 			sha256: a9352724d479fcdce5eccc63b340cc3c82ccebd50c5e25bc9627da3b9898feaa
@@ -21,9 +21,9 @@
 			version: 0.4.7
 		}
 		signer: {
-			sha256: 1dd0fbabce43466067257e104e8e51f600bfd69559e72d7ef09893a2f460c77f
-			url: https://github.com/tez-capital/tezos-macos-pipeline/releases/download/octez-v25.2-2026-09-03_13-10/octez-signer
-			version: "25.2"
+			sha256: 4a858e621b6c6e8860dbe014493567abbfbd482b879cf01f4c7fc7376e6e1d7c
+			url: https://github.com/tez-capital/tezos-macos-pipeline/releases/download/octez-v25.3-2026-10-20_09-39/octez-signer
+			version: "25.3"
 		}
 		tezsign: {
 			sha256: 44e2455ad2ea15b3e7066b9d630053d0851dafe68f02126366aab18999cd0dc5
@@ -39,11 +39,11 @@
 		}
 		client: {
 			mirrors: {
-				gitlab: https://gitlab.com/api/v4/projects/3836952/packages/generic/octez-binaries-25.2/25.2/arm64-octez-client
+				gitlab: https://gitlab.com/api/v4/projects/3836952/packages/generic/octez-binaries-25.3/25.3/arm64-octez-client
 			}
-			sha256: d2fc028ba31f53b60c49370c96d2998358a94f9c02fc4141e08cf4542dbcce8d
-			url: https://octez.tezos.com/releases/octez-v25.2/binaries/arm64/octez-client
-			version: "25.2"
+			sha256: 52247317d1a2db802132a13264a599852028f1eb007f7104427f1c16f782c395
+			url: https://octez.tezos.com/releases/octez-v25.3/binaries/arm64/octez-client
+			version: "25.3"
 		}
 		prism: {
 			sha256: 4b8b51bc6bf7a4de3938a1aa36e4d6bc07dcceebe9de5052ad1d2f158ba550b3
@@ -52,11 +52,11 @@
 		}
 		signer: {
 			mirrors: {
-				gitlab: https://gitlab.com/api/v4/projects/3836952/packages/generic/octez-binaries-25.2/25.2/arm64-octez-signer
+				gitlab: https://gitlab.com/api/v4/projects/3836952/packages/generic/octez-binaries-25.3/25.3/arm64-octez-signer
 			}
-			sha256: e87989dd114bbe8891a248a74da47d27c2e14bf9196c766f1a22ed98203594db
-			url: https://octez.tezos.com/releases/octez-v25.2/binaries/arm64/octez-signer
-			version: "25.2"
+			sha256: 1d788efe735efe869f90b41b7fa5d69b4c6ff31b972990a4e04b9b9247b3f8c1
+			url: https://octez.tezos.com/releases/octez-v25.3/binaries/arm64/octez-signer
+			version: "25.3"
 		}
 		tezsign: {
 			sha256: 522f95c4363bf3ad2d8bb3ada2827efedad40e7e5c66181da1a669af282ff1f8
@@ -72,11 +72,11 @@
 		}
 		client: {
 			mirrors: {
-				gitlab: https://gitlab.com/api/v4/projects/3836952/packages/generic/octez-binaries-25.2/25.2/x86_64-octez-client
+				gitlab: https://gitlab.com/api/v4/projects/3836952/packages/generic/octez-binaries-25.3/25.3/x86_64-octez-client
 			}
-			sha256: 92363044581812a3446ec00b95708c83c97973cf4a95905916c7f6956df65f51
-			url: https://octez.tezos.com/releases/octez-v25.2/binaries/x86_64/octez-client
-			version: "25.2"
+			sha256: 2e03901db6e0eab373e16ecf1d37055f6adf8a300a3cbed449eb61e45a511b63
+			url: https://octez.tezos.com/releases/octez-v25.3/binaries/x86_64/octez-client
+			version: "25.3"
 		}
 		prism: {
 			sha256: 184e10f55a2b5de60a26682207325d3b0addfcce5e02f328be37272013dd2445
@@ -85,11 +85,11 @@
 		}
 		signer: {
 			mirrors: {
-				gitlab: https://gitlab.com/api/v4/projects/3836952/packages/generic/octez-binaries-25.2/25.2/x86_64-octez-signer
+				gitlab: https://gitlab.com/api/v4/projects/3836952/packages/generic/octez-binaries-25.3/25.3/x86_64-octez-signer
 			}
-			sha256: ee9613c6b2aaf059105e684c2b68c23634603a25f85f24f88757efc6e7e45b17
-			url: https://octez.tezos.com/releases/octez-v25.2/binaries/x86_64/octez-signer
-			version: "25.2"
+			sha256: 044fa25486387f3edf28106b8b6c6570e6f288bdc7f57f3038908a6d6e38d245
+			url: https://octez.tezos.com/releases/octez-v25.3/binaries/x86_64/octez-signer
+			version: "25.3"
 		}
 		tezsign: {
 			sha256: 5e3b52b7ab5cc85f4781d2be5b0192bc838641bf6a7d8ca13a87e11740ee7343
